@@ -53,5 +53,17 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+    {
+      resolve: "gatsby-plugin-iltorb",
+      options: {
+        extensions: ["css", "html", "js", "svg", "png", "ttf"],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        precachePages: [`/`, `/work`, `/blog`],
+      },
+    },
   ],
 }

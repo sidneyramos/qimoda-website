@@ -1,19 +1,21 @@
 {
   "name": "qimoda-website",
   "private": true,
-  "description": "A starter powered by Gatsby and Prismic to showcase portfolios and blogs.",
+  "description": "We are Qimoda.",
   "version": "0.1.0",
   "author": "Sidney Ramos <sidney.ramos95@gmail.com>",
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.12",
+    "classnames": "^2.2.6",
     "gatsby": "^2.12.0",
     "gatsby-image": "^2.2.20",
     "gatsby-plugin-catch-links": "^2.0.12",
     "gatsby-plugin-emotion": "^4.1.0",
     "gatsby-plugin-google-analytics": "^2.1.6",
+    "gatsby-plugin-iltorb": "^1.0.0",
     "gatsby-plugin-manifest": "^2.2.4",
-    "gatsby-plugin-offline": "^3.0.8",
+    "gatsby-plugin-offline": "^3.0.32",
     "gatsby-plugin-react-helmet": "^3.1.8",
     "gatsby-plugin-resolve-src": "^2.0.0",
     "gatsby-plugin-sass": "^2.0.11",
@@ -59,7 +61,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/margueriteroth/gatsby-prismic-starter-prist"
+    "url": "https://github.com/Qimoda/qimoda-website"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

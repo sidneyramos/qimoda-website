@@ -14,7 +14,7 @@ const Work = ({ projects, meta }) => (
   <>
     <Helmet
       title={`Work | Qimoda`}
-      titleTemplate={`%s | Work | Qimoda`}
+      titleTemplate={`%s`}
       meta={[
         {
           name: `description`,

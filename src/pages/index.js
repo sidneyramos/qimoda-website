@@ -151,7 +151,7 @@ const WorkAction = styled(Link)`
   }
 
   &:hover {
-    color: ${colors.blue500};
+    color: ${colors.teal600};
     transition: all 150ms ease-in-out;
 
     span {
@@ -166,7 +166,7 @@ const RenderBody = ({ home, projects, meta }) => (
   <>
     <Helmet
       title={meta.title}
-      titleTemplate={`%s | ${meta.title}`}
+      titleTemplate={`%s`}
       meta={[
         {
           name: `description`,

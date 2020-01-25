@@ -46,13 +46,13 @@ const ButtonContainer = styled("button")`
   }
 
   &.Button--secondary {
-    background: ${colors.blue200};
-    color: ${colors.blue600};
+    background: ${colors.teal200};
+    color: ${colors.teal600};
     padding: 0.95em 1.8em;
     font-size: 0.95rem;
 
     &:hover {
-      background: ${colors.blue300};
+      background: ${colors.teal300};
       transition: background 100ms ease-in-out;
     }
   }

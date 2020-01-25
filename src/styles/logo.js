@@ -17,29 +17,35 @@ const logoStyles = css`
 
   .logo-link {
     text-decoration: none;
+  }
 
-    .logo {
-      position: relative;
+  .logo {
+    position: relative;
 
-      h1 {
-        line-height: 1;
-        margin: 0;
-        font-weight: 700;
-        color: #003437;
-      }
+    &.hide-heading {
+      height: 25px;
+      width: 15px;
+      margin-right: 5px;
+    }
 
-      svg {
-        height: 100%;
-        position: absolute;
-        margin-top: 1%;
-        top: 0;
-        left: 4%;
-        z-index: -1;
-        animation-name: flash;
-        animation-duration: 3s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-      }
+    h1 {
+      line-height: 1;
+      margin: 0;
+      font-weight: 700;
+      color: #003437;
+    }
+
+    svg {
+      height: 100%;
+      position: absolute;
+      margin-top: 1%;
+      top: 0;
+      left: 4%;
+      z-index: -1;
+      animation-name: flash;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
     }
   }
 `

@@ -1,8 +1,9 @@
 import React, { Fragment } from "react"
+var classNames = require("classnames")
 
-const Logo = () => (
-  <div className="logo">
-    <h1>QIMODA</h1>
+const Logo = ({ hideHeading = false }) => (
+  <div className={classNames("logo", { "hide-heading": hideHeading })}>
+    {!hideHeading && <h1>QIMODA</h1>}
     <svg
       version="1.0"
       xmlns="http://www.w3.org/2000/svg"

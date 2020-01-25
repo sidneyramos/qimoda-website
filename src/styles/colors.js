@@ -74,6 +74,7 @@ const colors = {
   teal600: "#159f9f",
   teal500: "#17B1B1",
   teal400: "#76D7C4",
+  teal300: "#C0E4E4",
   teal200: "#D1EFEF",
   teal100: "#E8F7F7",
 

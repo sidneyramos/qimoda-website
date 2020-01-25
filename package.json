@@ -1,7 +1,7 @@
 {
   "name": "qimoda-website",
   "private": true,
-  "description": "A starter powered by Gatsby and Prismic to showcase portfolios and blogs.",
+  "description": "We are Qimoda.",
   "version": "0.1.0",
   "author": "Sidney Ramos <sidney.ramos95@gmail.com>",
   "dependencies": {
@@ -59,7 +59,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/margueriteroth/gatsby-prismic-starter-prist"
+    "url": "https://github.com/Qimoda/qimoda-website"
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"

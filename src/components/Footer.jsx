@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
 import Logo from "components/_ui/Logo"
-import qimoda from "images/qimoda/2.png"
+import qimoda from "images/qimoda/5.png"
 
 const FooterContainer = styled("div")`
   padding-top: 3.75em;
@@ -26,15 +26,29 @@ const FooterAuthor = styled("a")`
   text-decoration: none;
   margin-top: 1.5em;
 
+  .footerLogoContainer {
+    position: relative;
+  }
+
+  h1 {
+    font-size: 45px;
+    margin: 0;
+    color: ${colors.qimodaDark};
+  }
+
   &:hover {
     color: ${colors.blue900};
 
-    .FooterSpooch {
-      animation-name: rotate;
-      animation-duration: 1.5s;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
+    h1 {
+      color: ${colors.qimodaDark};
     }
+  }
+
+  .FooterSpooch {
+    animation-name: flash;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
   }
 
   @keyframes rotate {
@@ -45,18 +59,38 @@ const FooterAuthor = styled("a")`
       transform: rotate(360deg);
     }
   }
+
+  @keyframes flash {
+    0%,
+    87%,
+    95% {
+      filter: brightness(100%);
+    }
+    93%,
+    99%,
+    100% {
+      filter: brightness(200%);
+    }
+  }
 `
 
 const FooterSpooch = styled("img")`
-  max-width: 33px;
+  max-width: 20px;
   margin-top: 0.25em;
+  position: absolute;
+  top: 10px;
+  left: 8px;
+  z-index: -1;
 `
 
 const Footer = () => (
   <FooterContainer>
     <FooterAuthor href="https://sidneyramos.com">
       © 2019 — Qimoda Digital
-      <FooterSpooch className="FooterSpooch" src={qimoda} />
+      <div className="footerLogoContainer">
+        <h1 className="footerLogo">Q</h1>
+        <FooterSpooch className="FooterSpooch" src={qimoda} />
+      </div>
     </FooterAuthor>
   </FooterContainer>
 )

@@ -10,6 +10,16 @@ const colors = {
   blue200: "#e3efff",
   blue100: "#f1f8ff",
 
+  red900: "#7B241C",
+  red800: "#A93226",
+  red700: "#A93226",
+  red600: "#C0392B",
+  red500: "#CD6155",
+  red400: "#D98880",
+  red300: "#E6B0AA",
+  red200: "#F2D7D5",
+  red100: "#F9EBEA",
+
   green600: "#61A840",
   green500: "#6CBB47",
   green200: "#E2F1DA",
@@ -50,14 +60,32 @@ const colors = {
   purple200: "#F0E5FF",
   purple100: "#F8F2FF",
 
+  gold900: "#9C640C",
+  gold800: "#B9770E",
+  gold700: "#D68910",
+  gold600: "#F39C12",
+  gold500: "#F5B041",
+  gold400: "#F8C471",
+  gold300: "#FAD7A0",
+  gold200: "#FDEBD0",
+  gold100: "#FEF5E7",
+
+  teal700: "#17A589",
   teal600: "#159f9f",
   teal500: "#17B1B1",
+  teal400: "#76D7C4",
   teal200: "#D1EFEF",
   teal100: "#E8F7F7",
 
   qimodaLight: "#036c72",
+  qimodaLighter: "#049199",
+  qimodaLightest: "#05c4cf",
+
   qimodaDark: "#003437",
-  qimodaGrey: "#94a8a9",
+
+  qimodaBrown: "#BCAC9B",
+  qimodaBrownLight: "#DDC9B4",
+  qimodaBrownDark: "#AD9D8D",
 }
 
 export default colors

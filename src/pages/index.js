@@ -27,7 +27,14 @@ const Hero = styled("div")`
 
     em {
       text-decoration: line-through;
-      color: ${colors.qimodaGrey};
+      color: ${colors.red500};
+
+      &:hover {
+        cursor: pointer;
+        transition: all 100ms ease-in-out;
+        color: ${colors.red600};
+        background-color: ${colors.red200};
+      }
     }
 
     &:last-of-type {
@@ -44,6 +51,19 @@ const Hero = styled("div")`
     &:nth-of-type(1) {
       a,
       strong {
+        color: ${colors.gold500};
+
+        &:hover {
+          cursor: pointer;
+          transition: all 100ms ease-in-out;
+          color: ${colors.gold600};
+          background-color: ${colors.gold200};
+        }
+      }
+    }
+    &:nth-of-type(2) {
+      a,
+      strong {
         color: ${colors.blue500};
 
         &:hover {
@@ -54,46 +74,7 @@ const Hero = styled("div")`
         }
       }
     }
-    &:nth-of-type(2) {
-      a,
-      strong {
-        color: ${colors.orange500};
-
-        &:hover {
-          cursor: pointer;
-          transition: all 100ms ease-in-out;
-          color: ${colors.orange600};
-          background-color: ${colors.orange200};
-        }
-      }
-    }
     &:nth-of-type(3) {
-      a,
-      strong {
-        color: ${colors.qimodaLight};
-
-        &:hover {
-          cursor: pointer;
-          transition: all 100ms ease-in-out;
-          color: ${colors.qimodaDark};
-          background-color: ${colors.qimodaGrey};
-        }
-      }
-    }
-    &:nth-of-type(4) {
-      a,
-      strong {
-        color: ${colors.green500};
-
-        &:hover {
-          cursor: pointer;
-          transition: all 100ms ease-in-out;
-          color: ${colors.green600};
-          background-color: ${colors.green200};
-        }
-      }
-    }
-    &:nth-of-type(5) {
       a,
       strong {
         color: ${colors.teal500};
@@ -103,6 +84,34 @@ const Hero = styled("div")`
           transition: all 100ms ease-in-out;
           color: ${colors.teal600};
           background-color: ${colors.teal200};
+        }
+      }
+    }
+
+    &:nth-of-type(4) {
+      a,
+      strong {
+        color: ${colors.qimodaLight};
+
+        &:hover {
+          cursor: pointer;
+          transition: all 100ms ease-in-out;
+          color: ${colors.qimodaLightest};
+          background-color: ${colors.qimodaDark};
+        }
+      }
+    }
+
+    &:nth-of-type(5) {
+      a,
+      strong {
+        color: ${colors.green500};
+
+        &:hover {
+          cursor: pointer;
+          transition: all 100ms ease-in-out;
+          color: ${colors.green600};
+          background-color: ${colors.green200};
         }
       }
     }

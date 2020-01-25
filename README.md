@@ -4,7 +4,6 @@ A light-themed starter powered by [Gatsby v2](https://www.gatsbyjs.org) and [Pri
 
 <img width="1280" alt="prist" src="https://user-images.githubusercontent.com/5288685/63654882-51787e00-c746-11e9-9e9e-2ab823129d93.png">
 
-
 ### 👩‍💻 [Demo website](http://prist.marguerite.io)
 
 ## ✨ Features
@@ -44,7 +43,6 @@ Your site is now running at `http://localhost:8000`!
 
 _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
 
-
 ## 👩‍🎤 Configuring Prismic
 
 1. **Create account and repo**
@@ -64,6 +62,7 @@ In your `gatsby-config.js` file, add your Prismic Repo name to the `repositoryNa
         }
     },
 ```
+
 3. **Define your Custom Types**
 
 This starter uses 3 Custom Types:
@@ -73,7 +72,8 @@ Create the three following Custom Types by selecting "Create New" in the top rig
 
 **1. Homepage** (Single)
 ![image](https://user-images.githubusercontent.com/5288685/65046592-f265ed80-d92e-11e9-8700-4602b9038c0d.png)
-In the right panel, select *JSON editor* and paste the following:
+In the right panel, select _JSON editor_ and paste the following:
+
 ```
 {
   "Main" : {
@@ -155,6 +155,7 @@ In the right panel, select *JSON editor* and paste the following:
 ```
 
 **2. Post** (Repeatable)
+
 ```
 {
   "Main" : {
@@ -228,6 +229,7 @@ In the right panel, select *JSON editor* and paste the following:
 ```
 
 **3. Project** (Repeatable)
+
 ```
 {
   "Main" : {
@@ -292,4 +294,3 @@ In the right panel, select *JSON editor* and paste the following:
   }
 }
 ```
-

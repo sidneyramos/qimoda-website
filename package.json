@@ -67,5 +67,8 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "resolutions": {
+    "serialize-javascript": "^2.1.1"
   }
 }

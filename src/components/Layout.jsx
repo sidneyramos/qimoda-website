@@ -6,9 +6,11 @@ import { Global } from "@emotion/core"
 import globalStyles from "styles/global"
 import typeStyles from "styles/typography"
 import logoStyles from "styles/logo"
+import listStyles from "styles/list"
 import dimensions from "styles/dimensions"
 import Footer from "components/Footer"
 import Header from "components/Header"
+import Helmet from "react-helmet"
 import "styles/fonts.scss"
 
 const LayoutContainer = styled.div`
@@ -44,14 +46,24 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <LayoutContainer className="div">
-        <Global styles={[globalStyles, typeStyles, logoStyles]} />
-        <div className="Layout">
-          <Header />
-          <main className="Layout__content">{children}</main>
-          <Footer />
-        </div>
-      </LayoutContainer>
+      <>
+        <Helmet
+          meta={[
+            {
+              name: `og:image`,
+              content: "https://qimoda.com/preview.png",
+            },
+          ]}
+        />
+        <LayoutContainer className="div">
+          <Global styles={[globalStyles, typeStyles, logoStyles, listStyles]} />
+          <div className="Layout">
+            <Header />
+            <main className="Layout__content">{children}</main>
+            <Footer />
+          </div>
+        </LayoutContainer>
+      </>
     )}
   />
 )

@@ -3,6 +3,7 @@ import Button from "components/_ui/Button"
 import Logo from "components/_ui/Logo"
 import styled from "@emotion/styled"
 import dimensions from "styles/dimensions"
+import colors from "styles/colors"
 import { RichText } from "prismic-reactjs"
 import PropTypes from "prop-types"
 
@@ -17,9 +18,7 @@ const AboutContainer = styled("div")`
   }
 
   @media (max-width: ${dimensions.maxwidthMobile}px) {
-    grid-template-columns: 7em 1fr;
-    grid-template-rows: 3em 1fr;
-    grid-gap: 2em;
+    display: block;
   }
 `
 
@@ -71,6 +70,106 @@ const AboutBio = styled("div")`
 
   @media (max-width: ${dimensions.maxwidthMobile}px) {
     grid-row: 2;
+  }
+
+  ul {
+    li {
+      margin-bottom: 15px;
+      text-align: justify;
+      padding-left: 10px;
+
+      a,
+      strong {
+        &:first-of-type {
+          transform: translateX(-5px);
+          text-align: left;
+          padding-left: 5px;
+          padding-right: 5px;
+          margin-bottom: 10px;
+          display: inline-block;
+          // border-bottom: 1px solid;
+          // width: 100%;
+        }
+      }
+
+      &:nth-of-type(1) {
+        a,
+        strong {
+          &:first-of-type {
+            color: ${colors.teal600};
+
+            &:hover {
+              cursor: pointer;
+              transition: all 100ms ease-in-out;
+              color: ${colors.teal600};
+              background-color: ${colors.teal200};
+            }
+          }
+        }
+      }
+      &:nth-of-type(2) {
+        a,
+        strong {
+          &:first-of-type {
+            color: ${colors.blue600};
+
+            &:hover {
+              cursor: pointer;
+              transition: all 100ms ease-in-out;
+              color: ${colors.blue600};
+              background-color: ${colors.blue200};
+            }
+          }
+        }
+      }
+      &:nth-of-type(3) {
+        a,
+        strong {
+          &:first-of-type {
+            color: ${colors.gold600};
+
+            &:hover {
+              cursor: pointer;
+              transition: all 100ms ease-in-out;
+              color: ${colors.gold600};
+              background-color: ${colors.gold200};
+            }
+          }
+        }
+      }
+
+      &:nth-of-type(4) {
+        a,
+        strong {
+          &:first-of-type {
+            color: ${colors.red600};
+
+            &:hover {
+              cursor: pointer;
+              transition: all 100ms ease-in-out;
+              color: ${colors.red600};
+              background-color: ${colors.red200};
+            }
+          }
+        }
+      }
+
+      &:nth-of-type(5) {
+        a,
+        strong {
+          &:first-of-type {
+            color: ${colors.green600};
+
+            &:hover {
+              cursor: pointer;
+              transition: all 100ms ease-in-out;
+              color: ${colors.green600};
+              background-color: ${colors.green200};
+            }
+          }
+        }
+      }
+    }
   }
 `
 

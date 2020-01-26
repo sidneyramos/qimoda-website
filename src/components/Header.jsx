@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import Link from "components/_ui/Link"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
 import dimensions from "styles/dimensions"
@@ -64,7 +64,7 @@ const HeaderLinks = styled("div")`
 
     &.Link--is-active {
       &:after {
-        background: ${colors.blue500};
+        background: ${colors.qimodaLight};
         transition: 100ms ease-in-out background;
       }
     }

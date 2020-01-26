@@ -102,7 +102,7 @@ const About = ({ bio, socialLinks }) => (
       ))}
     </AboutLinkContainer>
     <AboutBio>{RichText.render(bio)}</AboutBio>
-    <AboutActions>
+    {/* <AboutActions>
       <a
         href="mailto:team@qimoda.com"
         target="_blank"
@@ -110,7 +110,7 @@ const About = ({ bio, socialLinks }) => (
       >
         <Button className="Button--secondary">Email us</Button>
       </a>
-    </AboutActions>
+    </AboutActions> */}
   </AboutContainer>
 )
 

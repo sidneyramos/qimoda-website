@@ -65,5 +65,6 @@ module.exports = {
         precachePages: [`/`, `/work`, `/blog`],
       },
     },
+    `gatsby-plugin-transition-link`,
   ],
 }

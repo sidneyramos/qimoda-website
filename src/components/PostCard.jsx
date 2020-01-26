@@ -1,6 +1,6 @@
 import React from "react"
 import Moment from "react-moment"
-import { Link } from "gatsby"
+import Link from "components/_ui/Link"
 import { RichText } from "prismic-reactjs"
 import styled from "@emotion/styled"
 import colors from "styles/colors"

@@ -51,7 +51,7 @@ const Layout = ({ children }) => (
         <Helmet
           meta={[
             {
-              name: `og:image`,
+              property: `og:image`,
               content: `https://qimoda.com${preview}`,
             },
           ]}

@@ -12,6 +12,7 @@ import Footer from "components/Footer"
 import Header from "components/Header"
 import Helmet from "react-helmet"
 import "styles/fonts.scss"
+import preview from "../images/preview.png"
 
 const LayoutContainer = styled.div`
   max-width: ${dimensions.maxwidthDesktop}px;
@@ -51,7 +52,7 @@ const Layout = ({ children }) => (
           meta={[
             {
               name: `og:image`,
-              content: "https://qimoda.com/preview.png",
+              content: `https://qimoda.com${preview}`,
             },
           ]}
         />

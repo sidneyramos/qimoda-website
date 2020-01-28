@@ -7,6 +7,7 @@ import { RichText } from "prismic-reactjs"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
 import Layout from "components/Layout"
+import Logo from "components/_ui/Logo"
 
 const PostHeroContainer = styled("div")`
   max-height: 500px;
@@ -150,7 +151,10 @@ const Post = ({ post, meta }) => {
             </PostHeroAnnotation>
           </PostHeroContainer>
         )}
-        <PostBody>{RichText.render(post.post_body)}</PostBody>
+        <PostBody>
+          {RichText.render(post.post_body)}
+          <Logo hideHeading />
+        </PostBody>
       </Layout>
     </>
   )

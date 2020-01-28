@@ -5598,6 +5598,12 @@ gatsby-plugin-page-creator@^2.1.21:
     lodash "^4.17.15"
     micromatch "^3.1.10"
 
+gatsby-plugin-preact@^3.1.25:
+  version "3.1.25"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-preact/-/gatsby-plugin-preact-3.1.25.tgz#0b11d550b59d6aa7935b6047616427ca8977e582"
+  dependencies:
+    "@babel/runtime" "^7.7.6"
+
 gatsby-plugin-react-helmet@^3.1.8:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-react-helmet/-/gatsby-plugin-react-helmet-3.1.8.tgz#319254fd8cd99d0fcd615cee11a5d1f1ad0ab6f4"
@@ -9409,6 +9415,10 @@ potrace@^2.1.2:
   resolved "https://registry.yarnpkg.com/potrace/-/potrace-2.1.2.tgz#61473a326be1e734abac6d14d54e1880eed35471"
   dependencies:
     jimp "^0.6.4"
+
+preact@^10.2.1:
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.2.1.tgz#b30eb4cdc455499ee2ff82e0fa1a16fc8e20f3a4"
 
 prebuild-install@^5.3.0:
   version "5.3.2"

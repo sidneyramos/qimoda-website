@@ -34,6 +34,15 @@ const globalStyles = css`
     }
   }
 
+  a {
+    color: ${colors.qimodaLight};
+    transition: 0.3s;
+
+    &:hover {
+      color: ${colors.qimodaLighter};
+    }
+  }
+
   /*
     A workaround for forcing accessibility wrappers
     to have a 100% height.

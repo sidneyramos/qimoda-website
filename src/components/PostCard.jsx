@@ -21,6 +21,7 @@ const PostCardContainer = styled(Link)`
     box-shadow: 0px 9px 24px rgba(0, 0, 0, 0.1);
     transition: all 150ms ease-in-out;
     cursor: pointer;
+    color: initial;
 
     .PostCardAction {
       color: ${colors.teal600};

@@ -85,7 +85,7 @@ const FooterSpooch = styled("img")`
 
 const Footer = () => (
   <FooterContainer>
-    <FooterAuthor href="https://sidneyramos.com">
+    <FooterAuthor>
       © 2020 — Qimoda Digital
       <div className="footerLogoContainer">
         <h1 className="footerLogo">Q</h1>

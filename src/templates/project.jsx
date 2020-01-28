@@ -8,6 +8,7 @@ import { graphql } from "gatsby"
 import { RichText } from "prismic-reactjs"
 import Button from "components/_ui/Button"
 import Layout from "components/Layout"
+import Logo from "components/_ui/Logo"
 
 const ProjectHeroContainer = styled("div")`
   background: ${colors.grey200};
@@ -100,6 +101,7 @@ const Project = ({ project, meta }) => {
         )}
         <ProjectBody>
           {RichText.render(project.project_description)}
+          <Logo hideHeading />
           <WorkLink to={"/work"}>
             <Button className="Button--secondary">See other work</Button>
           </WorkLink>

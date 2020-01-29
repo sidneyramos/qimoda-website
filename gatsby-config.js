@@ -28,7 +28,7 @@ module.exports = {
       options: {
         repositoryName: "qimoda", // (REQUIRED, replace with your own)
         linkResolver: () => post => `/${post.uid}`,
-        omitPrismicScript: true
+        omitPrismicScript: true,
       },
     },
     {
@@ -68,5 +68,15 @@ module.exports = {
     },
     `gatsby-plugin-transition-link`,
     `gatsby-plugin-preact`,
+    {
+      resolve: `gatsby-plugin-html-minifier`,
+      options: {
+        minifyCSS: true,
+        minifyJS: true,
+        minifyURLs: true,
+        removeEmptyAttributes: true,
+        removeComments: true,
+      },
+    },
   ],
 }

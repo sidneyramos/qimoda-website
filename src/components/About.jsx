@@ -73,14 +73,41 @@ const AboutBio = styled("div")`
   }
 
   ul {
+    padding: 0;
+    margin: 0;
+
     li {
       margin-bottom: 15px;
       text-align: justify;
       padding-left: 10px;
 
+      font-size: 14px;
+      border: 1px solid ${colors.grey200};
+      padding: 2.25em 2.5em 2.25em 2.5em;
+      border-radius: 5px;
+      box-shadow: 0px 9px 24px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+
+      &:before {
+        top: initial;
+        bottom: 15px;
+        // transform: translateY(-50%);
+        right: 15px;
+        left: initial;
+        width: 10px;
+        height: 21px;
+      }
+
+      &:hover {
+        box-shadow: 0px 9px 24px rgba(0, 0, 0, 0.1);
+        transition: all 150ms ease-in-out;
+        cursor: pointer;
+      }
+
       a,
       strong {
         &:first-of-type {
+          font-size: 18px;
           transform: translateX(-5px);
           text-align: left;
           padding-left: 5px;
@@ -95,27 +122,38 @@ const AboutBio = styled("div")`
       &:nth-of-type(1) {
         a,
         strong {
+          transition: all 100ms ease-in-out;
+
           &:first-of-type {
             color: ${colors.teal600};
+          }
+        }
 
-            &:hover {
-              cursor: pointer;
-              transition: all 100ms ease-in-out;
+        &:hover {
+          a,
+          strong {
+            &:first-of-type {
               color: ${colors.teal600};
               background-color: ${colors.teal200};
             }
           }
         }
       }
+
       &:nth-of-type(2) {
         a,
         strong {
+          transition: all 100ms ease-in-out;
+
           &:first-of-type {
             color: ${colors.blue600};
+          }
+        }
 
-            &:hover {
-              cursor: pointer;
-              transition: all 100ms ease-in-out;
+        &:hover {
+          a,
+          strong {
+            &:first-of-type {
               color: ${colors.blue600};
               background-color: ${colors.blue200};
             }
@@ -125,12 +163,17 @@ const AboutBio = styled("div")`
       &:nth-of-type(3) {
         a,
         strong {
+          transition: all 100ms ease-in-out;
+
           &:first-of-type {
             color: ${colors.gold600};
+          }
+        }
 
-            &:hover {
-              cursor: pointer;
-              transition: all 100ms ease-in-out;
+        &:hover {
+          a,
+          strong {
+            &:first-of-type {
               color: ${colors.gold600};
               background-color: ${colors.gold200};
             }
@@ -141,12 +184,17 @@ const AboutBio = styled("div")`
       &:nth-of-type(4) {
         a,
         strong {
+          transition: all 100ms ease-in-out;
+
           &:first-of-type {
             color: ${colors.red600};
+          }
+        }
 
-            &:hover {
-              cursor: pointer;
-              transition: all 100ms ease-in-out;
+        &:hover {
+          a,
+          strong {
+            &:first-of-type {
               color: ${colors.red600};
               background-color: ${colors.red200};
             }
@@ -157,12 +205,17 @@ const AboutBio = styled("div")`
       &:nth-of-type(5) {
         a,
         strong {
+          transition: all 100ms ease-in-out;
+
           &:first-of-type {
             color: ${colors.green600};
+          }
+        }
 
-            &:hover {
-              cursor: pointer;
-              transition: all 100ms ease-in-out;
+        &:hover {
+          a,
+          strong {
+            &:first-of-type {
               color: ${colors.green600};
               background-color: ${colors.green200};
             }

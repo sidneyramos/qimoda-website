@@ -16,7 +16,7 @@ import PostCard from "components/PostCard"
 const AboutContainer = styled("div")`
   padding-top: 1em;
   display: grid;
-  grid-template-columns: 8em 1fr 15em;
+  grid-template-columns: 9em 1fr 15em;
   grid-gap: 2em;
 
   @media (max-width: ${dimensions.maxwidthTablet}px) {

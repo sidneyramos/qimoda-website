@@ -6,12 +6,18 @@ import dimensions from "styles/dimensions"
 import colors from "styles/colors"
 import { RichText } from "prismic-reactjs"
 import PropTypes from "prop-types"
+import qimoda from "images/qimoda/5.svg"
+import tech from "images/qimoda/icons/tech.svg"
+import ux from "images/qimoda/icons/ux.svg"
+import community from "images/qimoda/icons/community.svg"
+import content from "images/qimoda/icons/content.svg"
+import PostCard from "components/PostCard"
 
 const AboutContainer = styled("div")`
   padding-top: 1em;
   display: grid;
-  grid-template-columns: 8em 1fr 8em;
-  grid-gap: 3em;
+  grid-template-columns: 8em 1fr 15em;
+  grid-gap: 2em;
 
   @media (max-width: ${dimensions.maxwidthTablet}px) {
     grid-template-columns: 1fr 3fr 1fr;
@@ -24,7 +30,6 @@ const AboutContainer = styled("div")`
 
 const AboutLinkContainer = styled("div")`
   padding-top: 1em;
-  padding-bottom: 3em;
   display: flex;
   flex-direction: column;
 
@@ -79,23 +84,40 @@ const AboutBio = styled("div")`
     li {
       margin-bottom: 15px;
       text-align: justify;
-      padding-left: 10px;
 
       font-size: 14px;
       border: 1px solid ${colors.grey200};
-      padding: 2.25em 2.5em 2.25em 2.5em;
+      padding: 2.25em 2.5em 2.25em 11em;
       border-radius: 5px;
       box-shadow: 0px 9px 24px rgba(0, 0, 0, 0.06);
       overflow: hidden;
 
       &:before {
+        background-image: initial;
+        animation: none;
+        left: 27px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 100px;
+        width: 100px;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: block;
         top: initial;
         bottom: 15px;
-        // transform: translateY(-50%);
         right: 15px;
         left: initial;
         width: 10px;
         height: 21px;
+        background-image: url('${qimoda}');
+        background-size: cover;
+        animation-name: flash;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
       }
 
       &:hover {
@@ -120,6 +142,10 @@ const AboutBio = styled("div")`
       }
 
       &:nth-of-type(1) {
+        &:before {
+          background-image: url(${tech});
+        }
+
         a,
         strong {
           transition: all 100ms ease-in-out;
@@ -141,6 +167,10 @@ const AboutBio = styled("div")`
       }
 
       &:nth-of-type(2) {
+        &:before {
+          background-image: url(${ux});
+        }
+
         a,
         strong {
           transition: all 100ms ease-in-out;
@@ -161,6 +191,10 @@ const AboutBio = styled("div")`
         }
       }
       &:nth-of-type(3) {
+        &:before {
+          background-image: url(${community});
+        }
+
         a,
         strong {
           transition: all 100ms ease-in-out;
@@ -182,6 +216,10 @@ const AboutBio = styled("div")`
       }
 
       &:nth-of-type(4) {
+        &:before {
+          background-image: url(${content});
+        }
+        
         a,
         strong {
           transition: all 100ms ease-in-out;
@@ -228,7 +266,7 @@ const AboutBio = styled("div")`
 
 const AboutActions = styled("div")`
   padding-top: 1em;
-  padding-bottom: 3em;
+  // padding-bottom: 3em;
 
   @media (max-width: ${dimensions.maxwidthMobile}px) {
     padding: 0;
@@ -237,7 +275,7 @@ const AboutActions = styled("div")`
   }
 `
 
-const About = ({ bio, socialLinks }) => (
+const About = ({ bio, socialLinks, posts }) => (
   <AboutContainer>
     <AboutLinkContainer>
       {socialLinks.map((social, i) => (
@@ -254,15 +292,20 @@ const About = ({ bio, socialLinks }) => (
       ))}
     </AboutLinkContainer>
     <AboutBio>{RichText.render(bio)}</AboutBio>
-    {/* <AboutActions>
-      <a
-        href="mailto:team@qimoda.com"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Button className="Button--secondary">Email us</Button>
-      </a>
-    </AboutActions> */}
+    <AboutActions>
+      {posts.map((post, i) => (
+        <PostCard
+          isSmall
+          key={i}
+          author={post.node.post_author}
+          category={post.node.post_category}
+          title={post.node.post_title}
+          date={post.node.post_date}
+          description={post.node.post_preview_description}
+          uid={post.node._meta.uid}
+        />
+      ))}
+    </AboutActions>
   </AboutContainer>
 )
 

@@ -5,6 +5,7 @@ import { RichText } from "prismic-reactjs"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
 import PropTypes from "prop-types"
+var classNames = require("classnames")
 
 const PostCardContainer = styled(Link)`
   border: 1px solid ${colors.grey200};
@@ -34,11 +35,19 @@ const PostCardContainer = styled(Link)`
       }
     }
   }
+
+  &.isSmall {
+    padding: 1.5em;
+  }
 `
 
 const PostCategory = styled("h6")`
   font-weight: 600;
   color: ${colors.grey600};
+
+  &.isSmall {
+    font-size: 0.8em;
+  }
 `
 
 const PostTitle = styled("h3")`
@@ -53,6 +62,10 @@ const PostMetas = styled("div")`
   justify-content: space-between;
   font-size: 0.85em;
   color: ${colors.grey600};
+
+  &.isSmall {
+    font-size: 12px;
+  }
 `
 
 const PostAuthor = styled("div")`
@@ -70,6 +83,12 @@ const PostDescription = styled("div")`
   p:last-of-type {
     margin: 0;
   }
+
+  &.isSmall {
+    font-size: 14px;
+    margin: 1em 0;
+    margin-bottom: 1.5em;
+  }
 `
 
 const PostCardAction = styled("div")`
@@ -84,19 +103,44 @@ const PostCardAction = styled("div")`
     display: inline-block;
     transition: transform 400ms ease-in-out;
   }
+
+  &.isSmall {
+    font-size: 14px;
+  }
 `
 
-const PostCard = ({ author, category, date, title, description, uid }) => (
-  <PostCardContainer className="BlogPostCard" to={`/blog/${uid}`}>
-    <PostCategory>{category[0].text}</PostCategory>
-    <PostTitle>{title[0].text}</PostTitle>
-    <PostDescription>{RichText.render(description)}</PostDescription>
-    <PostCardAction className="PostCardAction">
+const PostCard = ({
+  author,
+  category,
+  date,
+  title,
+  description,
+  uid,
+  isSmall,
+}) => (
+  <PostCardContainer
+    className={classNames(["BlogPostCard", { isSmall: isSmall }])}
+    to={`/blog/${uid}`}
+  >
+    <PostCategory className={classNames({ isSmall: isSmall })}>
+      {category[0].text}
+    </PostCategory>
+    <PostTitle className={classNames({ isSmall: isSmall })}>
+      {title[0].text}
+    </PostTitle>
+    <PostDescription className={classNames({ isSmall: isSmall })}>
+      {RichText.render(description)}
+    </PostDescription>
+    <PostCardAction
+      className={classNames(["PostCardAction", { isSmall: isSmall }])}
+    >
       Read more <span>&#8594;</span>
     </PostCardAction>
-    <PostMetas>
-      <PostAuthor>{author}</PostAuthor>
-      <PostDate>
+    <PostMetas className={classNames({ isSmall: isSmall })}>
+      <PostAuthor className={classNames({ isSmall: isSmall })}>
+        {author}
+      </PostAuthor>
+      <PostDate className={classNames({ isSmall: isSmall })}>
         <Moment format="MMMM D, YYYY">{date}</Moment>
       </PostDate>
     </PostMetas>

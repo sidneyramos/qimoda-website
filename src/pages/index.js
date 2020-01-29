@@ -1,16 +1,16 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Helmet from "react-helmet"
-import { RichText } from "prismic-reactjs"
-import { graphql } from "gatsby"
-import styled from "@emotion/styled"
-import colors from "styles/colors"
-import dimensions from "styles/dimensions"
-import Button from "components/_ui/Button"
-import About from "components/About"
-import Layout from "components/Layout"
-import Link from "components/_ui/Link"
-import ProjectCard from "components/ProjectCard"
+import React from "react";
+import PropTypes from "prop-types";
+import Helmet from "react-helmet";
+import { RichText } from "prismic-reactjs";
+import { graphql } from "gatsby";
+import styled from "@emotion/styled";
+import colors from "styles/colors";
+import dimensions from "styles/dimensions";
+import Button from "components/_ui/Button";
+import About from "components/About";
+import Layout from "components/Layout";
+import Link from "components/_ui/Link";
+import ProjectCard from "components/ProjectCard";
 
 const Hero = styled("div")`
   padding-top: 2.5em;
@@ -117,7 +117,7 @@ const Hero = styled("div")`
       }
     }
   }
-`
+`;
 
 const Section = styled("div")`
   margin-bottom: 10em;
@@ -131,7 +131,7 @@ const Section = styled("div")`
   &:last-of-type {
     margin-bottom: 0;
   }
-`
+`;
 
 const WorkAction = styled(Link)`
   font-weight: 600;
@@ -161,9 +161,9 @@ const WorkAction = styled(Link)`
       transition: transform 150ms ease-in-out;
     }
   }
-`
+`;
 
-const RenderBody = ({ home, projects, meta }) => (
+const RenderBody = ({ home, projects, meta, posts }) => (
   <>
     <Helmet
       title={meta.title}
@@ -171,36 +171,36 @@ const RenderBody = ({ home, projects, meta }) => (
       meta={[
         {
           name: `description`,
-          content: meta.description,
+          content: meta.description
         },
         {
           property: `og:title`,
-          content: meta.title,
+          content: meta.title
         },
         {
           property: `og:description`,
-          content: meta.description,
+          content: meta.description
         },
         {
           property: `og:type`,
-          content: `website`,
+          content: `website`
         },
         {
           name: `twitter:card`,
-          content: `summary`,
+          content: `summary`
         },
         {
           name: `twitter:creator`,
-          content: meta.author,
+          content: meta.author
         },
         {
           name: `twitter:title`,
-          content: meta.title,
+          content: meta.title
         },
         {
           name: `twitter:description`,
-          content: meta.description,
-        },
+          content: meta.description
+        }
       ].concat(meta)}
     />
     <Hero>
@@ -230,31 +230,42 @@ const RenderBody = ({ home, projects, meta }) => (
     </Section>
     <Section>
       {RichText.render(home.about_title)}
-      <About bio={home.about_bio} socialLinks={home.about_links} />
+      <About
+        bio={home.about_bio}
+        socialLinks={home.about_links}
+        posts={posts}
+      />
     </Section>
   </>
-)
+);
 
 export default ({ data }) => {
   //Required check for no data being returned
-  const doc = data.prismic.allHomepages.edges.slice(0, 1).pop()
-  const projects = data.prismic.allProjects.edges
-  const meta = data.site.siteMetadata
+  const doc = data.prismic.allHomepages.edges.slice(0, 1).pop();
+  const projects = data.prismic.allProjects.edges;
+  const meta = data.site.siteMetadata;
+  const posts = data.prismic.allPosts.edges;
 
-  if (!doc || !projects) return null
+  if (!doc || !projects) return null;
 
   return (
     <Layout>
-      <RenderBody home={doc.node} projects={projects} meta={meta} />
+      <RenderBody
+        home={doc.node}
+        projects={projects}
+        meta={meta}
+        posts={posts}
+      />
     </Layout>
-  )
-}
+  );
+};
 
 RenderBody.propTypes = {
   home: PropTypes.object.isRequired,
   projects: PropTypes.array.isRequired,
-  meta: PropTypes.object.isRequired,
-}
+  posts: PropTypes.array.isRequired,
+  meta: PropTypes.object.isRequired
+};
 
 export const query = graphql`
   {
@@ -293,6 +304,20 @@ export const query = graphql`
           }
         }
       }
+      allPosts(sortBy: post_date_DESC, first: 1) {
+        edges {
+          node {
+            post_title
+            post_date
+            post_category
+            post_preview_description
+            post_author
+            _meta {
+              uid
+            }
+          }
+        }
+      }
     }
     site {
       siteMetadata {
@@ -302,4 +327,4 @@ export const query = graphql`
       }
     }
   }
-`
+`;

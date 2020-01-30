@@ -89,7 +89,11 @@ const Footer = () => (
       © 2020 — Qimoda Digital
       <div className="footerLogoContainer">
         <h1 className="footerLogo">Q</h1>
-        <FooterSpooch className="FooterSpooch" src={qimoda} />
+        <FooterSpooch
+          className="FooterSpooch"
+          src={qimoda}
+          alt={"Qimoda is the next generation digital consultancy"}
+        />
       </div>
     </FooterAuthor>
   </FooterContainer>

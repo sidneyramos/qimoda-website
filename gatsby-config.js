@@ -76,5 +76,11 @@ module.exports = {
         removeComments: true,
       },
     },
+    {
+      resolve: "gatsby-plugin-html-attributes",
+      options: {
+        lang: "en",
+      },
+    },
   ],
 }

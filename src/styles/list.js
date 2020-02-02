@@ -22,6 +22,7 @@ const listStyles = css`
 
     li {
       position: relative;
+      margin: 15px 0;
 
       &:before {
         content: "";

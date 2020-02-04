@@ -1,22 +1,23 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Helmet from "react-helmet";
-import { RichText } from "prismic-reactjs";
-import { graphql } from "gatsby";
-import styled from "@emotion/styled";
-import colors from "styles/colors";
-import dimensions from "styles/dimensions";
-import Button from "components/_ui/Button";
-import About from "components/About";
-import Layout from "components/Layout";
-import Link from "components/_ui/Link";
-import ProjectCard from "components/ProjectCard";
+import React from "react"
+import PropTypes from "prop-types"
+import Helmet from "react-helmet"
+import { RichText } from "prismic-reactjs"
+import { graphql } from "gatsby"
+import styled from "@emotion/styled"
+import colors from "styles/colors"
+import dimensions from "styles/dimensions"
+import Button from "components/_ui/Button"
+import About from "components/About"
+import Layout from "components/Layout"
+import Link from "components/_ui/Link"
+import ProjectCard from "components/ProjectCard"
 
 const Hero = styled("div")`
   padding-top: 2.5em;
   padding-bottom: 3em;
+  margin: 0 auto;
   margin-bottom: 6em;
-  max-width: 830px;
+  text-align: right;
 
   @media (max-width: ${dimensions.maxwidthMobile}px) {
     margin-bottom: 3em;
@@ -25,6 +26,11 @@ const Hero = styled("div")`
   h1 {
     margin: 0;
     font-weight: 400;
+    font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, Helvetica,
+      sans-serif;
+    font-size: 4rem;
+    line-height: 1.1;
+    color: ${colors.qimodaDarker};
 
     em {
       text-decoration: line-through;
@@ -39,7 +45,13 @@ const Hero = styled("div")`
     }
 
     &:last-of-type {
-      margin-bottom: 1em;
+      margin-top: 0.25em;
+      margin-bottom: 1.25em;
+
+      @media (max-width: ${dimensions.maxwidthMobile}px) {
+        margin-top: 1em;
+        margin-bottom: 1em;
+      }
     }
 
     a,
@@ -50,77 +62,82 @@ const Hero = styled("div")`
     }
 
     &:nth-of-type(1) {
+      text-align: left;
+
+      @media (max-width: ${dimensions.maxwidthTablet}px) {
+        font-size: 1.9rem;
+        margin-bottom: 1.5em;
+      }
+
       a,
       strong {
-        color: ${colors.gold500};
-
-        &:hover {
-          cursor: pointer;
-          transition: all 100ms ease-in-out;
-          color: ${colors.gold600};
-          background-color: ${colors.gold200};
-        }
+        white-space: pre;
+        color: ${colors.qimodaLight};
       }
     }
+
     &:nth-of-type(2) {
+      text-align: right;
+
+      @media (max-width: ${dimensions.maxwidthTablet}px) {
+        font-size: 1.9rem;
+      }
+
       a,
       strong {
-        color: ${colors.blue500};
-
-        &:hover {
-          cursor: pointer;
-          transition: all 100ms ease-in-out;
-          color: ${colors.blue600};
-          background-color: ${colors.blue200};
-        }
+        white-space: pre;
+        color: ${colors.qimodaLight};
       }
     }
+
     &:nth-of-type(3) {
+      text-align: right;
+
+      @media (max-width: ${dimensions.maxwidthTablet}px) {
+        font-size: 1.9rem;
+      }
+
       a,
       strong {
-        color: ${colors.teal500};
-
-        &:hover {
-          cursor: pointer;
-          transition: all 100ms ease-in-out;
-          color: ${colors.teal600};
-          background-color: ${colors.teal200};
-        }
+        white-space: pre;
+        color: ${colors.qimodaLight};
       }
     }
 
     &:nth-of-type(4) {
+      text-align: right;
+
+      @media (max-width: ${dimensions.maxwidthTablet}px) {
+        font-size: 1.9rem;
+      }
+
       a,
       strong {
+        white-space: pre;
         color: ${colors.qimodaLight};
-
-        &:hover {
-          cursor: pointer;
-          transition: all 100ms ease-in-out;
-          color: ${colors.qimodaLightest};
-          background-color: ${colors.qimodaDark};
-        }
+        animation-name: flash;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
       }
     }
 
-    &:nth-of-type(5) {
-      a,
-      strong {
-        color: ${colors.green500};
+    &:last-of-type {
+      font-family: "Rubik", -apple-system, BlinkMacSystemFont, Helvetica,
+        sans-serif;
+      font-size: 24px;
+      text-align: right;
+      color: ${colors.qimodaGray};
 
-        &:hover {
-          cursor: pointer;
-          transition: all 100ms ease-in-out;
-          color: ${colors.green600};
-          background-color: ${colors.green200};
-        }
+      @media (max-width: ${dimensions.maxwidthTablet}px) {
+        font-size: 1.15rem;
       }
     }
   }
-`;
+`
 
 const Section = styled("div")`
-  margin-bottom: 10em;
+  margin-bottom: 6em;
   display: flex;
   flex-direction: column;
 
@@ -131,7 +148,7 @@ const Section = styled("div")`
   &:last-of-type {
     margin-bottom: 0;
   }
-`;
+`
 
 const WorkAction = styled(Link)`
   font-weight: 600;
@@ -161,7 +178,7 @@ const WorkAction = styled(Link)`
       transition: transform 150ms ease-in-out;
     }
   }
-`;
+`
 
 const RenderBody = ({ home, projects, meta, posts }) => (
   <>
@@ -171,36 +188,36 @@ const RenderBody = ({ home, projects, meta, posts }) => (
       meta={[
         {
           name: `description`,
-          content: meta.description
+          content: meta.description,
         },
         {
           property: `og:title`,
-          content: meta.title
+          content: meta.title,
         },
         {
           property: `og:description`,
-          content: meta.description
+          content: meta.description,
         },
         {
           property: `og:type`,
-          content: `website`
+          content: `website`,
         },
         {
           name: `twitter:card`,
-          content: `summary`
+          content: `summary`,
         },
         {
           name: `twitter:creator`,
-          content: meta.author
+          content: meta.author,
         },
         {
           name: `twitter:title`,
-          content: meta.title
+          content: meta.title,
         },
         {
           name: `twitter:description`,
-          content: meta.description
-        }
+          content: meta.description,
+        },
       ].concat(meta)}
     />
     <Hero>
@@ -237,16 +254,16 @@ const RenderBody = ({ home, projects, meta, posts }) => (
       />
     </Section>
   </>
-);
+)
 
 export default ({ data }) => {
   //Required check for no data being returned
-  const doc = data.prismic.allHomepages.edges.slice(0, 1).pop();
-  const projects = data.prismic.allProjects.edges;
-  const meta = data.site.siteMetadata;
-  const posts = data.prismic.allPosts.edges;
+  const doc = data.prismic.allHomepages.edges.slice(0, 1).pop()
+  const projects = data.prismic.allProjects.edges
+  const meta = data.site.siteMetadata
+  const posts = data.prismic.allPosts.edges
 
-  if (!doc || !projects) return null;
+  if (!doc || !projects) return null
 
   return (
     <Layout>
@@ -257,15 +274,15 @@ export default ({ data }) => {
         posts={posts}
       />
     </Layout>
-  );
-};
+  )
+}
 
 RenderBody.propTypes = {
   home: PropTypes.object.isRequired,
   projects: PropTypes.array.isRequired,
   posts: PropTypes.array.isRequired,
-  meta: PropTypes.object.isRequired
-};
+  meta: PropTypes.object.isRequired,
+}
 
 export const query = graphql`
   {
@@ -327,4 +344,4 @@ export const query = graphql`
       }
     }
   }
-`;
+`

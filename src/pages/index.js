@@ -11,6 +11,7 @@ import About from "components/About"
 import Layout from "components/Layout"
 import Link from "components/_ui/Link"
 import ProjectCard from "components/ProjectCard"
+import qimoda from "images/qimoda/5.svg"
 
 const Hero = styled("div")`
   padding-top: 2.5em;
@@ -73,6 +74,25 @@ const Hero = styled("div")`
       strong {
         white-space: pre;
         color: ${colors.qimodaLight};
+        position: relative;
+
+        &:after {
+          z-index: -1;
+          content: "";
+          display: block;
+          position: absolute;
+          height: calc(50% - 10px);
+          width: calc(100%);
+          opacity: 25%;
+          background-color: ${colors.qimodaLight};
+          bottom: 10px;
+          right: 0;
+
+          @media (max-width: ${dimensions.maxwidthTablet}px) {
+            height: calc(70% - 10px);
+            bottom: 5px;
+          }
+        }
       }
     }
 
@@ -87,6 +107,25 @@ const Hero = styled("div")`
       strong {
         white-space: pre;
         color: ${colors.qimodaLight};
+        position: relative;
+
+        &:after {
+          z-index: -1;
+          content: "";
+          display: block;
+          position: absolute;
+          height: calc(50% - 10px);
+          width: calc(100%);
+          opacity: 25%;
+          background-color: ${colors.qimodaLight};
+          bottom: 10px;
+          right: 0;
+
+          @media (max-width: ${dimensions.maxwidthTablet}px) {
+            height: calc(70% - 10px);
+            bottom: 5px;
+          }
+        }
       }
     }
 
@@ -106,6 +145,7 @@ const Hero = styled("div")`
 
     &:nth-of-type(4) {
       text-align: right;
+      position: relative;
 
       @media (max-width: ${dimensions.maxwidthTablet}px) {
         font-size: 1.9rem;
@@ -115,11 +155,60 @@ const Hero = styled("div")`
       strong {
         white-space: pre;
         color: ${colors.qimodaLight};
-        animation-name: flash;
-        animation-duration: 3s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
+        // animation-name: flash;
+        // animation-duration: 3s;
+        // animation-iteration-count: infinite;
+        // animation-timing-function: linear;
+        position: relative;
+
+        &:after {
+          z-index: -1;
+          content: "";
+          display: block;
+          position: absolute;
+          height: calc(50% - 10px);
+          width: calc(100%);
+          opacity: 25%;
+          background-color: ${colors.qimodaLight};
+          bottom: 10px;
+          right: 0;
+
+          @media (max-width: ${dimensions.maxwidthTablet}px) {
+            height: calc(70% - 10px);
+            bottom: 5px;
+          }
+        }
       }
+
+      &:before {
+          content: "";
+          width: 10px;
+          height: 21px;
+          position: absolute;
+          bottom: calc(-0.25em + 5px);
+          right: 0;
+
+          background-image: url('${qimoda}');
+          background-size: cover;
+          animation-name: flash;
+          animation-duration: 3s;
+          animation-iteration-count: infinite;
+          animation-timing-function: linear;
+
+          @media (max-width: ${dimensions.maxwidthTablet}px) {
+            bottom: calc(-0.25em - 2px);
+          }
+        }
+
+        &:after {
+          content: "";
+          display: block;
+          height: 5px;
+          width: calc(100% - 20px);
+          background-color: black;
+          margin-top: 0.25em;
+          margin-bottom: 0.25em;
+        }
     }
 
     &:last-of-type {

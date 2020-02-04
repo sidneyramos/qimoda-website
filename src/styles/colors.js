@@ -83,10 +83,12 @@ const colors = {
   qimodaLightest: "#05c4cf",
 
   qimodaDark: "#003437",
+  qimodaDarker: "#172930",
 
   qimodaBrown: "#BCAC9B",
   qimodaBrownLight: "#DDC9B4",
   qimodaBrownDark: "#AD9D8D",
+  qimodaGray: "#546d76",
 }
 
 export default colors

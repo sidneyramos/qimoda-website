@@ -87,6 +87,11 @@ const Hero = styled("div")`
           background-color: ${colors.qimodaLight};
           bottom: 10px;
           right: 0;
+
+          @media (max-width: ${dimensions.maxwidthTablet}px) {
+            height: calc(70% - 10px);
+            bottom: 5px;
+          }
         }
       }
     }
@@ -115,6 +120,11 @@ const Hero = styled("div")`
           background-color: ${colors.qimodaLight};
           bottom: 10px;
           right: 0;
+
+          @media (max-width: ${dimensions.maxwidthTablet}px) {
+            height: calc(70% - 10px);
+            bottom: 5px;
+          }
         }
       }
     }
@@ -162,6 +172,11 @@ const Hero = styled("div")`
           background-color: ${colors.qimodaLight};
           bottom: 10px;
           right: 0;
+
+          @media (max-width: ${dimensions.maxwidthTablet}px) {
+            height: calc(70% - 10px);
+            bottom: 5px;
+          }
         }
       }
 
@@ -179,6 +194,10 @@ const Hero = styled("div")`
           animation-duration: 3s;
           animation-iteration-count: infinite;
           animation-timing-function: linear;
+
+          @media (max-width: ${dimensions.maxwidthTablet}px) {
+            bottom: calc(-0.25em - 2px);
+          }
         }
 
         &:after {

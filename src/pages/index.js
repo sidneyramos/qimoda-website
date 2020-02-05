@@ -83,7 +83,7 @@ const Hero = styled("div")`
           position: absolute;
           height: calc(50% - 10px);
           width: calc(100%);
-          opacity: 25%;
+          opacity: 0.25;
           background-color: ${colors.qimodaLight};
           bottom: 10px;
           right: 0;
@@ -116,7 +116,7 @@ const Hero = styled("div")`
           position: absolute;
           height: calc(50% - 10px);
           width: calc(100%);
-          opacity: 25%;
+          opacity: 0.25;
           background-color: ${colors.qimodaLight};
           bottom: 10px;
           right: 0;
@@ -168,7 +168,7 @@ const Hero = styled("div")`
           position: absolute;
           height: calc(50% - 10px);
           width: calc(100%);
-          opacity: 25%;
+          opacity: 0.25;
           background-color: ${colors.qimodaLight};
           bottom: 10px;
           right: 0;

@@ -4,6 +4,7 @@ import styled from "@emotion/styled"
 import colors from "styles/colors"
 import dimensions from "styles/dimensions"
 import Logo from "components/_ui/Logo"
+import qimoda from "images/qimoda/5.png"
 
 const HeaderContainer = styled("div")`
   padding-top: 3.75em;
@@ -41,31 +42,37 @@ const HeaderLinks = styled("div")`
     display: flex;
     align-items: center;
     position: relative;
+    letter-spacing: 1px;
+    overflow: visible;
 
     &:after {
       position: absolute;
       content: "";
-      bottom: 0;
-      width: 18px;
-      height: 3px;
-      background: transparent;
-      bottom: -3px;
-      right: 50%;
-      margin-right: -9px;
-      transition: 100ms ease-in-out background;
+      width: 100%;
+      height: 12px;
+      background: ${colors.qimodaLight};
+      background-size: cover;
+      bottom: 8px;
+      left: 0;
+      transform: translateX(-10px);
+      transition: 0.25s;
+      z-index: -1;
+      opacity: 0;
+      filter: brightness(150%);
     }
 
     &:hover {
       &:after {
-        background: ${colors.qimodaLight};
-        transition: 100ms ease-in-out background;
+        transform: translateX(0px);
+        opacity: 0.25;
       }
     }
 
     &.Link--is-active {
       &:after {
-        background: ${colors.qimodaLight};
-        transition: 100ms ease-in-out background;
+        transition: 100ms;
+        opacity: 0.25;
+        transform: translateX(0);
       }
     }
   }
@@ -79,10 +86,10 @@ const Header = () => (
       </Link>
       <HeaderLinks>
         <Link activeClassName="Link--is-active" to="/work">
-          Work
+          WORK
         </Link>
         <Link activeClassName="Link--is-active" to="/blog">
-          Blog
+          BLOG
         </Link>
       </HeaderLinks>
     </HeaderContent>

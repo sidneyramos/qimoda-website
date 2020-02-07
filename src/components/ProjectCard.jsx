@@ -33,8 +33,16 @@ const ProjectCardContainer = styled(Link)`
     color: initial;
 
     .ProjectCardAction {
-      color: ${colors.teal500};
       transition: all 150ms ease-in-out;
+
+      p {
+        color: body;
+
+        &:after {
+          transform: translate(0);
+          opacity: 0.25;
+        }
+      }
 
       span {
         transform: translateX(0px);
@@ -107,6 +115,28 @@ const ProjectCardAction = styled("div")`
   text-decoration: none;
   color: currentColor;
   transition: all 150ms ease-in-out;
+  position: relative;
+
+  p {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+
+    &:after {
+      z-index: -1;
+      content: "";
+      display: block;
+      position: absolute;
+      height: 50%;
+      width: 100%;
+      transform: translateX(-15px);
+      opacity: 0;
+      background-color: ${colors.qimodaLight};
+      bottom: 0;
+      right: 0;
+      transition: 0.5s;
+    }
+  }
 
   span {
     margin-left: 1em;
@@ -165,7 +195,7 @@ const ProjectCard = ({ category, title, description, thumbnail, uid }) => (
       <ProjectCardTitle>{title[0].text}</ProjectCardTitle>
       <ProjectCardBlurb>{RichText.render(description)}</ProjectCardBlurb>
       <ProjectCardAction className="ProjectCardAction">
-        Details <span>&#8594;</span>
+        <p>DETAILS</p> <span>&#8594;</span>
       </ProjectCardAction>
     </ProjectCardContent>
     <ProjectCardImageContainer className="ProjectCardImageContainer">

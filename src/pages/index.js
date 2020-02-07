@@ -335,8 +335,8 @@ const RenderBody = ({ home, projects, meta, posts }) => (
       </WorkAction>
     </Section>
     <Section>
-      {RichText.render(home.about_title)}
       <About
+        title={home.about_title}
         bio={home.about_bio}
         socialLinks={home.about_links}
         posts={posts}

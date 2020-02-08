@@ -12,6 +12,7 @@ import ux from "images/qimoda/icons/ux.svg"
 import community from "images/qimoda/icons/community.svg"
 import content from "images/qimoda/icons/content.svg"
 import PostCard from "components/PostCard"
+import { Text, Box } from "@chakra-ui/core"
 
 const AboutContainer = styled("div")`
   padding-top: 1em;
@@ -46,6 +47,7 @@ const AboutLink = styled("a")`
   color: currentColor;
   display: flex;
   align-items: center;
+  text-transform: uppercase;
 
   span {
     margin-left: 1em;
@@ -58,13 +60,38 @@ const AboutLink = styled("a")`
 
   p {
     margin: 0;
+    position: relative;
+
+    &:after {
+      z-index: -1;
+      content: "";
+      display: block;
+      position: absolute;
+      height: 50%;
+      width: 100%;
+      transform: translateX(-15px);
+      opacity: 0;
+      background-color: ${colors.qimodaLight};
+      bottom: 0;
+      right: 0;
+      transition: 0.5s;
+    }
   }
 
   &:hover {
+    color: currentColor;
+
     span {
       transform: translateX(0px);
       opacity: 1;
       transition: all 150ms ease-in-out;
+    }
+
+    p {
+      &:after {
+        opacity: 0.25;
+        transform: translateX(0);
+      }
     }
   }
 `
@@ -275,38 +302,68 @@ const AboutActions = styled("div")`
   }
 `
 
-const About = ({ bio, socialLinks, posts }) => (
-  <AboutContainer>
-    <AboutLinkContainer>
-      {socialLinks.map((social, i) => (
-        <AboutLink
-          key={i}
-          href={social.about_link[0].spans[0].data.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Logo hideHeading />
-          <p>{social.about_link[0].text}</p>
-          <span>&#8594;</span>
-        </AboutLink>
-      ))}
-    </AboutLinkContainer>
-    <AboutBio>{RichText.render(bio)}</AboutBio>
-    <AboutActions>
-      {posts.map((post, i) => (
-        <PostCard
-          isSmall
-          key={i}
-          author={post.node.post_author}
-          category={post.node.post_category}
-          title={post.node.post_title}
-          date={post.node.post_date}
-          description={post.node.post_preview_description}
-          uid={post.node._meta.uid}
-        />
-      ))}
-    </AboutActions>
-  </AboutContainer>
+const AboutTitle = styled(Box)`
+  * {
+    text-transform: uppercase;
+    font-family: Rubik;
+    display: inline-block;
+    position: relative;
+
+    &:after {
+      z-index: -1;
+      content: "";
+      display: block;
+      position: absolute;
+      height: 50%;
+      width: 100%;
+      opacity: 0.25;
+      background-color: ${colors.qimodaLight};
+      bottom: 0;
+      right: 0;
+
+      @media (max-width: ${dimensions.maxwidthTablet}px) {
+        height: calc(70% - 10px);
+        bottom: 5px;
+      }
+    }
+  }
+`
+
+const About = ({ title, bio, socialLinks, posts }) => (
+  <>
+    <AboutTitle>{RichText.render(title)}</AboutTitle>
+    <AboutContainer>
+      <AboutLinkContainer>
+        {socialLinks.map((social, i) => (
+          <AboutLink
+            key={i}
+            href={social.about_link[0].spans[0].data.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Logo hideHeading />
+            <p>{social.about_link[0].text}</p>
+            <span>&#8594;</span>
+          </AboutLink>
+        ))}
+      </AboutLinkContainer>
+      <AboutBio>{RichText.render(bio)}</AboutBio>
+      <AboutActions>
+        {posts.map((post, i) => (
+          <PostCard
+            isSmall
+            key={i}
+            author={post.node.post_author}
+            category={post.node.post_category}
+            title={post.node.post_title}
+            date={post.node.post_date}
+            description={post.node.post_preview_description}
+            uid={post.node._meta.uid}
+          />
+        ))}
+      </AboutActions>
+    </AboutContainer>
+  </>
 )
 
 export default About

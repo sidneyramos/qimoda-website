@@ -1,0 +1,7 @@
+{
+  "env": {
+    "BEARER_API": "@bearer_api",
+    "CONTACT_SPREADSHEET": "@contact_spreadsheet",
+    "GSHEET_AUTH": "@gsheet_auth"
+  }
+}

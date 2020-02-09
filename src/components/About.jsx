@@ -7,10 +7,10 @@ import colors from "styles/colors"
 import { RichText } from "prismic-reactjs"
 import PropTypes from "prop-types"
 import qimoda from "images/qimoda/5.svg"
-import tech from "images/qimoda/icons/tech.svg"
-import ux from "images/qimoda/icons/ux.svg"
-import community from "images/qimoda/icons/community.svg"
-import content from "images/qimoda/icons/content.svg"
+import tech from "images/qimoda/icons/tech-minimal-light.svg"
+import ux from "images/qimoda/icons/ux-minimal-light.svg"
+import community from "images/qimoda/icons/community-minimal-light.svg"
+import content from "images/qimoda/icons/content-minimal-light.svg"
 import PostCard from "components/PostCard"
 import { Text, Box } from "@chakra-ui/core"
 
@@ -107,35 +107,41 @@ const AboutBio = styled("div")`
   ul {
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-wrap: wrap;
 
     li {
-      margin-bottom: 15px;
-      text-align: justify;
-
+      flex: 1 1 calc(50% - 10px);
+      background-color: ${colors.teal200};
+      margin: 5px;
       font-size: 14px;
-      border: 1px solid ${colors.grey200};
-      padding: 2.25em 2.5em 2.25em 11em;
-      border-radius: 5px;
-      box-shadow: 0px 9px 24px rgba(0, 0, 0, 0.06);
       overflow: hidden;
 
+      @media (max-width: ${dimensions.maxwidthTablet + 200}px) {
+        flex: 1 1 100%;
+      }
+
       &:before {
+        background-color: ${colors.qimodaDark};
         background-image: initial;
         animation: none;
-        left: 27px;
-        top: 50%;
-        transform: translateY(-50%);
-        height: 100px;
-        width: 100px;
+        height: 150px;
+        width: 100%;
+        margin: 0 auto;
+        position: initial;
+        margin-bottom: 10px;
+        background-size: 140px 140px;
+        background-position: 50% 20px;
+        background-repeat: no-repeat;
       }
 
       &:after {
         content: "";
         position: absolute;
         display: block;
-        top: initial;
-        bottom: 15px;
-        right: 15px;
+        top: 10px;
+        bottom: initial;
+        right: 10px;
         left: initial;
         width: 10px;
         height: 21px;
@@ -147,24 +153,21 @@ const AboutBio = styled("div")`
         animation-timing-function: linear;
       }
 
-      &:hover {
-        box-shadow: 0px 9px 24px rgba(0, 0, 0, 0.1);
-        transition: all 150ms ease-in-out;
-        cursor: pointer;
-      }
-
       a,
       strong {
+        text-transform: uppercase;
+        
         &:first-of-type {
-          font-size: 18px;
-          transform: translateX(-5px);
-          text-align: left;
-          padding-left: 5px;
-          padding-right: 5px;
+          width: 100%;
+          padding: 0 20px;
+          font-size: 12px;
+          display: block;
+          text-align: center;
+          font-weight: 700;
+          // font-family: "Rubik Mono One";
+          margin: 0 auto;
           margin-bottom: 10px;
-          display: inline-block;
-          // border-bottom: 1px solid;
-          // width: 100%;
+          color: ${colors.qimodaDarker}
         }
       }
 
@@ -172,119 +175,22 @@ const AboutBio = styled("div")`
         &:before {
           background-image: url(${tech});
         }
-
-        a,
-        strong {
-          transition: all 100ms ease-in-out;
-
-          &:first-of-type {
-            color: ${colors.teal600};
-          }
-        }
-
-        &:hover {
-          a,
-          strong {
-            &:first-of-type {
-              color: ${colors.teal600};
-              background-color: ${colors.teal200};
-            }
-          }
-        }
       }
 
       &:nth-of-type(2) {
         &:before {
           background-image: url(${ux});
         }
-
-        a,
-        strong {
-          transition: all 100ms ease-in-out;
-
-          &:first-of-type {
-            color: ${colors.blue600};
-          }
-        }
-
-        &:hover {
-          a,
-          strong {
-            &:first-of-type {
-              color: ${colors.blue600};
-              background-color: ${colors.blue200};
-            }
-          }
-        }
       }
       &:nth-of-type(3) {
         &:before {
           background-image: url(${community});
-        }
-
-        a,
-        strong {
-          transition: all 100ms ease-in-out;
-
-          &:first-of-type {
-            color: ${colors.gold600};
-          }
-        }
-
-        &:hover {
-          a,
-          strong {
-            &:first-of-type {
-              color: ${colors.gold600};
-              background-color: ${colors.gold200};
-            }
-          }
         }
       }
 
       &:nth-of-type(4) {
         &:before {
           background-image: url(${content});
-        }
-        
-        a,
-        strong {
-          transition: all 100ms ease-in-out;
-
-          &:first-of-type {
-            color: ${colors.red600};
-          }
-        }
-
-        &:hover {
-          a,
-          strong {
-            &:first-of-type {
-              color: ${colors.red600};
-              background-color: ${colors.red200};
-            }
-          }
-        }
-      }
-
-      &:nth-of-type(5) {
-        a,
-        strong {
-          transition: all 100ms ease-in-out;
-
-          &:first-of-type {
-            color: ${colors.green600};
-          }
-        }
-
-        &:hover {
-          a,
-          strong {
-            &:first-of-type {
-              color: ${colors.green600};
-              background-color: ${colors.green200};
-            }
-          }
         }
       }
     }
@@ -322,8 +228,7 @@ const AboutTitle = styled(Box)`
       right: 0;
 
       @media (max-width: ${dimensions.maxwidthTablet}px) {
-        height: calc(70% - 10px);
-        bottom: 5px;
+        height: calc(45%);
       }
     }
   }

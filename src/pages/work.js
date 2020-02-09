@@ -5,9 +5,30 @@ import { graphql } from "gatsby"
 import styled from "@emotion/styled"
 import Layout from "components/Layout"
 import ProjectCard from "components/ProjectCard"
+import dimensions from "styles/dimensions"
+import colors from "styles/colors"
 
 const WorkTitle = styled("h1")`
   margin-bottom: 1em;
+  position: relative;
+  display: inline-block;
+
+  &:after {
+    z-index: -1;
+    content: "";
+    display: block;
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    opacity: 0.25;
+    background-color: ${colors.qimodaLight};
+    bottom: 0;
+    right: 0;
+
+    @media (max-width: ${dimensions.maxwidthTablet}px) {
+      height: calc(45%);
+    }
+  }
 `
 
 const Work = ({ projects, meta }) => (
@@ -51,7 +72,7 @@ const Work = ({ projects, meta }) => (
       ].concat(meta)}
     />
     <Layout>
-      <WorkTitle>Work</WorkTitle>
+      <WorkTitle>OUR PROJECTS</WorkTitle>
       <>
         {projects.map((project, i) => (
           <ProjectCard

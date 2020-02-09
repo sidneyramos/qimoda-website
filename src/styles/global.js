@@ -43,6 +43,18 @@ const globalStyles = css`
     }
   }
 
+  button {
+    border: initial;
+    background-color: initial;
+    cursor: pointer;
+
+    svg {
+      path {
+        fill: white;
+      }
+    }
+  }
+
   /*
     A workaround for forcing accessibility wrappers
     to have a 100% height.

@@ -12,6 +12,33 @@ import Layout from "components/Layout"
 import Link from "components/_ui/Link"
 import ProjectCard from "components/ProjectCard"
 import qimoda from "images/qimoda/5.svg"
+import { Formik } from "formik"
+import * as Yup from "yup"
+import { TiUser } from "react-icons/ti"
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  useToast,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  Icon,
+  InputLeftElement,
+  FormErrorMessage,
+  Box,
+  Textarea,
+} from "@chakra-ui/core"
+
+const Lorem = require("react-lorem-component")
+const axios = require("axios")
 
 const Hero = styled("div")`
   padding-top: 2.5em;
@@ -241,8 +268,8 @@ const Section = styled("div")`
 
 const WorkAction = styled(Link)`
   font-weight: 600;
+  color: ${colors.qimodaDarker};
   text-decoration: none;
-  color: currentColor;
   transition: all 150ms ease-in-out;
   margin-left: auto;
 
@@ -258,7 +285,7 @@ const WorkAction = styled(Link)`
   }
 
   &:hover {
-    color: ${colors.teal600};
+    color: ${colors.qimodaDarker};
     transition: all 150ms ease-in-out;
 
     span {
@@ -266,84 +293,275 @@ const WorkAction = styled(Link)`
       opacity: 1;
       transition: transform 150ms ease-in-out;
     }
+
+    p {
+      &:after {
+        opacity: 0.25;
+        transform: translateX(0);
+      }
+    }
+  }
+
+  p {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+
+    &:after {
+      z-index: -1;
+      content: "";
+      display: block;
+      position: absolute;
+      height: 50%;
+      width: 100%;
+      transform: translateX(-15px);
+      opacity: 0;
+      background-color: ${colors.qimodaLight};
+      bottom: 0;
+      right: 0;
+      transition: 0.5s;
+    }
   }
 `
 
-const RenderBody = ({ home, projects, meta, posts }) => (
-  <>
-    <Helmet
-      title={meta.title}
-      titleTemplate={`%s`}
-      meta={[
-        {
-          name: `description`,
-          content: meta.description,
-        },
-        {
-          property: `og:title`,
-          content: meta.title,
-        },
-        {
-          property: `og:description`,
-          content: meta.description,
-        },
-        {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`,
-        },
-        {
-          name: `twitter:creator`,
-          content: meta.author,
-        },
-        {
-          name: `twitter:title`,
-          content: meta.title,
-        },
-        {
-          name: `twitter:description`,
-          content: meta.description,
-        },
-      ].concat(meta)}
-    />
-    <Hero>
-      <>{RichText.render(home.hero_title)}</>
-      <a
-        href={home.hero_button_link.url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Button>{RichText.render(home.hero_button_text)}</Button>
-      </a>
-    </Hero>
-    <Section>
-      {projects.map((project, i) => (
-        <ProjectCard
-          key={i}
-          category={project.node.project_category}
-          title={project.node.project_title}
-          description={project.node.project_preview_description}
-          thumbnail={project.node.project_preview_thumbnail}
-          uid={project.node._meta.uid}
-        />
-      ))}
-      <WorkAction to={"/work"}>
-        See more work <span>&#8594;</span>
-      </WorkAction>
-    </Section>
-    <Section>
-      <About
-        title={home.about_title}
-        bio={home.about_bio}
-        socialLinks={home.about_links}
-        posts={posts}
+const ErrorMessage = styled(FormErrorMessage)`
+  p {
+    margin: 0;
+  }
+`
+
+const ModalClose = styled(ModalCloseButton)`
+  svg {
+    path {
+      fill: black;
+    }
+  }
+`
+
+const ContactForm = props => {
+  const SignupSchema = Yup.object().shape({
+    name: Yup.string().required("Please enter your full name"),
+    email: Yup.string()
+      .email("Please enter a valid email address")
+      .required("Please enter your email address"),
+    phone: Yup.string().required("Please enter your phone number"),
+  })
+
+  const toast = useToast()
+
+  return (
+    <Formik
+      initialValues={{ name: "", email: "", phone: "", message: "" }}
+      validationSchema={SignupSchema}
+      onSubmit={(values, actions) => {
+        axios({
+          method: "post",
+          url: "/api/submit",
+          data: values,
+        }).then(res => {
+          actions.setSubmitting(false)
+          actions.resetForm()
+          props.onClose()
+          toast({
+            title: "Message submitted",
+            description: "We'll get back to you shortly.",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          })
+        })
+      }}
+    >
+      {props => (
+        <form onSubmit={props.handleSubmit}>
+          <ModalBody>
+            <FormControl isInvalid={props.errors.name && props.touched.name}>
+              <FormLabel htmlFor="name">Full name</FormLabel>
+              <InputGroup>
+                <InputLeftElement
+                  children={<Box as={TiUser} size="20px" color="gray.300" />}
+                />
+                <Input
+                  id="name"
+                  placeholder="John Doe"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.name}
+                  name="name"
+                />
+              </InputGroup>
+
+              {props.errors.name && (
+                <ErrorMessage>{props.errors.name}</ErrorMessage>
+              )}
+            </FormControl>
+
+            <FormControl
+              mt={4}
+              isInvalid={props.errors.email && props.touched.email}
+            >
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <InputGroup>
+                <InputLeftElement
+                  children={<Icon name="at-sign" color="gray.300" />}
+                />
+                <Input
+                  id="email"
+                  placeholder="john.doe@gmail.com"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.email}
+                  name="email"
+                />
+              </InputGroup>
+              {props.errors.email && (
+                <ErrorMessage>{props.errors.email}</ErrorMessage>
+              )}
+            </FormControl>
+
+            <FormControl
+              mt={4}
+              isInvalid={props.errors.phone && props.touched.phone}
+            >
+              <FormLabel htmlFor="phone">Contact Number</FormLabel>
+              <InputGroup>
+                <InputLeftElement
+                  children={<Icon name="phone" color="gray.300" />}
+                />
+                <Input
+                  placeholder="+61 412 321 123"
+                  id="phone"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.phone}
+                  name="phone"
+                />
+              </InputGroup>
+              {props.errors.phone && (
+                <ErrorMessage>{props.errors.phone}</ErrorMessage>
+              )}
+            </FormControl>
+
+            <FormControl
+              mt={4}
+              isInvalid={props.errors.message && props.touched.message}
+            >
+              <FormLabel htmlFor="message">Enquiry</FormLabel>
+              <InputGroup>
+                <InputLeftElement
+                  children={<Icon name="chat" color="gray.300" />}
+                />
+                <Textarea
+                  placeholder="Your message goes here"
+                  id="message"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.message}
+                  name="message"
+                  paddingLeft="2.5rem"
+                />
+              </InputGroup>
+              {props.errors.message && (
+                <ErrorMessage>{props.errors.message}</ErrorMessage>
+              )}
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button type="submit" isLoading={props.isSubmitting}>
+              Connect
+            </Button>
+          </ModalFooter>
+        </form>
+      )}
+    </Formik>
+  )
+}
+
+const RenderBody = ({ home, projects, meta, posts }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+  return (
+    <>
+      <Helmet
+        title={meta.title}
+        titleTemplate={`%s`}
+        meta={[
+          {
+            name: `description`,
+            content: meta.description,
+          },
+          {
+            property: `og:title`,
+            content: meta.title,
+          },
+          {
+            property: `og:description`,
+            content: meta.description,
+          },
+          {
+            property: `og:type`,
+            content: `website`,
+          },
+          {
+            name: `twitter:card`,
+            content: `summary`,
+          },
+          {
+            name: `twitter:creator`,
+            content: meta.author,
+          },
+          {
+            name: `twitter:title`,
+            content: meta.title,
+          },
+          {
+            name: `twitter:description`,
+            content: meta.description,
+          },
+        ].concat(meta)}
       />
-    </Section>
-  </>
-)
+      <Hero>
+        <>{RichText.render(home.hero_title)}</>
+        <Button onClick={onOpen}>
+          {RichText.render(home.hero_button_text)}
+        </Button>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent backgroundColor="white">
+            <ModalHeader>CONNECT WITH US</ModalHeader>
+            <ModalClose />
+
+            <ContactForm onClose={onClose} />
+          </ModalContent>
+        </Modal>
+      </Hero>
+      <Section>
+        {projects.map((project, i) => (
+          <ProjectCard
+            key={i}
+            category={project.node.project_category}
+            title={project.node.project_title}
+            description={project.node.project_preview_description}
+            thumbnail={project.node.project_preview_thumbnail}
+            uid={project.node._meta.uid}
+          />
+        ))}
+        <WorkAction to={"/work"}>
+          <p>MORE WORK</p> <span>&#8594;</span>
+        </WorkAction>
+      </Section>
+      <Section>
+        <About
+          title={home.about_title}
+          bio={home.about_bio}
+          socialLinks={home.about_links}
+          posts={posts}
+        />
+      </Section>
+    </>
+  )
+}
 
 export default ({ data }) => {
   //Required check for no data being returned

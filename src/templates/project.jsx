@@ -49,6 +49,7 @@ const WorkLink = styled(Link)`
   margin-top: 3em;
   display: block;
   text-align: center;
+  text-decoration: none;
 `
 
 const Project = ({ project, meta }) => {

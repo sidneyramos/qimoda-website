@@ -5,6 +5,16 @@ import styled from "@emotion/styled"
 import dimensions from "styles/dimensions"
 import colors from "styles/colors"
 import PropTypes from "prop-types"
+import techHighlight from "images/qimoda/icons/tech-minimal-highlight.svg"
+import uxHighlight from "images/qimoda/icons/ux-minimal-highlight.svg"
+import communityHighlight from "images/qimoda/icons/community-minimal-highlight.svg"
+import contentHighlight from "images/qimoda/icons/content-minimal-highlight.svg"
+import tech from "images/qimoda/icons/tech-minimal.svg"
+import ux from "images/qimoda/icons/ux-minimal.svg"
+import community from "images/qimoda/icons/community-minimal.svg"
+import content from "images/qimoda/icons/content-minimal.svg"
+
+import { Image, Box, Flex } from "@chakra-ui/core"
 
 const ProjectCardContainer = styled(Link)`
   display: grid;
@@ -65,7 +75,7 @@ const ProjectCardContainer = styled(Link)`
 
 const ProjectCardContent = styled("div")`
   background: white;
-  padding: 4em 3em 2.25em 3em;
+  padding: 3em 3em 2.25em 3em;
   position: relative;
 
   &:before {
@@ -90,20 +100,21 @@ const ProjectCardContent = styled("div")`
   }
 `
 
-const ProjectCardCategory = styled("h6")`
-  font-weight: 600;
+const ProjectCardCategory = styled(Flex)`
   color: ${colors.grey600};
+  margin-bottom: 0.5em;
 `
 
 const ProjectCardTitle = styled("h3")`
   margin-bottom: 0.5em;
-  margin-top: 0.5em;
+  margin-top: 0;
+  font-size: 35px;
 `
 
 const ProjectCardBlurb = styled("div")`
-  margin-bottom: 0.5em;
   margin-top: 0.5em;
-  margin-bottom: 5em;
+  margin-bottom: 1.5em;
+  font-size: 14px;
 
   @media (max-width: ${dimensions.maxwidthTablet}px) {
     margin-bottom: 2.5em;
@@ -188,12 +199,48 @@ const ProjectCardImageContainer = styled("div")`
   }
 `
 
+const ProjectCategoryIcon = styled(Box)`
+  height: 50px;
+  width: 50px;
+  background-repeat: no-repeat;
+  background-size: cover;
+`
+
+const renderCategoryIcons = str => {
+  const iconArray = []
+
+  const techIcon = (
+    icon = str.toLowerCase().includes("tech") ? techHighlight : tech
+  ) => <ProjectCategoryIcon backgroundImage={`url(${icon})`} alt="Tech" />
+  const uxIcon = (
+    icon = str.toLowerCase().includes("ux") ? uxHighlight : ux
+  ) => <ProjectCategoryIcon backgroundImage={`url(${icon})`} alt="UX" />
+  const communityIcon = (
+    icon = str.toLowerCase().includes("community")
+      ? communityHighlight
+      : community
+  ) => <ProjectCategoryIcon backgroundImage={`url(${icon})`} alt="Community" />
+  const contentIcon = (
+    icon = str.toLowerCase().includes("content") ? contentHighlight : content
+  ) => (
+    <ProjectCategoryIcon
+      backgroundImage={`url(${icon})`}
+      fill="blue"
+      alt="Content"
+    />
+  )
+
+  return [techIcon(), uxIcon(), communityIcon(), contentIcon()]
+}
+
 const ProjectCard = ({ category, title, description, thumbnail, uid }) => (
   <ProjectCardContainer to={`/work/${uid}`}>
     <ProjectCardContent className="ProjectCardContent">
-      <ProjectCardCategory>{category[0].text}</ProjectCardCategory>
       <ProjectCardTitle>{title[0].text}</ProjectCardTitle>
       <ProjectCardBlurb>{RichText.render(description)}</ProjectCardBlurb>
+      <ProjectCardCategory justifyContent="space-between">
+        {renderCategoryIcons(category[0].text)}
+      </ProjectCardCategory>
       <ProjectCardAction className="ProjectCardAction">
         <p>DETAILS</p> <span>&#8594;</span>
       </ProjectCardAction>

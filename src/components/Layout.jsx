@@ -13,6 +13,7 @@ import Header from "components/Header"
 import Helmet from "react-helmet"
 import "styles/fonts.scss"
 import preview from "../images/preview.png"
+import { ThemeProvider, theme } from "@chakra-ui/core"
 
 const LayoutContainer = styled.div`
   max-width: ${dimensions.maxwidthDesktop}px;
@@ -48,22 +49,26 @@ const Layout = ({ children }) => (
     `}
     render={data => (
       <>
-        <Helmet
-          meta={[
-            {
-              property: `og:image`,
-              content: `https://qimoda.com${preview}`,
-            },
-          ]}
-        />
-        <LayoutContainer className="div">
-          <Global styles={[globalStyles, typeStyles, logoStyles, listStyles]} />
-          <div className="Layout">
-            <Header />
-            <main className="Layout__content">{children}</main>
-            <Footer />
-          </div>
-        </LayoutContainer>
+        <ThemeProvider theme={theme}>
+          <Helmet
+            meta={[
+              {
+                property: `og:image`,
+                content: `https://qimoda.com${preview}`,
+              },
+            ]}
+          />
+          <LayoutContainer className="div">
+            <Global
+              styles={[globalStyles, typeStyles, logoStyles, listStyles]}
+            />
+            <div className="Layout">
+              <Header />
+              <main className="Layout__content">{children}</main>
+              <Footer />
+            </div>
+          </LayoutContainer>
+        </ThemeProvider>
       </>
     )}
   />

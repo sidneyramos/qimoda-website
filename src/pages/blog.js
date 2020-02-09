@@ -3,12 +3,32 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
+import colors from "styles/colors"
 import dimensions from "styles/dimensions"
 import Layout from "components/Layout"
 import PostCard from "components/PostCard"
 
 const BlogTitle = styled("h1")`
   margin-bottom: 1em;
+  position: relative;
+  display: inline-block;
+
+  &:after {
+    z-index: -1;
+    content: "";
+    display: block;
+    position: absolute;
+    height: 50%;
+    width: 100%;
+    opacity: 0.25;
+    background-color: ${colors.qimodaLight};
+    bottom: 0;
+    right: 0;
+
+    @media (max-width: ${dimensions.maxwidthTablet}px) {
+      height: calc(45%);
+    }
+  }
 `
 
 const BlogGrid = styled("div")`
@@ -68,7 +88,7 @@ const Blog = ({ posts, meta }) => (
       ].concat(meta)}
     />
     <Layout>
-      <BlogTitle>Blog</BlogTitle>
+      <BlogTitle>OUR BLOG</BlogTitle>
       <BlogGrid>
         {posts.map((post, i) => (
           <PostCard

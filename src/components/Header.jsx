@@ -59,6 +59,10 @@ const HeaderLinks = styled("div")`
       z-index: -1;
       opacity: 0;
       filter: brightness(150%);
+
+      @media (max-width: ${dimensions.maxwidthMobile}px) {
+        bottom: 0;
+      }
     }
 
     &:hover {

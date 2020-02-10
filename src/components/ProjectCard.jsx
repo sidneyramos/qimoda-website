@@ -9,12 +9,12 @@ import techHighlight from "images/qimoda/icons/tech-minimal-highlight.svg"
 import uxHighlight from "images/qimoda/icons/ux-minimal-highlight.svg"
 import communityHighlight from "images/qimoda/icons/community-minimal-highlight.svg"
 import contentHighlight from "images/qimoda/icons/content-minimal-highlight.svg"
-import tech from "images/qimoda/icons/tech-minimal.svg"
-import ux from "images/qimoda/icons/ux-minimal.svg"
-import community from "images/qimoda/icons/community-minimal.svg"
-import content from "images/qimoda/icons/content-minimal.svg"
+import tech from "images/qimoda/icons/tech-minimal-light.svg"
+import ux from "images/qimoda/icons/ux-minimal-light.svg"
+import community from "images/qimoda/icons/community-minimal-light.svg"
+import content from "images/qimoda/icons/content-minimal-light.svg"
 
-import { Image, Box, Flex } from "@chakra-ui/core"
+import { Image, Box, Flex, PseudoBox } from "@chakra-ui/core"
 
 const ProjectCardContainer = styled(Link)`
   display: grid;
@@ -199,32 +199,114 @@ const ProjectCardImageContainer = styled("div")`
   }
 `
 
-const ProjectCategoryIcon = styled(Box)`
-  height: 50px;
-  width: 50px;
+const ProjectCategoryIcon = styled(PseudoBox)`
+  // height: 50px;
+  // width: 50px;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 50px 45px;
+  background-position: 50% 0;
+
+  position: relative;
+  width: 60px;
+  height: 34.64px;
+  margin: 17.32px 0;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+  }
+
+  &:before {
+    bottom: 100%;
+  }
+
+  &:after {
+    top: 100%;
+    width: 0;
+  }
 `
 
 const renderCategoryIcons = str => {
   const iconArray = []
 
   const techIcon = (
-    icon = str.toLowerCase().includes("tech") ? techHighlight : tech
-  ) => <ProjectCategoryIcon backgroundImage={`url(${icon})`} alt="Tech" />
-  const uxIcon = (
-    icon = str.toLowerCase().includes("ux") ? uxHighlight : ux
-  ) => <ProjectCategoryIcon backgroundImage={`url(${icon})`} alt="UX" />
-  const communityIcon = (
-    icon = str.toLowerCase().includes("community")
-      ? communityHighlight
-      : community
-  ) => <ProjectCategoryIcon backgroundImage={`url(${icon})`} alt="Community" />
-  const contentIcon = (
-    icon = str.toLowerCase().includes("content") ? contentHighlight : content
+    icon = tech,
+    isTech = str.toLowerCase().includes("tech")
   ) => (
     <ProjectCategoryIcon
+      backgroundColor={isTech ? colors.qimodaDark : colors.qimodaLightGray}
       backgroundImage={`url(${icon})`}
+      _before={{
+        borderBottom: isTech
+          ? `17.32px solid ${colors.qimodaDark}`
+          : `17.32px solid ${colors.qimodaLightGray}`,
+      }}
+      _after={{
+        borderTop: isTech
+          ? `17.32px solid ${colors.qimodaDark}`
+          : `17.32px solid ${colors.qimodaLightGray}`,
+      }}
+      alt="Tech"
+    />
+  )
+  const uxIcon = (icon = ux, isUx = str.toLowerCase().includes("ux")) => (
+    <ProjectCategoryIcon
+      backgroundColor={isUx ? colors.qimodaDark : colors.qimodaLightGray}
+      backgroundImage={`url(${icon})`}
+      _before={{
+        borderBottom: isUx
+          ? `17.32px solid ${colors.qimodaDark}`
+          : `17.32px solid ${colors.qimodaLightGray}`,
+      }}
+      _after={{
+        borderTop: isUx
+          ? `17.32px solid ${colors.qimodaDark}`
+          : `17.32px solid ${colors.qimodaLightGray}`,
+      }}
+      alt="UX"
+    />
+  )
+  const communityIcon = (
+    icon = community,
+    isCommunity = str.toLowerCase().includes("community")
+  ) => (
+    <ProjectCategoryIcon
+      backgroundColor={isCommunity ? colors.qimodaDark : colors.qimodaLightGray}
+      backgroundImage={`url(${icon})`}
+      _before={{
+        borderBottom: isCommunity
+          ? `17.32px solid ${colors.qimodaDark}`
+          : `17.32px solid ${colors.qimodaLightGray}`,
+      }}
+      _after={{
+        borderTop: isCommunity
+          ? `17.32px solid ${colors.qimodaDark}`
+          : `17.32px solid ${colors.qimodaLightGray}`,
+      }}
+      alt="Community"
+    />
+  )
+  const contentIcon = (
+    icon = content,
+    isContent = str.toLowerCase().includes("content")
+  ) => (
+    <ProjectCategoryIcon
+      backgroundColor={isContent ? colors.qimodaDark : colors.qimodaLightGray}
+      backgroundImage={`url(${icon})`}
+      _before={{
+        borderBottom: isContent
+          ? `17.32px solid ${colors.qimodaDark}`
+          : `17.32px solid ${colors.qimodaLightGray}`,
+      }}
+      _after={{
+        borderTop: isContent
+          ? `17.32px solid ${colors.qimodaDark}`
+          : `17.32px solid ${colors.qimodaLightGray}`,
+      }}
       fill="blue"
       alt="Content"
     />

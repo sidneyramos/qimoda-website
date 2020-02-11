@@ -65,7 +65,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-transition-link`,
-    `gatsby-plugin-preact`,
     {
       resolve: `gatsby-plugin-html-minifier`,
       options: {
@@ -82,12 +81,6 @@ module.exports = {
         lang: "en",
       },
     },
-    {
-      resolve: `gatsby-plugin-nprogress`,
-      options: {
-        color: `#003437`,
-        showSpinner: false,
-      },
-    },
+    `gatsby-plugin-preact`,
   ],
 }

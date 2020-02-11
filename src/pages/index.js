@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
-import { RichText } from "prismic-reactjs"
+import RichText from "prismic-reactjs/src/Component"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
@@ -15,7 +15,6 @@ import qimoda from "images/qimoda/5.svg"
 import { Formik } from "formik"
 import * as Yup from "yup"
 import { TiUser } from "react-icons/ti"
-
 import {
   Modal,
   ModalOverlay,
@@ -24,20 +23,19 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
-  useToast,
-  FormControl,
-  FormLabel,
-  Input,
-  InputGroup,
-  Icon,
-  InputLeftElement,
-  FormErrorMessage,
-  Box,
-  Textarea,
-} from "@chakra-ui/core"
+} from "@chakra-ui/core/dist/Modal"
+import useDisclosure from "@chakra-ui/core/dist/useDisclosure"
+import useToast from "@chakra-ui/core/dist/Toast"
+import FormControl from "@chakra-ui/core/dist/FormControl"
+import FormLabel from "@chakra-ui/core/dist/FormLabel"
+import Input from "@chakra-ui/core/dist/Input"
+import InputGroup from "@chakra-ui/core/dist/InputGroup"
+import Icon from "@chakra-ui/core/dist/Icon"
+import { InputLeftElement } from "@chakra-ui/core/dist/InputElement"
+import FormErrorMessage from "@chakra-ui/core/dist/FormErrorMessage"
+import Box from "@chakra-ui/core/dist/Box"
+import Textarea from "@chakra-ui/core/dist/Textarea"
 
-const Lorem = require("react-lorem-component")
 const axios = require("axios")
 
 const Hero = styled("div")`

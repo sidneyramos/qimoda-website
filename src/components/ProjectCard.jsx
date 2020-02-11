@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "components/_ui/Link"
-import { RichText } from "prismic-reactjs"
+import RichText from "prismic-reactjs/src/Component"
 import styled from "@emotion/styled"
 import dimensions from "styles/dimensions"
 import colors from "styles/colors"
@@ -13,8 +13,10 @@ import tech from "images/qimoda/icons/tech-minimal-light.svg"
 import ux from "images/qimoda/icons/ux-minimal-light.svg"
 import community from "images/qimoda/icons/community-minimal-light.svg"
 import content from "images/qimoda/icons/content-minimal-light.svg"
+import LazyLoad from "react-lazyload"
 
-import { Image, Box, Flex, PseudoBox } from "@chakra-ui/core"
+import Flex from "@chakra-ui/core/dist/Flex"
+import PseudoBox from "@chakra-ui/core/dist/PseudoBox"
 
 const ProjectCardContainer = styled(Link)`
   display: grid;
@@ -328,7 +330,9 @@ const ProjectCard = ({ category, title, description, thumbnail, uid }) => (
       </ProjectCardAction>
     </ProjectCardContent>
     <ProjectCardImageContainer className="ProjectCardImageContainer">
-      <img src={thumbnail.url} alt={title[0].text} />
+      <LazyLoad offset={400}>
+        <img src={thumbnail.url} alt={title[0].text} />
+      </LazyLoad>
     </ProjectCardImageContainer>
   </ProjectCardContainer>
 )

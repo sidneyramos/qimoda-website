@@ -29,6 +29,7 @@ module.exports = {
         omitPrismicScript: true,
       },
     },
+    `gatsby-plugin-preact`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -41,7 +42,6 @@ module.exports = {
         icon: `src/images/qimoda/2.png`, // This path is relative to the root of the site.
       },
     },
-    // https://www.gatsbyjs.org/packages/gatsby-plugin-google-analytics/
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -81,6 +81,5 @@ module.exports = {
         lang: "en",
       },
     },
-    `gatsby-plugin-preact`,
   ],
 }

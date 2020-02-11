@@ -3,7 +3,7 @@ import Link from "components/_ui/Link"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
 import Logo from "components/_ui/Logo"
-import qimoda from "images/qimoda/5.png"
+import qimoda from "images/qimoda/5.svg"
 
 const FooterContainer = styled("div")`
   padding-top: 3.75em;

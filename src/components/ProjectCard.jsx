@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "components/_ui/Link"
-import { RichText } from "prismic-reactjs"
+import RichText from "prismic-reactjs/src/Component"
 import styled from "@emotion/styled"
 import dimensions from "styles/dimensions"
 import colors from "styles/colors"
@@ -14,7 +14,8 @@ import ux from "images/qimoda/icons/ux-minimal-light.svg"
 import community from "images/qimoda/icons/community-minimal-light.svg"
 import content from "images/qimoda/icons/content-minimal-light.svg"
 
-import { Image, Box, Flex, PseudoBox } from "@chakra-ui/core"
+import Flex from "@chakra-ui/core/dist/Flex"
+import PseudoBox from "@chakra-ui/core/dist/PseudoBox"
 
 const ProjectCardContainer = styled(Link)`
   display: grid;
@@ -230,98 +231,89 @@ const ProjectCategoryIcon = styled(PseudoBox)`
   }
 `
 
-const renderCategoryIcons = str => {
-  const iconArray = []
-
-  const techIcon = (
-    icon = tech,
-    isTech = str.toLowerCase().includes("tech")
-  ) => (
-    <ProjectCategoryIcon
-      backgroundColor={isTech ? colors.qimodaDark : colors.qimodaLightGray}
-      backgroundImage={`url(${icon})`}
-      _before={{
-        borderBottom: isTech
-          ? `17.32px solid ${colors.qimodaDark}`
-          : `17.32px solid ${colors.qimodaLightGray}`,
-      }}
-      _after={{
-        borderTop: isTech
-          ? `17.32px solid ${colors.qimodaDark}`
-          : `17.32px solid ${colors.qimodaLightGray}`,
-      }}
-      alt="Tech"
-    />
-  )
-  const uxIcon = (icon = ux, isUx = str.toLowerCase().includes("ux")) => (
-    <ProjectCategoryIcon
-      backgroundColor={isUx ? colors.qimodaDark : colors.qimodaLightGray}
-      backgroundImage={`url(${icon})`}
-      _before={{
-        borderBottom: isUx
-          ? `17.32px solid ${colors.qimodaDark}`
-          : `17.32px solid ${colors.qimodaLightGray}`,
-      }}
-      _after={{
-        borderTop: isUx
-          ? `17.32px solid ${colors.qimodaDark}`
-          : `17.32px solid ${colors.qimodaLightGray}`,
-      }}
-      alt="UX"
-    />
-  )
-  const communityIcon = (
-    icon = community,
-    isCommunity = str.toLowerCase().includes("community")
-  ) => (
-    <ProjectCategoryIcon
-      backgroundColor={isCommunity ? colors.qimodaDark : colors.qimodaLightGray}
-      backgroundImage={`url(${icon})`}
-      _before={{
-        borderBottom: isCommunity
-          ? `17.32px solid ${colors.qimodaDark}`
-          : `17.32px solid ${colors.qimodaLightGray}`,
-      }}
-      _after={{
-        borderTop: isCommunity
-          ? `17.32px solid ${colors.qimodaDark}`
-          : `17.32px solid ${colors.qimodaLightGray}`,
-      }}
-      alt="Community"
-    />
-  )
-  const contentIcon = (
-    icon = content,
-    isContent = str.toLowerCase().includes("content")
-  ) => (
-    <ProjectCategoryIcon
-      backgroundColor={isContent ? colors.qimodaDark : colors.qimodaLightGray}
-      backgroundImage={`url(${icon})`}
-      _before={{
-        borderBottom: isContent
-          ? `17.32px solid ${colors.qimodaDark}`
-          : `17.32px solid ${colors.qimodaLightGray}`,
-      }}
-      _after={{
-        borderTop: isContent
-          ? `17.32px solid ${colors.qimodaDark}`
-          : `17.32px solid ${colors.qimodaLightGray}`,
-      }}
-      fill="blue"
-      alt="Content"
-    />
-  )
-
-  return [techIcon(), uxIcon(), communityIcon(), contentIcon()]
-}
-
 const ProjectCard = ({ category, title, description, thumbnail, uid }) => (
   <ProjectCardContainer to={`/work/${uid}`}>
     <ProjectCardContent className="ProjectCardContent">
       <ProjectCardTitle>{title[0].text}</ProjectCardTitle>
       <ProjectCardBlurb>{RichText.render(description)}</ProjectCardBlurb>
       <ProjectCardCategory justifyContent="space-between">
-        {renderCategoryIcons(category[0].text)}
+        <ProjectCategoryIcon
+          backgroundColor={
+            category[0].text.toLowerCase().includes("tech")
+              ? colors.qimodaDark
+              : colors.qimodaLightGray
+          }
+          backgroundImage={`url(${tech})`}
+          _before={{
+            borderBottom: category[0].text.toLowerCase().includes("tech")
+              ? `17.32px solid ${colors.qimodaDark}`
+              : `17.32px solid ${colors.qimodaLightGray}`,
+          }}
+          _after={{
+            borderTop: category[0].text.toLowerCase().includes("tech")
+              ? `17.32px solid ${colors.qimodaDark}`
+              : `17.32px solid ${colors.qimodaLightGray}`,
+          }}
+          alt="Tech"
+        />
+        <ProjectCategoryIcon
+          backgroundColor={
+            category[0].text.toLowerCase().includes("ux")
+              ? colors.qimodaDark
+              : colors.qimodaLightGray
+          }
+          backgroundImage={`url(${ux})`}
+          _before={{
+            borderBottom: category[0].text.toLowerCase().includes("ux")
+              ? `17.32px solid ${colors.qimodaDark}`
+              : `17.32px solid ${colors.qimodaLightGray}`,
+          }}
+          _after={{
+            borderTop: category[0].text.toLowerCase().includes("ux")
+              ? `17.32px solid ${colors.qimodaDark}`
+              : `17.32px solid ${colors.qimodaLightGray}`,
+          }}
+          alt="UX"
+        />
+        <ProjectCategoryIcon
+          backgroundColor={
+            category[0].text.toLowerCase().includes("community")
+              ? colors.qimodaDark
+              : colors.qimodaLightGray
+          }
+          backgroundImage={`url(${community})`}
+          _before={{
+            borderBottom: category[0].text.toLowerCase().includes("community")
+              ? `17.32px solid ${colors.qimodaDark}`
+              : `17.32px solid ${colors.qimodaLightGray}`,
+          }}
+          _after={{
+            borderTop: category[0].text.toLowerCase().includes("community")
+              ? `17.32px solid ${colors.qimodaDark}`
+              : `17.32px solid ${colors.qimodaLightGray}`,
+          }}
+          alt="Community"
+        />
+        <ProjectCategoryIcon
+          backgroundColor={
+            category[0].text.toLowerCase().includes("content")
+              ? colors.qimodaDark
+              : colors.qimodaLightGray
+          }
+          backgroundImage={`url(${content})`}
+          _before={{
+            borderBottom: category[0].text.toLowerCase().includes("content")
+              ? `17.32px solid ${colors.qimodaDark}`
+              : `17.32px solid ${colors.qimodaLightGray}`,
+          }}
+          _after={{
+            borderTop: category[0].text.toLowerCase().includes("content")
+              ? `17.32px solid ${colors.qimodaDark}`
+              : `17.32px solid ${colors.qimodaLightGray}`,
+          }}
+          fill="blue"
+          alt="Content"
+        />
       </ProjectCardCategory>
       <ProjectCardAction className="ProjectCardAction">
         <p>DETAILS</p> <span>&#8594;</span>

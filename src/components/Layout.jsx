@@ -13,7 +13,8 @@ import Header from "components/Header"
 import Helmet from "react-helmet"
 import "styles/fonts.scss"
 import preview from "../images/preview.png"
-import { ThemeProvider, theme } from "@chakra-ui/core"
+import ThemeProvider from "@chakra-ui/core/dist/ThemeProvider"
+import theme from "@chakra-ui/core/dist/theme"
 
 const LayoutContainer = styled.div`
   max-width: ${dimensions.maxwidthDesktop}px;

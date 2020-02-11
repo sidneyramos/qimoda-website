@@ -1,11 +1,12 @@
 import React from "react"
-import Moment from "react-moment"
 import Link from "components/_ui/Link"
-import { RichText } from "prismic-reactjs"
+import RichText from "prismic-reactjs/src/Component"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
 import PropTypes from "prop-types"
-import { Box } from "@chakra-ui/core"
+import Box from "@chakra-ui/core/dist/Box"
+import dayjs from "dayjs"
+
 var classNames = require("classnames")
 
 const PostCardContainer = styled(Link)`
@@ -63,7 +64,6 @@ const PostCategory = styled("h6")`
   background-color: ${colors.white};
   text-transform: uppercase;
   font-size: 15px;
-  // font-family: "Rubik Mono One";
 `
 
 const PostTitle = styled("h3")`
@@ -183,7 +183,7 @@ const PostCard = ({
           {author}
         </PostAuthor>
         <PostDate className={classNames({ isSmall: isSmall })}>
-          <Moment format="MMMM D, YYYY">{date}</Moment>
+          {dayjs(date).format("MMMM D, YYYY")}
         </PostDate>
       </PostMetas>
     </PostContentContainer>

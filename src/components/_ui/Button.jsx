@@ -3,9 +3,9 @@ import styled from "@emotion/styled"
 import colors from "styles/colors"
 import dimensions from "styles/dimensions"
 import qimoda from "images/qimoda/5.svg"
-import { Button as ChakraButton } from "@chakra-ui/core"
+import Button from "@chakra-ui/core/dist/Button"
 
-const ButtonContainer = styled(ChakraButton)`
+const ButtonContainer = styled(Button)`
   padding: 1em 2em;
   font-weight: 600;
   color: white;
@@ -73,7 +73,7 @@ const ButtonContainer = styled(ChakraButton)`
   }
 `
 
-class Button extends Component {
+class ButtonComponent extends Component {
   render() {
     const { children, ...props } = this.props
     return (
@@ -88,4 +88,4 @@ class Button extends Component {
   }
 }
 
-export default Button
+export default ButtonComponent

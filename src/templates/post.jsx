@@ -1,13 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
-import Moment from "react-moment"
 import { graphql } from "gatsby"
-import { RichText } from "prismic-reactjs"
+import RichText from "prismic-reactjs/src/Component"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
 import Layout from "components/Layout"
 import Logo from "components/_ui/Logo"
+import dayjs from "dayjs"
 
 const PostHeroContainer = styled("div")`
   max-height: 500px;
@@ -139,9 +139,7 @@ const Post = ({ post, meta }) => {
         <PostTitle>{RichText.render(post.post_title)}</PostTitle>
         <PostMetas>
           <PostAuthor>{post.post_author}</PostAuthor>
-          <PostDate>
-            <Moment format="MMMM D, YYYY">{post.post_date}</Moment>
-          </PostDate>
+          <PostDate>{dayjs(post.post_date).format("MMMM D, YYYY")}</PostDate>
         </PostMetas>
         {post.post_hero_image && (
           <PostHeroContainer>

@@ -1,10 +1,9 @@
 import React from "react"
-import Button from "components/_ui/Button"
 import Logo from "components/_ui/Logo"
 import styled from "@emotion/styled"
 import dimensions from "styles/dimensions"
 import colors from "styles/colors"
-import { RichText } from "prismic-reactjs"
+import RichText from "prismic-reactjs/src/Component"
 import PropTypes from "prop-types"
 import qimoda from "images/qimoda/5.svg"
 import tech from "images/qimoda/icons/tech-minimal-light.svg"
@@ -12,7 +11,7 @@ import ux from "images/qimoda/icons/ux-minimal-light.svg"
 import community from "images/qimoda/icons/community-minimal-light.svg"
 import content from "images/qimoda/icons/content-minimal-light.svg"
 import PostCard from "components/PostCard"
-import { Text, Box } from "@chakra-ui/core"
+import Box from "@chakra-ui/core/dist/Box"
 
 const AboutContainer = styled("div")`
   padding-top: 1em;

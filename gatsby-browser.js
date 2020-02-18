@@ -8,3 +8,6 @@
 // const { linkResolver } = require('./src/utils/prismic-configuration');
 
 // registerLinkResolver(linkResolver);
+
+require("typeface-rubik")
+require("typeface-rubik-mono-one")

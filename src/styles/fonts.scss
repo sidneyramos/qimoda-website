@@ -1,12 +1,17 @@
-@import url("https://fonts.googleapis.com/css?family=Rubik+Mono+One|Rubik:400,500,700,900&display=fallback");
+@font-face {
+  font-family: Recoleta;
+  font-weight: 400;
+  font-style: normal;
+  src: url("fonts/Recoleta-Regular.otf") format("otf");
+  font-display: fallback;
+}
 
 html {
-  font-family: "Rubik", -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+  font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
 }
 
 @supports (font-variation-settings: normal) {
   html {
-    font-family: "Rubik", -apple-system, BlinkMacSystemFont, Helvetica,
-      sans-serif;
+    font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
   }
 }

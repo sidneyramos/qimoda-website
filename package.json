@@ -57,6 +57,8 @@
     "react-router-dom": "^5.0.0",
     "react-router-hash-link": "^1.2.1",
     "smooth-scroll": "16.1.2",
+    "typeface-rubik": "^0.0.72",
+    "typeface-rubik-mono-one": "^0.0.72",
     "yup": "^0.28.1"
   },
   "devDependencies": {

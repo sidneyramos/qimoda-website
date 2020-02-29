@@ -2,6 +2,8 @@
   "env": {
     "BEARER_API": "@bearer_api",
     "CONTACT_SPREADSHEET": "@contact_spreadsheet",
-    "GSHEET_AUTH": "@gsheet_auth"
+    "GSHEET_AUTH": "@gsheet_auth",
+    "GATSBY_GOOGLE_ANALYTICS": "@gatsby_google_analytics",
+    "GATSBY_PRISMIC_APIKEY": "@gatsby_prismic_apikey"
   }
 }

@@ -75,10 +75,11 @@
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "now dev --listen 8000",
+    "develop": "now dev --listen 1234",
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "deploy": "now --prod",
+    "deploy-dev": "now",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },

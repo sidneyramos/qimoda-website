@@ -338,7 +338,8 @@ const ModalClose = styled(ModalCloseButton)`
 
 const ContactForm = props => {
   const SignupSchema = Yup.object().shape({
-    name: Yup.string().required("Please enter your full name"),
+    firstname: Yup.string().required("Please enter your first name"),
+    lastname: Yup.string().required("Please enter your last name"),
     email: Yup.string()
       .email("Please enter a valid email address")
       .required("Please enter your email address"),
@@ -349,7 +350,13 @@ const ContactForm = props => {
 
   return (
     <Formik
-      initialValues={{ name: "", email: "", phone: "", message: "" }}
+      initialValues={{
+        firstname: "",
+        lastname: "",
+        email: "",
+        phone: "",
+        message: "",
+      }}
       validationSchema={SignupSchema}
       onSubmit={(values, actions) => {
         axios({
@@ -373,7 +380,9 @@ const ContactForm = props => {
       {props => (
         <form onSubmit={props.handleSubmit}>
           <ModalBody>
-            <FormControl isInvalid={props.errors.name && props.touched.name}>
+            <FormControl
+              isInvalid={props.errors.firstname && props.touched.firstname}
+            >
               <FormLabel htmlFor="name">Full name</FormLabel>
               <InputGroup>
                 <InputLeftElement
@@ -384,13 +393,37 @@ const ContactForm = props => {
                   placeholder="John Doe"
                   onChange={props.handleChange}
                   onBlur={props.handleBlur}
-                  value={props.values.name}
-                  name="name"
+                  value={props.values.firstname}
+                  name="firstname"
                 />
               </InputGroup>
 
-              {props.errors.name && (
-                <ErrorMessage>{props.errors.name}</ErrorMessage>
+              {props.errors.firstname && (
+                <ErrorMessage>{props.errors.firstname}</ErrorMessage>
+              )}
+            </FormControl>
+
+            <FormControl
+              mt={4}
+              isInvalid={props.errors.lastname && props.touched.lastname}
+            >
+              <FormLabel htmlFor="lastname">Last name</FormLabel>
+              <InputGroup>
+                <InputLeftElement
+                  children={<Box as={TiUser} size="20px" color="gray.300" />}
+                />
+                <Input
+                  id="lastname"
+                  placeholder="John Doe"
+                  onChange={props.handleChange}
+                  onBlur={props.handleBlur}
+                  value={props.values.lastname}
+                  name="lastname"
+                />
+              </InputGroup>
+
+              {props.errors.lastname && (
+                <ErrorMessage>{props.errors.lastname}</ErrorMessage>
               )}
             </FormControl>
 

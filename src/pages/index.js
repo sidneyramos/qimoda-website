@@ -436,6 +436,8 @@ const RenderBody = ({ home, projects, meta, posts }) => {
             flex={{ xs: "1 0 100%", md: "1" }}
           >
             <Lottie
+              ariaRole="img"
+              title="qimoda-animation"
               options={heroAnimationOptions}
               isPaused={animPaused}
               isClickToPauseDisabled={true}

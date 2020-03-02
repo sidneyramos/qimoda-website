@@ -13,10 +13,13 @@ import Header from "components/Header"
 import Helmet from "react-helmet"
 import "styles/fonts.scss"
 import preview from "../images/preview.png"
+import bg from "../images/bg.png"
+import Box from "@chakra-ui/core/dist/Box"
+
 import ThemeProvider from "@chakra-ui/core/dist/ThemeProvider"
 import theme from "@chakra-ui/core/dist/theme"
 
-const LayoutContainer = styled.div`
+const LayoutContainer = styled(Box)`
   max-width: ${dimensions.maxwidthDesktop}px;
   padding-left: ${dimensions.paddingHorizontalDesktop}em;
   padding-right: ${dimensions.paddingHorizontalDesktop}em;
@@ -59,7 +62,7 @@ const Layout = ({ children }) => (
               },
             ]}
           />
-          <LayoutContainer className="div">
+          <LayoutContainer backgroundImage={`url('${bg}')`} className="div">
             <Global
               styles={[globalStyles, typeStyles, logoStyles, listStyles]}
             />

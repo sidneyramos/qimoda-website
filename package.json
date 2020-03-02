@@ -27,6 +27,7 @@
     "gatsby-plugin-nprogress": "^2.1.19",
     "gatsby-plugin-offline": "3.0.34",
     "gatsby-plugin-preact": "3.1.26",
+    "gatsby-plugin-preload-fonts": "^1.0.27",
     "gatsby-plugin-react-helmet": "3.1.22",
     "gatsby-plugin-resolve-src": "^2.0.0",
     "gatsby-plugin-sass": "2.1.28",
@@ -51,6 +52,7 @@
     "react-helmet": "^5.2.1",
     "react-icons": "^3.9.0",
     "react-lorem-component": "^0.13.0",
+    "react-lottie": "^1.2.3",
     "react-markdown": "^4.0.6",
     "react-modal": "^3.8.1",
     "react-reveal": "^1.2.2",
@@ -81,7 +83,8 @@
     "deploy": "now --prod",
     "deploy-dev": "now",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
+    "preload-fonts": "gatsby-preload-fonts"
   },
   "repository": {
     "type": "git",

@@ -421,7 +421,7 @@ const RenderBody = ({ home, projects, meta, posts }) => {
               </Heading>
               <Button
                 onClick={onOpen}
-                margin={{ xs: "0 auto", md: "0" }}
+                margin={{ xs: "40px auto", md: "0" }}
                 display="block"
               >
                 {/* {RichText.render(home.hero_button_text)} */}

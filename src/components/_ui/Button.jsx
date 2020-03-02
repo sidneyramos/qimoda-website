@@ -17,14 +17,15 @@ const ButtonContainer = styled(Button)`
   transition: background 100ms ease-in-out;
   position: relative;
   height: auto;
+  overflow: hidden;
 
   &:after {
     content: "";
-    width: 10px;
-    height: 21px;
+    width: 35px;
+    height: 70px;
     position: absolute;
-    bottom: calc(50% - 12px);
-    right: 12px;
+    bottom: -14px;
+    left: 25px;
     opacity: 0;
     transition: 0.5s;
 
@@ -44,6 +45,8 @@ const ButtonContainer = styled(Button)`
 
   p {
     margin: 0;
+    line-height: 1;
+    position: relative;
   }
 
 
@@ -51,7 +54,7 @@ const ButtonContainer = styled(Button)`
     cursor: pointer;
 
     &:after {
-      opacity: 1;
+      opacity: 0.4;
     }
   }
 

@@ -9,6 +9,7 @@ import RichText from "prismic-reactjs/src/Component"
 import Button from "components/_ui/Button"
 import Layout from "components/Layout"
 import Logo from "components/_ui/Logo"
+import Img from "gatsby-image"
 
 const ProjectHeroContainer = styled("div")`
   background: ${colors.grey200};
@@ -20,7 +21,8 @@ const ProjectHeroContainer = styled("div")`
   padding-top: 2.25em;
   margin-bottom: 3.5em;
 
-  img {
+  .gatsby-image-wrapper {
+    width: 60%;
     max-width: 600px;
   }
 `
@@ -97,7 +99,10 @@ const Project = ({ project, meta }) => {
         <ProjectTitle>{RichText.render(project.project_title)}</ProjectTitle>
         {project.project_hero_image && (
           <ProjectHeroContainer>
-            <img src={project.project_hero_image.url} alt="bees" />
+            <Img
+              fluid={project.project_hero_imageSharp.childImageSharp.fluid}
+              alt={project.project_hero_image.alt}
+            />
           </ProjectHeroContainer>
         )}
         <ProjectBody>
@@ -115,6 +120,7 @@ const Project = ({ project, meta }) => {
 export default ({ data }) => {
   const projectContent = data.prismic.allProjects.edges[0].node
   const meta = data.site.siteMetadata
+
   return <Project project={projectContent} meta={meta} />
 }
 
@@ -134,6 +140,13 @@ export const query = graphql`
             project_category
             project_post_date
             project_hero_image
+            project_hero_imageSharp {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             project_description
             _meta {
               uid

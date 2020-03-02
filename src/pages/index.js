@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import RichText from "prismic-reactjs/src/Component"
@@ -34,219 +34,24 @@ import Icon from "@chakra-ui/core/dist/Icon"
 import { InputLeftElement } from "@chakra-ui/core/dist/InputElement"
 import FormErrorMessage from "@chakra-ui/core/dist/FormErrorMessage"
 import Box from "@chakra-ui/core/dist/Box"
+import Heading from "@chakra-ui/core/dist/Heading"
+import Text from "@chakra-ui/core/dist/Text"
+import Flex from "@chakra-ui/core/dist/Flex"
+
 import Textarea from "@chakra-ui/core/dist/Textarea"
+import Lottie from "react-lottie"
+import heroAnimation from "../data/animation1.json"
+import { SlideIn } from "@chakra-ui/core/dist/Transition"
 
 const axios = require("axios")
 
-const Hero = styled("div")`
-  padding-top: 2.5em;
-  padding-bottom: 3em;
+const Hero = styled(Box)`
   margin: 0 auto;
-  margin-bottom: 6em;
-  text-align: right;
+  text-align: left;
+  font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
 
   @media (max-width: ${dimensions.maxwidthMobile}px) {
     margin-bottom: 3em;
-  }
-
-  h1 {
-    margin: 0;
-    font-weight: 400;
-    font-family: "Rubik Mono One", -apple-system, BlinkMacSystemFont, Helvetica,
-      sans-serif;
-    font-size: 4rem;
-    line-height: 1.1;
-    color: ${colors.qimodaDarker};
-
-    em {
-      text-decoration: line-through;
-      color: ${colors.red500};
-
-      &:hover {
-        cursor: pointer;
-        transition: all 100ms ease-in-out;
-        color: ${colors.red600};
-        background-color: ${colors.red200};
-      }
-    }
-
-    &:last-of-type {
-      margin-top: 0.25em;
-      margin-bottom: 1.25em;
-
-      @media (max-width: ${dimensions.maxwidthMobile}px) {
-        margin-top: 1em;
-        margin-bottom: 1em;
-      }
-    }
-
-    a,
-    strong {
-      text-decoration: none;
-      transition: all 100ms ease-in-out;
-      font-weight: 500;
-    }
-
-    &:nth-of-type(1) {
-      text-align: left;
-
-      @media (max-width: ${dimensions.maxwidthTablet}px) {
-        font-size: 1.9rem;
-        margin-bottom: 1.5em;
-      }
-
-      a,
-      strong {
-        white-space: pre;
-        color: ${colors.qimodaLight};
-        position: relative;
-
-        &:after {
-          z-index: -1;
-          content: "";
-          display: block;
-          position: absolute;
-          height: calc(50% - 10px);
-          width: calc(100%);
-          opacity: 0.25;
-          background-color: ${colors.qimodaLight};
-          bottom: 10px;
-          right: 0;
-
-          @media (max-width: ${dimensions.maxwidthTablet}px) {
-            height: calc(70% - 10px);
-            bottom: 5px;
-          }
-        }
-      }
-    }
-
-    &:nth-of-type(2) {
-      text-align: right;
-
-      @media (max-width: ${dimensions.maxwidthTablet}px) {
-        font-size: 1.9rem;
-      }
-
-      a,
-      strong {
-        white-space: pre;
-        color: ${colors.qimodaLight};
-        position: relative;
-
-        &:after {
-          z-index: -1;
-          content: "";
-          display: block;
-          position: absolute;
-          height: calc(50% - 10px);
-          width: calc(100%);
-          opacity: 0.25;
-          background-color: ${colors.qimodaLight};
-          bottom: 10px;
-          right: 0;
-
-          @media (max-width: ${dimensions.maxwidthTablet}px) {
-            height: calc(70% - 10px);
-            bottom: 5px;
-          }
-        }
-      }
-    }
-
-    &:nth-of-type(3) {
-      text-align: right;
-
-      @media (max-width: ${dimensions.maxwidthTablet}px) {
-        font-size: 1.9rem;
-      }
-
-      a,
-      strong {
-        white-space: pre;
-        color: ${colors.qimodaLight};
-      }
-    }
-
-    &:nth-of-type(4) {
-      text-align: right;
-      position: relative;
-
-      @media (max-width: ${dimensions.maxwidthTablet}px) {
-        font-size: 1.9rem;
-      }
-
-      a,
-      strong {
-        white-space: pre;
-        color: ${colors.qimodaLight};
-        // animation-name: flash;
-        // animation-duration: 3s;
-        // animation-iteration-count: infinite;
-        // animation-timing-function: linear;
-        position: relative;
-
-        &:after {
-          z-index: -1;
-          content: "";
-          display: block;
-          position: absolute;
-          height: calc(50% - 10px);
-          width: calc(100%);
-          opacity: 0.25;
-          background-color: ${colors.qimodaLight};
-          bottom: 10px;
-          right: 0;
-
-          @media (max-width: ${dimensions.maxwidthTablet}px) {
-            height: calc(70% - 10px);
-            bottom: 5px;
-          }
-        }
-      }
-
-      &:before {
-          content: "";
-          width: 10px;
-          height: 21px;
-          position: absolute;
-          bottom: calc(-0.25em + 5px);
-          right: 0;
-
-          background-image: url('${qimoda}');
-          background-size: cover;
-          animation-name: flash;
-          animation-duration: 3s;
-          animation-iteration-count: infinite;
-          animation-timing-function: linear;
-
-          @media (max-width: ${dimensions.maxwidthTablet}px) {
-            bottom: calc(-0.25em - 2px);
-          }
-        }
-
-        &:after {
-          content: "";
-          display: block;
-          height: 5px;
-          width: calc(100% - 20px);
-          background-color: black;
-          margin-top: 0.25em;
-          margin-bottom: 0.25em;
-        }
-    }
-
-    &:last-of-type {
-      font-family: "Rubik", -apple-system, BlinkMacSystemFont, Helvetica,
-        sans-serif;
-      font-size: 24px;
-      text-align: right;
-      color: ${colors.qimodaGray};
-
-      @media (max-width: ${dimensions.maxwidthTablet}px) {
-        font-size: 1.15rem;
-      }
-    }
   }
 `
 
@@ -316,7 +121,7 @@ const WorkAction = styled(Link)`
       opacity: 0;
       background-color: ${colors.qimodaLight};
       bottom: 0;
-      right: 0;
+      left: 0;
       transition: 0.5s;
     }
   }
@@ -335,6 +140,15 @@ const ModalClose = styled(ModalCloseButton)`
     }
   }
 `
+
+const heroAnimationOptions = {
+  loop: false,
+  autoplay: true,
+  animationData: heroAnimation,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+}
 
 const ContactForm = props => {
   const SignupSchema = Yup.object().shape({
@@ -500,7 +314,9 @@ const ContactForm = props => {
 
           <ModalFooter>
             <Button type="submit" isLoading={props.isSubmitting}>
-              Connect
+              <Text fontFamily="inherit" zIndex="1">
+                Connect
+              </Text>
             </Button>
           </ModalFooter>
         </form>
@@ -511,6 +327,8 @@ const ContactForm = props => {
 
 const RenderBody = ({ home, projects, meta, posts }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const [animPaused, setAnimPaused] = useState(false)
 
   return (
     <>
@@ -552,20 +370,102 @@ const RenderBody = ({ home, projects, meta, posts }) => {
           },
         ].concat(meta)}
       />
-      <Hero>
-        <>{RichText.render(home.hero_title)}</>
-        <Button onClick={onOpen}>
-          {RichText.render(home.hero_button_text)}
-        </Button>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent backgroundColor="white">
-            <ModalHeader>CONNECT WITH US</ModalHeader>
-            <ModalClose />
+      <Hero pt={{ md: "2.5em" }} pb="3em">
+        <Flex flexWrap="wrap">
+          <Flex
+            width={{ xs: "100%", md: "auto" }}
+            flex={{ xs: "1 0 100%", md: "1" }}
+            flexDirection="column"
+            pt="2em"
+          >
+            <Box>
+              <Heading
+                fontFamily="inherit"
+                as="h1"
+                fontWeight="500"
+                lineHeight="1"
+                m="0"
+                mt="0.5em"
+                mb="0.25em"
+                textAlign={{ xs: "center", md: "left" }}
+              >
+                We make good brands
+              </Heading>
+              <Heading
+                fontFamily="inherit"
+                as="h1"
+                fontWeight="500"
+                lineHeight="1"
+                m="0"
+                mb="0.6em"
+                textAlign={{ xs: "center", md: "left" }}
+              >
+                become{" "}
+                <Box as="span" color={colors.qimodaLight}>
+                  remarkable.
+                </Box>
+              </Heading>
 
-            <ContactForm onClose={onClose} />
-          </ModalContent>
-        </Modal>
+              <Heading
+                fontFamily="inherit"
+                as="h3"
+                fontWeight="400"
+                fontSize="0.9rem"
+                color="#353535"
+                lineHeight="1"
+                m="0"
+                mb="2rem"
+                textAlign={{ xs: "center", md: "left" }}
+              >
+                Website Design | Development | Content
+              </Heading>
+              <Button
+                onClick={onOpen}
+                margin={{ xs: "0 auto", md: "0" }}
+                display="block"
+              >
+                {/* {RichText.render(home.hero_button_text)} */}
+                <Text fontFamily="inherit" zIndex="1">
+                  Get in touch now
+                </Text>
+              </Button>
+            </Box>
+          </Flex>
+          <Box
+            width={{ xs: "100%", md: "auto" }}
+            flex={{ xs: "1 0 100%", md: "1" }}
+          >
+            <Lottie
+              options={heroAnimationOptions}
+              isPaused={animPaused}
+              isClickToPauseDisabled={true}
+              eventListeners={[
+                {
+                  eventName: "enterFrame",
+                  callback: e => {
+                    if (e.currentTime > 107) {
+                      setAnimPaused(true)
+                    }
+                  },
+                },
+              ]}
+              height={400}
+            />
+          </Box>
+        </Flex>
+        <SlideIn in={isOpen}>
+          {styles => (
+            <Modal isOpen={true} onClose={onClose}>
+              <ModalOverlay opacity={styles.opacity} />
+              <ModalContent backgroundColor="white" {...styles}>
+                <ModalHeader>CONNECT WITH US</ModalHeader>
+                <ModalClose />
+
+                <ContactForm onClose={onClose} />
+              </ModalContent>
+            </Modal>
+          )}
+        </SlideIn>
       </Hero>
       <Section>
         {projects.map((project, i) => (
@@ -575,6 +475,7 @@ const RenderBody = ({ home, projects, meta, posts }) => {
             title={project.node.project_title}
             description={project.node.project_preview_description}
             thumbnail={project.node.project_preview_thumbnail}
+            thumbnailSharp={project.node.project_preview_imageSharp}
             uid={project.node._meta.uid}
           />
         ))}
@@ -651,6 +552,14 @@ export const query = graphql`
             project_title
             project_preview_description
             project_preview_thumbnail
+            project_preview_image
+            project_preview_imageSharp {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             project_category
             project_post_date
             _meta {

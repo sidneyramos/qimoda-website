@@ -16,6 +16,8 @@ import content from "images/qimoda/icons/content-minimal-light.svg"
 
 import Flex from "@chakra-ui/core/dist/Flex"
 import PseudoBox from "@chakra-ui/core/dist/PseudoBox"
+import Img from "gatsby-image"
+import LazyLoad from "react-lazyload"
 
 const ProjectCardContainer = styled(Link)`
   display: grid;
@@ -189,6 +191,7 @@ const ProjectCardImageContainer = styled("div")`
     transition: all 150ms ease-in-out;
   }
 
+  .gatsby-image-wrapper,
   img {
     max-width: 400px;
     width: 100%;
@@ -231,7 +234,7 @@ const ProjectCategoryIcon = styled(PseudoBox)`
   }
 `
 
-const ProjectCard = ({ category, title, description, thumbnail, uid }) => (
+const ProjectCard = ({ category, title, description, thumbnailSharp, uid }) => (
   <ProjectCardContainer to={`/work/${uid}`}>
     <ProjectCardContent className="ProjectCardContent">
       <ProjectCardTitle>{title[0].text}</ProjectCardTitle>
@@ -320,7 +323,9 @@ const ProjectCard = ({ category, title, description, thumbnail, uid }) => (
       </ProjectCardAction>
     </ProjectCardContent>
     <ProjectCardImageContainer className="ProjectCardImageContainer">
-      <img src={thumbnail.url} alt={title[0].text} />
+      <LazyLoad once offset={50}>
+        <Img fluid={thumbnailSharp.childImageSharp.fluid} alt={title[0].text} />
+      </LazyLoad>
     </ProjectCardImageContainer>
   </ProjectCardContainer>
 )
@@ -329,7 +334,7 @@ export default ProjectCard
 
 ProjectCard.propTypes = {
   category: PropTypes.array.isRequired,
-  thumbnail: PropTypes.object.isRequired,
+  thumbnailSharp: PropTypes.object.isRequired,
   title: PropTypes.array.isRequired,
   description: PropTypes.array.isRequired,
   uid: PropTypes.string.isRequired,

@@ -81,6 +81,7 @@ const Work = ({ projects, meta }) => (
             title={project.node.project_title}
             description={project.node.project_preview_description}
             thumbnail={project.node.project_preview_thumbnail}
+            thumbnailSharp={project.node.project_preview_imageSharp}
             uid={project.node._meta.uid}
           />
         ))}
@@ -110,6 +111,14 @@ export const query = graphql`
             project_title
             project_preview_description
             project_preview_thumbnail
+            project_preview_image
+            project_preview_imageSharp {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             project_category
             project_post_date
             _meta {

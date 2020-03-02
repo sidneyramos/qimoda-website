@@ -15,6 +15,7 @@ const ButtonContainer = styled(Button)`
   border-radius: 5px;
   position: relative;
   transition: background 100ms ease-in-out;
+  background-color: ${colors.qimodaDarker}
   position: relative;
   height: auto;
   overflow: hidden;

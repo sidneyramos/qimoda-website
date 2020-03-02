@@ -2,11 +2,6 @@ require("dotenv").config()
 const axios = require("axios")
 
 module.exports = (req, res) => {
-  const Bearer = require("@bearer/node")(process.env.BEARER_API)
-  const gsheet = Bearer.integration("google_sheets")
-  const spreadsheetId = process.env.CONTACT_SPREADSHEET
-  const data = [Object.values(req.body)]
-
   const request = JSON.stringify({
     submittedAt: new Date().getTime(),
     fields: [

@@ -58,7 +58,7 @@ module.exports = {
     {
       resolve: "gatsby-plugin-iltorb",
       options: {
-        extensions: ["css", "html", "js", "svg", "png", "ttf"],
+        extensions: ["css", "html", "js", "svg", "png", "ttf", "json"],
       },
     },
     {
@@ -85,5 +85,11 @@ module.exports = {
       },
     },
     `gatsby-plugin-preload-fonts`,
+    {
+      resolve: "gatsby-plugin-webpack-bundle-analyser-v2",
+      options: {
+        devMode: true,
+      },
+    },
   ],
 }

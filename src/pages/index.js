@@ -47,7 +47,6 @@ const axios = require("axios")
 
 const Hero = styled(Box)`
   margin: 0 auto;
-  margin-bottom: 6em;
   text-align: left;
   font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
 
@@ -476,6 +475,7 @@ const RenderBody = ({ home, projects, meta, posts }) => {
             title={project.node.project_title}
             description={project.node.project_preview_description}
             thumbnail={project.node.project_preview_thumbnail}
+            thumbnailSharp={project.node.project_preview_imageSharp}
             uid={project.node._meta.uid}
           />
         ))}
@@ -552,6 +552,14 @@ export const query = graphql`
             project_title
             project_preview_description
             project_preview_thumbnail
+            project_preview_image
+            project_preview_imageSharp {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             project_category
             project_post_date
             _meta {

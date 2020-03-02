@@ -8,6 +8,7 @@ import colors from "styles/colors"
 import Layout from "components/Layout"
 import Logo from "components/_ui/Logo"
 import dayjs from "dayjs"
+import Img from "gatsby-image"
 
 const PostHeroContainer = styled("div")`
   max-height: 500px;
@@ -17,6 +18,7 @@ const PostHeroContainer = styled("div")`
   justify-content: flex-end;
   margin-bottom: 3em;
 
+  .gatsby-image-wrapper,
   img {
     width: 100%;
   }
@@ -143,8 +145,8 @@ const Post = ({ post, meta }) => {
         </PostMetas>
         {post.post_hero_image && (
           <PostHeroContainer>
-            <img
-              src={post.post_hero_image.url}
+            <Img
+              fluid={post.post_hero_imageSharp.childImageSharp.fluid}
               alt={post.post_hero_image.alt}
             />
             <PostHeroAnnotation>
@@ -180,6 +182,13 @@ export const query = graphql`
           node {
             post_title
             post_hero_image
+            post_hero_imageSharp {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             post_hero_annotation
             post_date
             post_category

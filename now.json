@@ -5,5 +5,6 @@
     "GSHEET_AUTH": "@gsheet_auth",
     "GATSBY_GOOGLE_ANALYTICS": "@gatsby_google_analytics",
     "GATSBY_PRISMIC_APIKEY": "@gatsby_prismic_apikey"
-  }
+  },
+  "routes": [{ "handle": "filesystem" }, { "src": "/(.*)", "dest": "404.html" }]
 }

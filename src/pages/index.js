@@ -12,8 +12,6 @@ import Layout from "components/Layout"
 import Link from "components/_ui/Link"
 import ProjectCard from "components/ProjectCard"
 import qimoda from "images/qimoda/5.svg"
-import { Formik } from "formik"
-import * as Yup from "yup"
 import { TiUser } from "react-icons/ti"
 import {
   Modal,
@@ -38,7 +36,6 @@ import Heading from "@chakra-ui/core/dist/Heading"
 import Text from "@chakra-ui/core/dist/Text"
 import Flex from "@chakra-ui/core/dist/Flex"
 
-import Textarea from "@chakra-ui/core/dist/Textarea"
 import Lottie from "react-lottie"
 import heroAnimation from "../data/animation1.json"
 import { SlideIn } from "@chakra-ui/core/dist/Transition"
@@ -151,189 +148,17 @@ const heroAnimationOptions = {
   },
 }
 
-// const ContactForm = props => {
-//   const SignupSchema = Yup.object().shape({
-//     firstname: Yup.string().required("Please enter your first name"),
-//     lastname: Yup.string().required("Please enter your last name"),
-//     email: Yup.string()
-//       .email("Please enter a valid email address")
-//       .required("Please enter your email address"),
-//     phone: Yup.string().required("Please enter your phone number"),
-//   })
-
-//   const toast = useToast()
-
-//   return (
-//     <Formik
-//       initialValues={{
-//         firstname: "",
-//         lastname: "",
-//         email: "",
-//         phone: "",
-//         message: "",
-//       }}
-//       validationSchema={SignupSchema}
-//       onSubmit={(values, actions) => {
-//         axios({
-//           method: "post",
-//           url: "/api/submit",
-//           data: values,
-//         }).then(res => {
-//           actions.setSubmitting(false)
-//           actions.resetForm()
-//           props.onClose()
-//           toast({
-//             title: "Message submitted",
-//             description: "We'll get back to you shortly.",
-//             status: "success",
-//             duration: 9000,
-//             isClosable: true,
-//           })
-//         })
-//       }}
-//     >
-//       {props => (
-//         <form onSubmit={props.handleSubmit}>
-//           <ModalBody>
-//             <FormControl
-//               isInvalid={props.errors.firstname && props.touched.firstname}
-//             >
-//               <FormLabel htmlFor="name">Full name</FormLabel>
-//               <InputGroup>
-//                 <InputLeftElement
-//                   children={<Box as={TiUser} size="20px" color="gray.300" />}
-//                 />
-//                 <Input
-//                   id="name"
-//                   placeholder="John Doe"
-//                   onChange={props.handleChange}
-//                   onBlur={props.handleBlur}
-//                   value={props.values.firstname}
-//                   name="firstname"
-//                 />
-//               </InputGroup>
-
-//               {props.errors.firstname && (
-//                 <ErrorMessage>{props.errors.firstname}</ErrorMessage>
-//               )}
-//             </FormControl>
-
-//             <FormControl
-//               mt={4}
-//               isInvalid={props.errors.lastname && props.touched.lastname}
-//             >
-//               <FormLabel htmlFor="lastname">Last name</FormLabel>
-//               <InputGroup>
-//                 <InputLeftElement
-//                   children={<Box as={TiUser} size="20px" color="gray.300" />}
-//                 />
-//                 <Input
-//                   id="lastname"
-//                   placeholder="John Doe"
-//                   onChange={props.handleChange}
-//                   onBlur={props.handleBlur}
-//                   value={props.values.lastname}
-//                   name="lastname"
-//                 />
-//               </InputGroup>
-
-//               {props.errors.lastname && (
-//                 <ErrorMessage>{props.errors.lastname}</ErrorMessage>
-//               )}
-//             </FormControl>
-
-//             <FormControl
-//               mt={4}
-//               isInvalid={props.errors.email && props.touched.email}
-//             >
-//               <FormLabel htmlFor="email">Email</FormLabel>
-//               <InputGroup>
-//                 <InputLeftElement
-//                   children={<Icon name="at-sign" color="gray.300" />}
-//                 />
-//                 <Input
-//                   id="email"
-//                   placeholder="john.doe@gmail.com"
-//                   onChange={props.handleChange}
-//                   onBlur={props.handleBlur}
-//                   value={props.values.email}
-//                   name="email"
-//                 />
-//               </InputGroup>
-//               {props.errors.email && (
-//                 <ErrorMessage>{props.errors.email}</ErrorMessage>
-//               )}
-//             </FormControl>
-
-//             <FormControl
-//               mt={4}
-//               isInvalid={props.errors.phone && props.touched.phone}
-//             >
-//               <FormLabel htmlFor="phone">Contact Number</FormLabel>
-//               <InputGroup>
-//                 <InputLeftElement
-//                   children={<Icon name="phone" color="gray.300" />}
-//                 />
-//                 <Input
-//                   placeholder="+61 412 321 123"
-//                   id="phone"
-//                   onChange={props.handleChange}
-//                   onBlur={props.handleBlur}
-//                   value={props.values.phone}
-//                   name="phone"
-//                 />
-//               </InputGroup>
-//               {props.errors.phone && (
-//                 <ErrorMessage>{props.errors.phone}</ErrorMessage>
-//               )}
-//             </FormControl>
-
-//             <FormControl
-//               mt={4}
-//               isInvalid={props.errors.message && props.touched.message}
-//             >
-//               <FormLabel htmlFor="message">Enquiry</FormLabel>
-//               <InputGroup>
-//                 <InputLeftElement
-//                   children={<Icon name="chat" color="gray.300" />}
-//                 />
-//                 <Textarea
-//                   placeholder="Your message goes here"
-//                   id="message"
-//                   onChange={props.handleChange}
-//                   onBlur={props.handleBlur}
-//                   value={props.values.message}
-//                   name="message"
-//                   paddingLeft="2.5rem"
-//                 />
-//               </InputGroup>
-//               {props.errors.message && (
-//                 <ErrorMessage>{props.errors.message}</ErrorMessage>
-//               )}
-//             </FormControl>
-//           </ModalBody>
-
-//           <ModalFooter>
-//             <Button type="submit" isLoading={props.isSubmitting}>
-//               <Text fontFamily="inherit" zIndex="1">
-//                 Connect
-//               </Text>
-//             </Button>
-//           </ModalFooter>
-//         </form>
-//       )}
-//     </Formik>
-//   )
-// }
-
 const HooksContactForm = props => {
   const firstNameReq = value =>
-    value ? undefined : "Please enter your first name"
+    !!value && value.length > 1 ? undefined : "Please enter your first name"
   const lastNameReq = value =>
-    value ? undefined : "Please enter your last name"
+    !!value && value.length > 1 ? undefined : "Please enter your last name"
   const phoneReq = value =>
-    value ? undefined : "Please enter a valid phone number"
-  const emailReq = value => (value ? undefined : "Please enter a valid email")
+    !!value && value.length > 1
+      ? undefined
+      : "Please enter a valid phone number"
+  const emailReq = value =>
+    !!value && value.length > 1 ? undefined : "Please enter a valid email"
 
   const emailValid = value =>
     /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(
@@ -350,12 +175,11 @@ const HooksContactForm = props => {
   const toast = useToast()
 
   const onSubmit = async values => {
-    const res = await axios({
+    return await axios({
       method: "post",
       url: "/api/submit",
       data: values,
     })
-    return res
   }
 
   const { form, handleSubmit, values, pristine, submitting } = useForm({
@@ -396,7 +220,7 @@ const HooksContactForm = props => {
   return (
     <form
       onSubmit={event => {
-        handleSubmit(event).then(res => {
+        handleSubmit(event).then(() => {
           form.reset()
           props.onClose()
           toast({

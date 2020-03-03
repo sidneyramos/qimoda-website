@@ -11,7 +11,8 @@ import About from "components/About"
 import Layout from "components/Layout"
 import Link from "components/_ui/Link"
 import ProjectCard from "components/ProjectCard"
-import qimoda from "images/qimoda/5.svg"
+import lottiebg from "../images/lottiebg-min.png"
+
 import { TiUser } from "react-icons/ti"
 import {
   Modal,
@@ -444,6 +445,8 @@ const RenderBody = ({ home, projects, meta, posts }) => {
           <Box
             width={{ xs: "100%", md: "auto" }}
             flex={{ xs: "1 0 100%", md: "1" }}
+            backgroundImage={`url(${lottiebg})`}
+            backgroundSize="cover"
           >
             <Lottie
               ariaRole="img"

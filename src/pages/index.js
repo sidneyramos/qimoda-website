@@ -41,6 +41,7 @@ import Lottie from "react-lottie"
 import heroAnimation from "../data/animation1.json"
 import { SlideIn } from "@chakra-ui/core/dist/Transition"
 import { useForm, useField } from "react-final-form-hooks"
+import Img from "gatsby-image"
 
 const axios = require("axios")
 
@@ -138,6 +139,14 @@ const ModalClose = styled(ModalCloseButton)`
       fill: black;
     }
   }
+`
+
+const AnimationBackground = styled(Img)`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
 `
 
 const heroAnimationOptions = {
@@ -336,7 +345,7 @@ const HooksContactForm = props => {
   )
 }
 
-const RenderBody = ({ home, projects, meta, posts }) => {
+const RenderBody = ({ home, projects, meta, posts, animationBg }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [animPaused, setAnimPaused] = useState(false)
@@ -445,9 +454,16 @@ const RenderBody = ({ home, projects, meta, posts }) => {
           <Box
             width={{ xs: "100%", md: "auto" }}
             flex={{ xs: "1 0 100%", md: "1" }}
-            backgroundImage={`url(${lottiebg})`}
-            backgroundSize="cover"
+            position="relative"
           >
+            <AnimationBackground
+              fluid={animationBg.childImageSharp.fluid}
+              alt={"Imagine. Create. Disrupt."}
+              style={{
+                position: "absolute",
+              }}
+            />
+
             <Lottie
               ariaRole="img"
               title="qimoda-animation"
@@ -516,6 +532,7 @@ export default ({ data }) => {
   const projects = data.prismic.allProjects.edges
   const meta = data.site.siteMetadata
   const posts = data.prismic.allPosts.edges
+  const lottieBgImage = data.file
 
   if (!doc || !projects) return null
 
@@ -526,6 +543,7 @@ export default ({ data }) => {
         projects={projects}
         meta={meta}
         posts={posts}
+        animationBg={lottieBgImage}
       />
     </Layout>
   )
@@ -595,6 +613,14 @@ export const query = graphql`
               uid
             }
           }
+        }
+      }
+    }
+
+    file(relativePath: { eq: "lottiebg-min.png" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
         }
       }
     }

@@ -620,7 +620,7 @@ export const query = graphql`
     file(relativePath: { eq: "lottiebg-min.png" }) {
       childImageSharp {
         fluid {
-          ...GatsbyImageSharpFluid_tracedSVG
+          ...GatsbyImageSharpFluid_withWebp
         }
       }
     }

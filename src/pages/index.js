@@ -34,7 +34,6 @@ import Heading from "@chakra-ui/core/dist/Heading"
 import Text from "@chakra-ui/core/dist/Text"
 import Flex from "@chakra-ui/core/dist/Flex"
 
-import { SlideIn } from "@chakra-ui/core/dist/Transition"
 import { useForm, useField } from "react-final-form-hooks"
 import ft6 from "../images/feature-tile-icon-06.svg"
 import ft5 from "../images/feature-tile-icon-05.svg"
@@ -355,7 +354,7 @@ const HooksContactForm = props => {
 const LoadedModal = Loadable({
   loader: () => import("react-micro-modal"),
   loading() {
-    return <div>Loading...</div>
+    return <div />
   },
 })
 
@@ -501,7 +500,7 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
             justifyContent={{ md: "flex-end" }}
             mt={{ xs: "5em", md: "0" }}
           >
-            <LandingIllustration src={illus7} />
+            <LandingIllustration src={illus7} alt="Imagine. Create. Disrupt." />
           </Flex>
         </Flex>
       </Hero>
@@ -646,13 +645,16 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
             </Text>
           </Box>
           <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-            <StepIllustration src={illus1} />
+            <StepIllustration src={illus1} alt="Start off with a template" />
           </Flex>
         </Flex>
 
         <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap">
           <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-            <StepIllustration src={illus3} />
+            <StepIllustration
+              src={illus3}
+              alt="Help us make it uniquely yours"
+            />
           </Flex>
           <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
             <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
@@ -681,7 +683,7 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
             </Text>
           </Box>
           <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-            <StepIllustration src={illus4} />
+            <StepIllustration src={illus4} alt="We'll take care of the rest" />
           </Flex>
         </Flex>
       </AngledSection>

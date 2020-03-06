@@ -91,6 +91,5 @@ module.exports = {
     //     devMode: true,
     //   },
     // },
-    "gatsby-plugin-preload-link-crossorigin",
   ],
 }

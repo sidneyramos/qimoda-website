@@ -1,5 +1,5 @@
 require("dotenv").config()
-const axios = require("axios")
+const p = require("phin")
 
 module.exports = (req, res) => {
   const request = JSON.stringify({
@@ -37,10 +37,11 @@ module.exports = (req, res) => {
     },
   })
 
-  axios({
+  p({
     method: "post",
-    url:
-      "https://api.hsforms.com/submissions/v3/integration/submit/7109872/571c7494-d031-4245-8f0f-869b68111a72",
+    url: new URL(
+      "https://api.hsforms.com/submissions/v3/integration/submit/7109872/571c7494-d031-4245-8f0f-869b68111a72"
+    ),
     headers: {
       "Content-Type": "application/json",
     },

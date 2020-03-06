@@ -1,21 +1,17 @@
+import "react-micro-modal/dist/index.css"
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import Loadable from "react-loadable"
-import RichText from "prismic-reactjs/src/Component"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
 import dimensions from "styles/dimensions"
 import Button from "components/_ui/Button"
-import About from "components/About"
 import Layout from "components/Layout"
 import Link from "components/_ui/Link"
 import Card from "components/_ui/Card"
 import Section from "components/_ui/Section"
-import ProjectCard from "components/ProjectCard"
-import "react-micro-modal/dist/index.css"
-
 import { TiUser } from "react-icons/ti"
 import useDisclosure from "@chakra-ui/core/dist/useDisclosure"
 import useToast from "@chakra-ui/core/dist/Toast"
@@ -29,23 +25,20 @@ import { InputLeftElement } from "@chakra-ui/core/dist/InputElement"
 import FormErrorMessage from "@chakra-ui/core/dist/FormErrorMessage"
 import Box from "@chakra-ui/core/dist/Box"
 import Grid from "@chakra-ui/core/dist/Grid"
-
+import LazyLoad from "react-lazyload"
 import Heading from "@chakra-ui/core/dist/Heading"
 import Text from "@chakra-ui/core/dist/Text"
 import Flex from "@chakra-ui/core/dist/Flex"
-
 import { useForm, useField } from "react-final-form-hooks"
 import ft6 from "../images/feature-tile-icon-06.svg"
 import ft5 from "../images/feature-tile-icon-05.svg"
 import ft4 from "../images/feature-tile-icon-04.svg"
 import ft3 from "../images/feature-tile-icon-03.svg"
 import ft7 from "../images/feature-tile-icon-07.svg"
-
 import client1 from "../images/clients-01.svg"
 import client4 from "../images/clients-04.svg"
 import client3 from "../images/clients-03.svg"
 import client5 from "../images/clients-05.svg"
-
 import illus1 from "../images/illus1.svg"
 import illus2 from "../images/illus2.svg"
 import illus3 from "../images/illus3.svg"
@@ -54,70 +47,12 @@ import illus5 from "../images/illus5.svg"
 import illus6 from "../images/illus6.svg"
 import illus7 from "../images/illus7.svg"
 
-const axios = require("axios")
+const p = require("phin")
 
 const Hero = styled(Section)`
   margin: 0 auto;
   text-align: left;
   font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
-`
-
-const WorkAction = styled(Link)`
-  font-weight: 600;
-  color: ${colors.qimodaDarker};
-  text-decoration: none;
-  transition: all 150ms ease-in-out;
-  margin-left: auto;
-
-  @media (max-width: ${dimensions.maxwidthTablet}px) {
-    margin: 0 auto;
-  }
-
-  span {
-    margin-left: 1em;
-    transform: translateX(-8px);
-    display: inline-block;
-    transition: transform 400ms ease-in-out;
-  }
-
-  &:hover {
-    color: ${colors.qimodaDarker};
-    transition: all 150ms ease-in-out;
-
-    span {
-      transform: translateX(0px);
-      opacity: 1;
-      transition: transform 150ms ease-in-out;
-    }
-
-    p {
-      &:after {
-        opacity: 0.25;
-        transform: translateX(0);
-      }
-    }
-  }
-
-  p {
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-
-    &:after {
-      z-index: -1;
-      content: "";
-      display: block;
-      position: absolute;
-      height: 50%;
-      width: 100%;
-      transform: translateX(-15px);
-      opacity: 0;
-      background-color: ${colors.qimodaLight};
-      bottom: 0;
-      left: 0;
-      transition: 0.5s;
-    }
-  }
 `
 
 const ErrorMessage = styled(FormErrorMessage)`
@@ -164,7 +99,7 @@ const ModalHeader = styled("header")`
   justify-content: space-between;
 `
 
-const HooksContactForm = props => {
+const HooksContactForm = ({ defaultURL, ...props }) => {
   const firstNameReq = value =>
     !!value && value.length > 1 ? undefined : "Please enter your first name"
   const lastNameReq = value =>
@@ -191,15 +126,15 @@ const HooksContactForm = props => {
   const toast = useToast()
 
   const onSubmit = async values => {
-    return await axios({
+    return await p({
       method: "post",
-      url: "/api/submit",
+      url: new URL(`${defaultURL}api/submit`),
       data: values,
     })
   }
 
   const { form, handleSubmit, values, pristine, submitting } = useForm({
-    onSubmit, // the function to call with your form values upon valid submit
+    onSubmit,
   })
   const firstName = useField("firstname", form, firstNameReq, {
     value: true,
@@ -358,7 +293,7 @@ const LoadedModal = Loadable({
   },
 })
 
-const FormModal = ({ isOpen, onClose, buttonMarginMd = "0" }) => (
+const FormModal = ({ defaultURL, isOpen, onClose, buttonMarginMd = "0" }) => (
   <LoadedModal closeOnAnimationEnd open={isOpen}>
     {() => (
       <>
@@ -374,13 +309,13 @@ const FormModal = ({ isOpen, onClose, buttonMarginMd = "0" }) => (
           />
         </ModalHeader>
 
-        <HooksContactForm onClose={onClose} />
+        <HooksContactForm defaultURL={defaultURL} onClose={onClose} />
       </>
     )}
   </LoadedModal>
 )
 
-const RenderBody = ({ home, projects, meta, posts, allImages }) => {
+const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [animPaused, setAnimPaused] = useState(false)
@@ -425,7 +360,7 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
           },
         ].concat(meta)}
       />
-      <FormModal isOpen={isOpen} onClose={onClose} />
+      <FormModal isOpen={isOpen} onClose={onClose} defaultURL={location.href} />
       <Hero pt={{ md: "2.5em" }} pb={{ md: "3em" }}>
         <Flex flexWrap="wrap" mt={{ md: "2em" }} mb={{ md: "6em" }}>
           <Flex
@@ -481,7 +416,6 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
                 margin={{ xs: "0 auto", md: "0" }}
                 display="block"
               >
-                {/* {RichText.render(home.hero_button_text)} */}
                 <Text fontFamily="inherit" zIndex="1">
                   Get early access now
                 </Text>
@@ -506,12 +440,6 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
         </Heading>
         <Box textAlign="center" padding="0 15%">
           <Text>
-            {/* Build bigger, better, faster things and innovate with lightning pace
-            with our cutting-edge platform. Qimoda allows you to start off and a
-            prototype with a template similar to a website builder, but you're
-            never left off to fend for yourself with their clanky, janky (and
-            often unscalable) platforms. Leave the dirty stuff to the
-            professionals, and focus on the things you do best. */}
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </Text>
@@ -630,58 +558,66 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
       </Section>
 
       <AngledSection>
-        <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap-reverse">
-          <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
-            <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
-              Start off with a template
-            </Heading>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-          </Box>
-          <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-            <StepIllustration src={illus1} alt="Start off with a template" />
+        <LazyLoad height={300} once offset={50}>
+          <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap-reverse">
+            <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
+              <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+                Start off with a template
+              </Heading>
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Text>
+            </Box>
+            <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
+              <StepIllustration src={illus1} alt="Start off with a template" />
+            </Flex>
           </Flex>
-        </Flex>
+        </LazyLoad>
+        <LazyLoad height={300} once offset={50}>
+          <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap">
+            <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
+              <StepIllustration
+                src={illus3}
+                alt="Help us make it uniquely yours"
+              />
+            </Flex>
+            <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
+              <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+                Help us make it uniquely yours
+              </Heading>
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Text>
+            </Box>
+          </Flex>
+        </LazyLoad>
 
-        <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap">
-          <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-            <StepIllustration
-              src={illus3}
-              alt="Help us make it uniquely yours"
-            />
+        <LazyLoad height={300} once offset={50}>
+          <Flex
+            alignItems={{ md: "center" }}
+            my="3em"
+            mb="0"
+            flexWrap="wrap-reverse"
+          >
+            <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
+              <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+                We'll take care of the rest
+              </Heading>
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Text>
+            </Box>
+            <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
+              <StepIllustration
+                src={illus4}
+                alt="We'll take care of the rest"
+              />
+            </Flex>
           </Flex>
-          <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
-            <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
-              Help us make it uniquely yours
-            </Heading>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-          </Box>
-        </Flex>
-
-        <Flex
-          alignItems={{ md: "center" }}
-          my="3em"
-          mb="0"
-          flexWrap="wrap-reverse"
-        >
-          <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
-            <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
-              We'll take care of the rest
-            </Heading>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-          </Box>
-          <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-            <StepIllustration src={illus4} alt="We'll take care of the rest" />
-          </Flex>
-        </Flex>
+        </LazyLoad>
       </AngledSection>
       <Section>
         <Heading as="h1" textAlign="center" mb="0.5em">
@@ -697,53 +633,20 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Text>
         <Button onClick={onOpen} margin="0 auto" display="block">
-          {/* {RichText.render(home.hero_button_text)} */}
           <Text fontFamily="inherit" zIndex="1">
             Get early access now
           </Text>
         </Button>
       </Section>
-      {/* <Section>
-        {projects.map((project, i) => (
-          <ProjectCard
-            key={i}
-            category={project.node.project_category}
-            title={project.node.project_title}
-            description={project.node.project_preview_description}
-            thumbnail={project.node.project_preview_thumbnail}
-            thumbnailSharp={project.node.project_preview_imageSharp}
-            uid={project.node._meta.uid}
-          />
-        ))}
-        <WorkAction to={"/work"}>
-          <p>MORE WORK</p> <span>&#8594;</span>
-        </WorkAction>
-      </Section> */}
-      {/* <Section>
-        <About
-          title={home.about_title}
-          bio={home.about_bio}
-          socialLinks={home.about_links}
-          posts={posts}
-        />
-      </Section> */}
     </>
   )
 }
 
-export default ({ data }) => {
-  //Required check for no data being returned
+export default ({ data, ...props }) => {
   const doc = data.prismic.allHomepages.edges.slice(0, 1).pop()
   const projects = data.prismic.allProjects.edges
   const meta = data.site.siteMetadata
   const posts = data.prismic.allPosts.edges
-  const allImages = data.allImageSharp.edges.reduce((total, item) => {
-    const arr = total
-    arr[item.node.original.src] = item.node.fluid
-    return arr
-  }, {})
-
-  console.log(allImages)
 
   if (!doc || !projects) return null
 
@@ -754,7 +657,7 @@ export default ({ data }) => {
         projects={projects}
         meta={meta}
         posts={posts}
-        allImages={allImages}
+        {...props}
       />
     </Layout>
   )
@@ -828,27 +731,6 @@ export const query = graphql`
       }
     }
 
-    allImageSharp {
-      edges {
-        node {
-          id
-          original {
-            src
-          }
-          fluid {
-            ...GatsbyImageSharpFluid_withWebp_noBase64
-          }
-        }
-      }
-    }
-
-    file(relativePath: { eq: "lottiebg-min.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid_withWebp_noBase64
-        }
-      }
-    }
     site {
       siteMetadata {
         title

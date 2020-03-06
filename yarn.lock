@@ -2093,7 +2093,7 @@ aws4@^1.8.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
 
-axios@^0.19.0, axios@^0.19.2:
+axios@^0.19.0:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   dependencies:
@@ -2789,6 +2789,10 @@ caw@^2.0.0, caw@^2.0.1:
     isurl "^1.0.0-alpha5"
     tunnel-agent "^0.6.0"
     url-to-options "^1.0.1"
+
+centra@^2.2.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/centra/-/centra-2.4.0.tgz#53846f97db27705e9f90c46e0f824f6eb697e2d1"
 
 chalk@1.1.3, chalk@^1.0.0, chalk@^1.1.1, chalk@^1.1.3:
   version "1.1.3"
@@ -3562,7 +3566,7 @@ csso@^4.0.2:
   dependencies:
     css-tree "1.0.0-alpha.37"
 
-csstype@^2.2.0, csstype@^2.5.7, csstype@^2.6.4:
+csstype@^2.2.0, csstype@^2.5.7, csstype@^2.6.4, csstype@^2.6.7:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.9.tgz#05141d0cd557a56b8891394c1911c40c8a98d098"
 
@@ -3920,6 +3924,13 @@ dom-helpers@^3.4.0:
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.4.0.tgz#e9b369700f959f62ecde5a6babde4bccd9169af8"
   dependencies:
     "@babel/runtime" "^7.1.2"
+
+dom-helpers@^5.0.1:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.1.3.tgz#7233248eb3a2d1f74aafca31e52c5299cc8ce821"
+  dependencies:
+    "@babel/runtime" "^7.6.3"
+    csstype "^2.6.7"
 
 dom-serializer@0:
   version "0.2.2"
@@ -7358,10 +7369,6 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-lottie-web@^5.1.3:
-  version "5.6.5"
-  resolved "https://registry.yarnpkg.com/lottie-web/-/lottie-web-5.6.5.tgz#3a2f5f6ba64fb492cf8557dae504d06ead132525"
-
 loud-rejection@^1.0.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/loud-rejection/-/loud-rejection-1.6.0.tgz#5b46f80147edee578870f086d04821cf998e551f"
@@ -8637,6 +8644,12 @@ phin@^2.9.1:
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/phin/-/phin-2.9.3.tgz#f9b6ac10a035636fb65dfc576aaaa17b8743125c"
 
+phin@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/phin/-/phin-3.4.1.tgz#b023d14fa86fc6e4b40b6d0dfd5fe478c9c1bbb8"
+  dependencies:
+    centra "^2.2.1"
+
 physical-cpu-count@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/physical-cpu-count/-/physical-cpu-count-2.0.0.tgz#18de2f97e4bf7a9551ad7511942b5496f7aba660"
@@ -9487,13 +9500,6 @@ react-loadable@^5.5.0:
   dependencies:
     prop-types "^15.5.0"
 
-react-lottie@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/react-lottie/-/react-lottie-1.2.3.tgz#8544b96939e088658072eea5e12d912cdaa3acc1"
-  dependencies:
-    babel-runtime "^6.26.0"
-    lottie-web "^5.1.3"
-
 react-micro-modal@^1.7.3:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/react-micro-modal/-/react-micro-modal-1.7.3.tgz#9da33e0bb01f22637dd10e90d1fd2c16a58cc01f"
@@ -9561,6 +9567,15 @@ react-transition-group@^2.5.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
+
+react-transition-group@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.3.0.tgz#fea832e386cf8796c58b61874a3319704f5ce683"
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    dom-helpers "^5.0.1"
+    loose-envify "^1.4.0"
+    prop-types "^15.6.2"
 
 react@^16.8.0, react@^16.9.0:
   version "16.13.0"

@@ -60,7 +60,7 @@ const ButtonContainer = styled(Button)`
   }
 
   &.Button--secondary {
-    background: ${colors.teal200};
+    background: ${colors.qimodaButtonColour};
     color: ${colors.teal600};
     padding: 0.95em 1.8em;
     font-size: 0.95rem;

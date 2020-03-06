@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
+import Loadable from "react-loadable"
 import RichText from "prismic-reactjs/src/Component"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
@@ -28,7 +29,6 @@ import { InputLeftElement } from "@chakra-ui/core/dist/InputElement"
 import FormErrorMessage from "@chakra-ui/core/dist/FormErrorMessage"
 import Box from "@chakra-ui/core/dist/Box"
 import Grid from "@chakra-ui/core/dist/Grid"
-import Loadable from "react-loadable"
 
 import Heading from "@chakra-ui/core/dist/Heading"
 import Text from "@chakra-ui/core/dist/Text"
@@ -378,7 +378,7 @@ const FormModal = ({ buttonMarginMd = "0" }) => (
       <>
         <ModalHeader>
           <Heading as="h1" fontSize="1.5em" mr="20px" my="0">
-            CONNECT WITH US
+            Connect with us
           </Heading>
           <ModalClose
             size="sm"

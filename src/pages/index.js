@@ -28,7 +28,7 @@ import { InputLeftElement } from "@chakra-ui/core/dist/InputElement"
 import FormErrorMessage from "@chakra-ui/core/dist/FormErrorMessage"
 import Box from "@chakra-ui/core/dist/Box"
 import Grid from "@chakra-ui/core/dist/Grid"
-import MicroModal from "react-micro-modal"
+import Loadable from "react-loadable"
 
 import Heading from "@chakra-ui/core/dist/Heading"
 import Text from "@chakra-ui/core/dist/Text"
@@ -152,12 +152,6 @@ const LandingIllustration = styled("img")`
 
 const StepIllustration = styled("img")`
   width: 50%;
-`
-
-const StyledMicroModal = styled(MicroModal)`
-  &.modal {
-    z-index: 10;
-  }
 `
 
 const ModalFooter = styled("footer")`
@@ -358,8 +352,15 @@ const HooksContactForm = props => {
   )
 }
 
+const LoadedModal = Loadable({
+  loader: () => import("react-micro-modal"),
+  loading() {
+    return <div>Loading...</div>
+  },
+})
+
 const FormModal = ({ buttonMarginMd = "0" }) => (
-  <StyledMicroModal
+  <LoadedModal
     closeOnAnimationEnd
     trigger={handleOpen => (
       <Button
@@ -391,7 +392,7 @@ const FormModal = ({ buttonMarginMd = "0" }) => (
         <HooksContactForm onClose={handleClose} />
       </>
     )}
-  </StyledMicroModal>
+  </LoadedModal>
 )
 
 const RenderBody = ({ home, projects, meta, posts, allImages }) => {

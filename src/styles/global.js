@@ -55,6 +55,15 @@ const globalStyles = css`
     }
   }
 
+  .modal {
+    .modal-overlay {
+      z-index: 10;
+      .modal-container {
+        position: relative;
+      }
+    }
+  }
+
   /*
     A workaround for forcing accessibility wrappers
     to have a 100% height.

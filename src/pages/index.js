@@ -10,63 +10,57 @@ import Button from "components/_ui/Button"
 import About from "components/About"
 import Layout from "components/Layout"
 import Link from "components/_ui/Link"
+import Card from "components/_ui/Card"
+import Section from "components/_ui/Section"
 import ProjectCard from "components/ProjectCard"
-import lottiebg from "../images/lottiebg-min.png"
+import "react-micro-modal/dist/index.css"
 
 import { TiUser } from "react-icons/ti"
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/core/dist/Modal"
 import useDisclosure from "@chakra-ui/core/dist/useDisclosure"
 import useToast from "@chakra-ui/core/dist/Toast"
 import FormControl from "@chakra-ui/core/dist/FormControl"
 import FormLabel from "@chakra-ui/core/dist/FormLabel"
+import IconButton from "@chakra-ui/core/dist/IconButton"
 import Input from "@chakra-ui/core/dist/Input"
 import InputGroup from "@chakra-ui/core/dist/InputGroup"
 import Icon from "@chakra-ui/core/dist/Icon"
 import { InputLeftElement } from "@chakra-ui/core/dist/InputElement"
 import FormErrorMessage from "@chakra-ui/core/dist/FormErrorMessage"
 import Box from "@chakra-ui/core/dist/Box"
+import Grid from "@chakra-ui/core/dist/Grid"
+import MicroModal from "react-micro-modal"
+
 import Heading from "@chakra-ui/core/dist/Heading"
 import Text from "@chakra-ui/core/dist/Text"
 import Flex from "@chakra-ui/core/dist/Flex"
 
-import Lottie from "react-lottie"
-import heroAnimation from "../data/animation1.json"
 import { SlideIn } from "@chakra-ui/core/dist/Transition"
 import { useForm, useField } from "react-final-form-hooks"
-import Img from "gatsby-image"
+import ft6 from "../images/feature-tile-icon-06.svg"
+import ft5 from "../images/feature-tile-icon-05.svg"
+import ft4 from "../images/feature-tile-icon-04.svg"
+import ft3 from "../images/feature-tile-icon-03.svg"
+import ft7 from "../images/feature-tile-icon-07.svg"
+
+import client1 from "../images/clients-01.svg"
+import client4 from "../images/clients-04.svg"
+import client3 from "../images/clients-03.svg"
+import client5 from "../images/clients-05.svg"
+
+import illus1 from "../images/illus1.svg"
+import illus2 from "../images/illus2.svg"
+import illus3 from "../images/illus3.svg"
+import illus4 from "../images/illus4.svg"
+import illus5 from "../images/illus5.svg"
+import illus6 from "../images/illus6.svg"
+import illus7 from "../images/illus7.svg"
 
 const axios = require("axios")
 
-const Hero = styled(Box)`
+const Hero = styled(Section)`
   margin: 0 auto;
   text-align: left;
   font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
-
-  @media (max-width: ${dimensions.maxwidthMobile}px) {
-    margin-bottom: 3em;
-  }
-`
-
-const Section = styled("div")`
-  margin-bottom: 6em;
-  display: flex;
-  flex-direction: column;
-
-  @media (max-width: ${dimensions.maxwidthTablet}px) {
-    margin-bottom: 4em;
-  }
-
-  &:last-of-type {
-    margin-bottom: 0;
-  }
 `
 
 const WorkAction = styled(Link)`
@@ -133,7 +127,7 @@ const ErrorMessage = styled(FormErrorMessage)`
   }
 `
 
-const ModalClose = styled(ModalCloseButton)`
+const ModalClose = styled(IconButton)`
   svg {
     path {
       fill: black;
@@ -141,22 +135,41 @@ const ModalClose = styled(ModalCloseButton)`
   }
 `
 
-const AnimationBackground = styled(Img)`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
+const AngledSection = styled(Section)`
+  background-color: rgba(240, 252, 251, 0.75);
+  clip-path: polygon(0px 0px, 100% 4%, 100% 100%, 0% 100%);
+  padding-top: 80px;
+  padding-bottom: 80px;
+  overflow: hidden;
 `
 
-const heroAnimationOptions = {
-  loop: false,
-  autoplay: true,
-  animationData: heroAnimation,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
-}
+const LandingIllustration = styled("img")`
+  width: 80%;
+  @media (max-width: ${dimensions.maxwidthMobile}px) {
+    width: 100%;
+  }
+`
+
+const StepIllustration = styled("img")`
+  width: 50%;
+`
+
+const StyledMicroModal = styled(MicroModal)`
+  &.modal {
+    z-index: 10;
+  }
+`
+
+const ModalFooter = styled("footer")`
+  margin-top: 2em;
+`
+
+const ModalHeader = styled("header")`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  justify-content: space-between;
+`
 
 const HooksContactForm = props => {
   const firstNameReq = value =>
@@ -243,7 +256,7 @@ const HooksContactForm = props => {
         })
       }}
     >
-      <ModalBody>
+      <Box minWidth={{ md: "300px" }}>
         <FormControl
           isRequired
           isInvalid={firstName.meta.error && firstName.meta.touched}
@@ -332,7 +345,7 @@ const HooksContactForm = props => {
           </InputGroup>
           {email.meta.error && <ErrorMessage>{email.meta.error}</ErrorMessage>}
         </FormControl>
-      </ModalBody>
+      </Box>
 
       <ModalFooter>
         <Button type="submit" isDisabled={pristine} isLoading={submitting}>
@@ -345,7 +358,43 @@ const HooksContactForm = props => {
   )
 }
 
-const RenderBody = ({ home, projects, meta, posts, animationBg }) => {
+const FormModal = ({ buttonMarginMd = "0" }) => (
+  <StyledMicroModal
+    closeOnAnimationEnd
+    trigger={handleOpen => (
+      <Button
+        onClick={handleOpen}
+        margin={{ xs: "0 auto", md: buttonMarginMd }}
+        display="block"
+      >
+        {/* {RichText.render(home.hero_button_text)} */}
+        <Text fontFamily="inherit" zIndex="1">
+          Get early access now
+        </Text>
+      </Button>
+    )}
+  >
+    {handleClose => (
+      <>
+        <ModalHeader>
+          <Heading as="h1" fontSize="1.5em" mr="20px" my="0">
+            CONNECT WITH US
+          </Heading>
+          <ModalClose
+            size="sm"
+            onClick={handleClose}
+            aria-label="Close modal"
+            icon="close"
+          />
+        </ModalHeader>
+
+        <HooksContactForm onClose={handleClose} />
+      </>
+    )}
+  </StyledMicroModal>
+)
+
+const RenderBody = ({ home, projects, meta, posts, allImages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const [animPaused, setAnimPaused] = useState(false)
@@ -390,13 +439,12 @@ const RenderBody = ({ home, projects, meta, posts, animationBg }) => {
           },
         ].concat(meta)}
       />
-      <Hero pt={{ md: "2.5em" }} pb="3em">
-        <Flex flexWrap="wrap">
+      <Hero pt={{ md: "2.5em" }} pb={{ md: "3em" }}>
+        <Flex flexWrap="wrap" mt={{ md: "2em" }} mb={{ md: "6em" }}>
           <Flex
             width={{ xs: "100%", md: "auto" }}
             flex={{ xs: "1 0 100%", md: "1" }}
             flexDirection="column"
-            pt="2em"
           >
             <Box>
               <Heading
@@ -409,7 +457,7 @@ const RenderBody = ({ home, projects, meta, posts, animationBg }) => {
                 mb="0.25em"
                 textAlign={{ xs: "center", md: "left" }}
               >
-                We make good brands
+                Insert tagline here.
               </Heading>
               <Heading
                 fontFamily="inherit"
@@ -420,10 +468,11 @@ const RenderBody = ({ home, projects, meta, posts, animationBg }) => {
                 mb="0.6em"
                 textAlign={{ xs: "center", md: "left" }}
               >
-                become{" "}
+                Seriously, we{" "}
                 <Box as="span" color={colors.qimodaLight}>
-                  remarkable.
+                  need{" "}
                 </Box>
+                it
               </Heading>
 
               <Heading
@@ -432,73 +481,225 @@ const RenderBody = ({ home, projects, meta, posts, animationBg }) => {
                 fontWeight="400"
                 fontSize="0.9rem"
                 color="#353535"
-                lineHeight="1"
+                lineHeight="1.5"
                 m="0"
                 mb="2rem"
                 textAlign={{ xs: "center", md: "left" }}
               >
-                Website Design | Development | Content
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </Heading>
-              <Button
-                onClick={onOpen}
-                margin={{ xs: "40px auto", md: "0" }}
-                display="block"
-              >
-                {/* {RichText.render(home.hero_button_text)} */}
-                <Text fontFamily="inherit" zIndex="1">
-                  Get in touch now
-                </Text>
-              </Button>
+              <FormModal />
             </Box>
           </Flex>
-          <Box
+          <Flex
             width={{ xs: "100%", md: "auto" }}
             flex={{ xs: "1 0 100%", md: "1" }}
             position="relative"
+            alignItems={{ md: "center" }}
+            justifyContent={{ md: "flex-end" }}
+            mt={{ xs: "5em", md: "0" }}
           >
-            <AnimationBackground
-              fluid={animationBg.childImageSharp.fluid}
-              alt={"Imagine. Create. Disrupt."}
-              style={{
-                position: "absolute",
-              }}
-            />
-
-            <Lottie
-              ariaRole="img"
-              title="qimoda-animation"
-              options={heroAnimationOptions}
-              isPaused={animPaused}
-              isClickToPauseDisabled={true}
-              eventListeners={[
-                {
-                  eventName: "enterFrame",
-                  callback: e => {
-                    if (e.currentTime > 107) {
-                      setAnimPaused(true)
-                    }
-                  },
-                },
-              ]}
-              height={400}
-            />
-          </Box>
+            <LandingIllustration src={illus7} />
+          </Flex>
         </Flex>
-        <SlideIn in={isOpen}>
-          {styles => (
-            <Modal isOpen={true} onClose={onClose}>
-              <ModalOverlay opacity={styles.opacity} />
-              <ModalContent backgroundColor="white" {...styles}>
-                <ModalHeader>CONNECT WITH US</ModalHeader>
-                <ModalClose />
-
-                <HooksContactForm onClose={onClose} />
-              </ModalContent>
-            </Modal>
-          )}
-        </SlideIn>
       </Hero>
       <Section>
+        <Heading as="h1" textAlign="center" mb="0">
+          Lorem ipsum dolor sit amet
+        </Heading>
+        <Box textAlign="center" padding="0 15%">
+          <Text>
+            {/* Build bigger, better, faster things and innovate with lightning pace
+            with our cutting-edge platform. Qimoda allows you to start off and a
+            prototype with a template similar to a website builder, but you're
+            never left off to fend for yourself with their clanky, janky (and
+            often unscalable) platforms. Leave the dirty stuff to the
+            professionals, and focus on the things you do best. */}
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </Text>
+        </Box>
+        <Flex
+          width="100%"
+          justifyContent="space-around"
+          my="100px"
+          flexDirection={{ xs: "column", md: "row" }}
+          px={{ md: "5%" }}
+        >
+          <Box
+            width={{ xs: "100%", md: "20%" }}
+            mb={{ xs: "20px", md: 0 }}
+            height="30px"
+            backgroundPosition="center"
+            backgroundImage={`url('${client1}')`}
+            backgroundSize="auto 100%"
+            backgroundRepeat="no-repeat"
+          />
+          <Box
+            width={{ xs: "100%", md: "20%" }}
+            mb={{ xs: "20px", md: 0 }}
+            height="30px"
+            backgroundPosition="center"
+            backgroundImage={`url('${client4}')`}
+            backgroundSize="auto 100%"
+            backgroundRepeat="no-repeat"
+          />
+          <Box
+            width={{ xs: "100%", md: "20%" }}
+            mb={{ xs: "20px", md: 0 }}
+            height="30px"
+            backgroundPosition="center"
+            backgroundImage={`url('${client3}')`}
+            backgroundSize="auto 100%"
+            backgroundRepeat="no-repeat"
+          />
+          <Box
+            width={{ xs: "100%", md: "20%" }}
+            mb={{ xs: "20px", md: 0 }}
+            height="30px"
+            backgroundPosition="center"
+            backgroundImage={`url('${client5}')`}
+            backgroundSize="auto 100%"
+            backgroundRepeat="no-repeat"
+          />
+        </Flex>
+        <Grid
+          mt="40px"
+          px={{ md: "5%" }}
+          templateColumns={{ xs: "1fr", md: "repeat(2, 1fr)" }}
+          gap={4}
+        >
+          <Card
+            title="Benefit 1"
+            logo={
+              <Box
+                size="100%"
+                backgroundImage={`url('${ft6}')`}
+                backgroundSize="cover"
+              />
+            }
+          >
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </Card>
+          <Card
+            title="Benefit 2"
+            logo={
+              <Box
+                size="100%"
+                backgroundImage={`url('${ft4}')`}
+                backgroundSize="cover"
+              />
+            }
+          >
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </Card>
+          <Card
+            title="Benefit 3"
+            logo={
+              <Box
+                size="100%"
+                backgroundImage={`url('${ft3}')`}
+                backgroundSize="cover"
+              />
+            }
+          >
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </Card>
+          <Card
+            title="Benefit 4"
+            logo={
+              <Box
+                size="100%"
+                backgroundImage={`url('${ft5}')`}
+                backgroundSize="cover"
+              />
+            }
+          >
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </Card>
+        </Grid>
+      </Section>
+
+      <AngledSection>
+        <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap-reverse">
+          <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
+            <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+              Start off with a template
+            </Heading>
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </Box>
+          <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
+            <StepIllustration src={illus1} />
+          </Flex>
+        </Flex>
+
+        <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap">
+          <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
+            <StepIllustration src={illus3} />
+          </Flex>
+          <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
+            <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+              Help us make it uniquely yours
+            </Heading>
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </Box>
+        </Flex>
+
+        <Flex
+          alignItems={{ md: "center" }}
+          my="3em"
+          mb="0"
+          flexWrap="wrap-reverse"
+        >
+          <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
+            <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+              We'll take care of the rest
+            </Heading>
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </Text>
+          </Box>
+          <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
+            <StepIllustration src={illus4} />
+          </Flex>
+        </Flex>
+      </AngledSection>
+      <Section>
+        <Heading as="h1" textAlign="center" mb="0.5em">
+          Be part of the early beta
+        </Heading>
+        <Text
+          textAlign="center"
+          width={{ md: "50%" }}
+          mx={{ md: "auto" }}
+          mb="2em"
+        >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </Text>
+        <FormModal buttonMarginMd="0 auto" />
+      </Section>
+      {/* <Section>
         {projects.map((project, i) => (
           <ProjectCard
             key={i}
@@ -513,15 +714,15 @@ const RenderBody = ({ home, projects, meta, posts, animationBg }) => {
         <WorkAction to={"/work"}>
           <p>MORE WORK</p> <span>&#8594;</span>
         </WorkAction>
-      </Section>
-      <Section>
+      </Section> */}
+      {/* <Section>
         <About
           title={home.about_title}
           bio={home.about_bio}
           socialLinks={home.about_links}
           posts={posts}
         />
-      </Section>
+      </Section> */}
     </>
   )
 }
@@ -532,7 +733,13 @@ export default ({ data }) => {
   const projects = data.prismic.allProjects.edges
   const meta = data.site.siteMetadata
   const posts = data.prismic.allPosts.edges
-  const lottieBgImage = data.file
+  const allImages = data.allImageSharp.edges.reduce((total, item) => {
+    const arr = total
+    arr[item.node.original.src] = item.node.fluid
+    return arr
+  }, {})
+
+  console.log(allImages)
 
   if (!doc || !projects) return null
 
@@ -543,7 +750,7 @@ export default ({ data }) => {
         projects={projects}
         meta={meta}
         posts={posts}
-        animationBg={lottieBgImage}
+        allImages={allImages}
       />
     </Layout>
   )
@@ -612,6 +819,20 @@ export const query = graphql`
             _meta {
               uid
             }
+          }
+        }
+      }
+    }
+
+    allImageSharp {
+      edges {
+        node {
+          id
+          original {
+            src
+          }
+          fluid {
+            ...GatsbyImageSharpFluid_withWebp_noBase64
           }
         }
       }

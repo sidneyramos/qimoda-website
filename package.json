@@ -49,11 +49,14 @@
     "react-icons": "^3.9.0",
     "react-lazyload": "^2.6.5",
     "react-lottie": "^1.2.3",
+    "react-micro-modal": "^1.7.3",
     "react-router-dom": "^5.0.0",
     "react-router-hash-link": "^1.2.1",
+    "rebass": "^4.0.7",
     "smooth-scroll": "16.1.2",
     "typeface-rubik": "^0.0.72",
-    "typeface-rubik-mono-one": "^0.0.72"
+    "typeface-rubik-mono-one": "^0.0.72",
+    "typeface-vidaloka": "^0.0.71"
   },
   "devDependencies": {
     "gatsby-plugin-remove-trailing-slashes": "^2.0.11",

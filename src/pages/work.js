@@ -7,6 +7,7 @@ import Layout from "components/Layout"
 import ProjectCard from "components/ProjectCard"
 import dimensions from "styles/dimensions"
 import colors from "styles/colors"
+import Section from "components/_ui/Section"
 
 const WorkTitle = styled("h1")`
   margin-bottom: 1em;
@@ -72,20 +73,22 @@ const Work = ({ projects, meta }) => (
       ].concat(meta)}
     />
     <Layout>
-      <WorkTitle>OUR PROJECTS</WorkTitle>
-      <>
-        {projects.map((project, i) => (
-          <ProjectCard
-            key={i}
-            category={project.node.project_category}
-            title={project.node.project_title}
-            description={project.node.project_preview_description}
-            thumbnail={project.node.project_preview_thumbnail}
-            thumbnailSharp={project.node.project_preview_imageSharp}
-            uid={project.node._meta.uid}
-          />
-        ))}
-      </>
+      <Section>
+        <WorkTitle>OUR PROJECTS</WorkTitle>
+        <>
+          {projects.map((project, i) => (
+            <ProjectCard
+              key={i}
+              category={project.node.project_category}
+              title={project.node.project_title}
+              description={project.node.project_preview_description}
+              thumbnail={project.node.project_preview_thumbnail}
+              thumbnailSharp={project.node.project_preview_imageSharp}
+              uid={project.node._meta.uid}
+            />
+          ))}
+        </>
+      </Section>
     </Layout>
   </>
 )

@@ -4,8 +4,32 @@ import styled from "@emotion/styled"
 import colors from "styles/colors"
 import dimensions from "styles/dimensions"
 import Logo from "components/_ui/Logo"
+import Section from "components/_ui/Section"
 
-const HeaderContainer = styled("div")`
+const HeaderContainer = styled("header")`
+  margin-bottom: 6em;
+  display: flex;
+  flex-direction: column;
+
+  max-width: ${dimensions.maxwidthDesktop}px;
+  padding-left: ${dimensions.paddingHorizontalDesktop}em;
+  padding-right: ${dimensions.paddingHorizontalDesktop}em;
+  margin: 0 auto;
+
+  @media (max-width: ${dimensions.maxwidthTablet}px) {
+    padding-left: ${dimensions.paddingHorizontalTablet}em;
+    padding-right: ${dimensions.paddingHorizontalTablet}em;
+  }
+
+  @media (max-width: ${dimensions.maxwidthMobile}px) {
+    padding-left: ${dimensions.paddingHorizontalMobile}em;
+    padding-right: ${dimensions.paddingHorizontalMobile}em;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
   padding-top: 3.75em;
   padding-bottom: 3em;
 `

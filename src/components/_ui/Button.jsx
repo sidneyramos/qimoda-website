@@ -34,13 +34,13 @@ const ButtonContainer = styled(Button)`
     background-size: cover;
     filter: brightness(300%);
 
-    @media (max-width: ${dimensions.maxwidthTablet}px) {
-      bottom: calc(-0.25em - 2px);
-    }
+    // @media (max-width: ${dimensions.maxwidthTablet}px) {
+    //   bottom: calc(-0.25em - 2px);
+    // }
   }
 
   @media (max-width: ${dimensions.maxwidthMobile}px) {
-    padding: 0.8em 1.8em;
+    padding: 1.2em 1.8em;
     font-size: 1em;
   }
 

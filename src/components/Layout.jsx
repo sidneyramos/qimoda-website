@@ -17,24 +17,9 @@ import bg from "../images/bg.png"
 import Box from "@chakra-ui/core/dist/Box"
 
 import ThemeProvider from "@chakra-ui/core/dist/ThemeProvider"
-import theme from "@chakra-ui/core/dist/theme"
+import theme from "styles/theme"
 
 const LayoutContainer = styled(Box)`
-  max-width: ${dimensions.maxwidthDesktop}px;
-  padding-left: ${dimensions.paddingHorizontalDesktop}em;
-  padding-right: ${dimensions.paddingHorizontalDesktop}em;
-  margin: 0 auto;
-
-  @media (max-width: ${dimensions.maxwidthTablet}px) {
-    padding-left: ${dimensions.paddingHorizontalTablet}em;
-    padding-right: ${dimensions.paddingHorizontalTablet}em;
-  }
-
-  @media (max-width: ${dimensions.maxwidthMobile}px) {
-    padding-left: ${dimensions.paddingHorizontalMobile}em;
-    padding-right: ${dimensions.paddingHorizontalMobile}em;
-  }
-
   .Layout__content {
     padding-bottom: 5em;
   }

@@ -26,6 +26,7 @@
     "gatsby-plugin-offline": "3.0.34",
     "gatsby-plugin-preact": "3.1.26",
     "gatsby-plugin-preload-fonts": "^1.0.27",
+    "gatsby-plugin-preload-link-crossorigin": "^1.0.2",
     "gatsby-plugin-react-helmet": "3.1.22",
     "gatsby-plugin-resolve-src": "^2.0.0",
     "gatsby-plugin-sass": "2.1.28",

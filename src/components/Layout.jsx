@@ -13,7 +13,7 @@ import Header from "components/Header"
 import Helmet from "react-helmet"
 import "styles/fonts.scss"
 import preview from "../images/preview.png"
-import bg from "../images/bg.png"
+import bg from "../images/bg-min.png"
 import Box from "@chakra-ui/core/dist/Box"
 
 import ThemeProvider from "@chakra-ui/core/dist/ThemeProvider"

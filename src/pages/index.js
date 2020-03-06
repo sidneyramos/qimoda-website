@@ -358,23 +358,9 @@ const LoadedModal = Loadable({
   },
 })
 
-const FormModal = ({ buttonMarginMd = "0" }) => (
-  <LoadedModal
-    closeOnAnimationEnd
-    trigger={handleOpen => (
-      <Button
-        onClick={handleOpen}
-        margin={{ xs: "0 auto", md: buttonMarginMd }}
-        display="block"
-      >
-        {/* {RichText.render(home.hero_button_text)} */}
-        <Text fontFamily="inherit" zIndex="1">
-          Get early access now
-        </Text>
-      </Button>
-    )}
-  >
-    {handleClose => (
+const FormModal = ({ isOpen, onClose, buttonMarginMd = "0" }) => (
+  <LoadedModal closeOnAnimationEnd open={isOpen}>
+    {() => (
       <>
         <ModalHeader>
           <Heading as="h1" fontSize="1.5em" mr="20px" my="0">
@@ -382,13 +368,13 @@ const FormModal = ({ buttonMarginMd = "0" }) => (
           </Heading>
           <ModalClose
             size="sm"
-            onClick={handleClose}
+            onClick={onClose}
             aria-label="Close modal"
             icon="close"
           />
         </ModalHeader>
 
-        <HooksContactForm onClose={handleClose} />
+        <HooksContactForm onClose={onClose} />
       </>
     )}
   </LoadedModal>
@@ -439,6 +425,7 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
           },
         ].concat(meta)}
       />
+      <FormModal isOpen={isOpen} onClose={onClose} />
       <Hero pt={{ md: "2.5em" }} pb={{ md: "3em" }}>
         <Flex flexWrap="wrap" mt={{ md: "2em" }} mb={{ md: "6em" }}>
           <Flex
@@ -489,7 +476,16 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </Heading>
-              <FormModal />
+              <Button
+                onClick={onOpen}
+                margin={{ xs: "0 auto", md: "0" }}
+                display="block"
+              >
+                {/* {RichText.render(home.hero_button_text)} */}
+                <Text fontFamily="inherit" zIndex="1">
+                  Get early access now
+                </Text>
+              </Button>
             </Box>
           </Flex>
           <Flex
@@ -700,7 +696,12 @@ const RenderBody = ({ home, projects, meta, posts, allImages }) => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Text>
-        <FormModal buttonMarginMd="0 auto" />
+        <Button onClick={onOpen} margin="0 auto" display="block">
+          {/* {RichText.render(home.hero_button_text)} */}
+          <Text fontFamily="inherit" zIndex="1">
+            Get early access now
+          </Text>
+        </Button>
       </Section>
       {/* <Section>
         {projects.map((project, i) => (

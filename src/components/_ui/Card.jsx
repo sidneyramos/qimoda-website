@@ -1,6 +1,4 @@
 import React from "react"
-import colors from "styles/colors"
-import dimensions from "styles/dimensions"
 import styled from "@emotion/styled"
 
 const CardContainer = styled.div`

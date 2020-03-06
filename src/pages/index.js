@@ -1,5 +1,5 @@
 import "react-micro-modal/dist/index.css"
-import React, { useState } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import Loadable from "react-loadable"
@@ -9,27 +9,16 @@ import colors from "styles/colors"
 import dimensions from "styles/dimensions"
 import Button from "components/_ui/Button"
 import Layout from "components/Layout"
-import Link from "components/_ui/Link"
-import Card from "components/_ui/Card"
 import Section from "components/_ui/Section"
-import { TiUser } from "react-icons/ti"
 import useDisclosure from "@chakra-ui/core/dist/useDisclosure"
 import useToast from "@chakra-ui/core/dist/Toast"
-import FormControl from "@chakra-ui/core/dist/FormControl"
-import FormLabel from "@chakra-ui/core/dist/FormLabel"
 import IconButton from "@chakra-ui/core/dist/IconButton"
-import Input from "@chakra-ui/core/dist/Input"
-import InputGroup from "@chakra-ui/core/dist/InputGroup"
-import Icon from "@chakra-ui/core/dist/Icon"
-import { InputLeftElement } from "@chakra-ui/core/dist/InputElement"
-import FormErrorMessage from "@chakra-ui/core/dist/FormErrorMessage"
 import Box from "@chakra-ui/core/dist/Box"
 import Grid from "@chakra-ui/core/dist/Grid"
 import LazyLoad from "react-lazyload"
 import Heading from "@chakra-ui/core/dist/Heading"
 import Text from "@chakra-ui/core/dist/Text"
 import Flex from "@chakra-ui/core/dist/Flex"
-import { useForm, useField } from "react-final-form-hooks"
 import ft6 from "../images/feature-tile-icon-06.svg"
 import ft5 from "../images/feature-tile-icon-05.svg"
 import ft4 from "../images/feature-tile-icon-04.svg"
@@ -47,18 +36,10 @@ import illus5 from "../images/illus5.svg"
 import illus6 from "../images/illus6.svg"
 import illus7 from "../images/illus7.svg"
 
-const p = require("phin")
-
 const Hero = styled(Section)`
   margin: 0 auto;
   text-align: left;
   font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
-`
-
-const ErrorMessage = styled(FormErrorMessage)`
-  p {
-    margin: 0;
-  }
 `
 
 const ModalClose = styled(IconButton)`
@@ -88,10 +69,6 @@ const StepIllustration = styled("img")`
   width: 50%;
 `
 
-const ModalFooter = styled("footer")`
-  margin-top: 2em;
-`
-
 const ModalHeader = styled("header")`
   display: flex;
   align-items: center;
@@ -99,198 +76,19 @@ const ModalHeader = styled("header")`
   justify-content: space-between;
 `
 
-const HooksContactForm = ({ defaultURL, ...props }) => {
-  const firstNameReq = value =>
-    !!value && value.length > 1 ? undefined : "Please enter your first name"
-  const lastNameReq = value =>
-    !!value && value.length > 1 ? undefined : "Please enter your last name"
-  const phoneReq = value =>
-    !!value && value.length > 1
-      ? undefined
-      : "Please enter a valid phone number"
-  const emailReq = value =>
-    !!value && value.length > 1 ? undefined : "Please enter a valid email"
-
-  const emailValid = value =>
-    /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(
-      value
-    )
-      ? undefined
-      : "Please enter a valid email"
-  const composeValidators = (...validators) => value =>
-    validators.reduce(
-      (error, validator) => error || validator(value),
-      undefined
-    )
-
-  const toast = useToast()
-
-  const onSubmit = async values => {
-    return await p({
-      method: "post",
-      url: new URL(`${defaultURL}api/submit`),
-      data: values,
-    })
-  }
-
-  const { form, handleSubmit, values, pristine, submitting } = useForm({
-    onSubmit,
-  })
-  const firstName = useField("firstname", form, firstNameReq, {
-    value: true,
-    valid: true,
-    error: true,
-    touched: true,
-  })
-  const lastName = useField("lastname", form, lastNameReq, {
-    value: true,
-    valid: true,
-    error: true,
-    touched: true,
-  })
-
-  const phone = useField("phone", form, phoneReq, {
-    value: true,
-    valid: true,
-    error: true,
-    touched: true,
-  })
-
-  const email = useField(
-    "email",
-    form,
-    composeValidators(emailReq, emailValid),
-    {
-      value: true,
-      valid: true,
-      error: true,
-      touched: true,
-    }
-  )
-
-  return (
-    <form
-      onSubmit={event => {
-        handleSubmit(event).then(() => {
-          form.reset()
-          props.onClose()
-          toast({
-            title: "Message submitted",
-            description: "We'll get back to you shortly.",
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-          })
-        })
-      }}
-    >
-      <Box minWidth={{ md: "300px" }}>
-        <FormControl
-          isRequired
-          isInvalid={firstName.meta.error && firstName.meta.touched}
-          mb="15px"
-        >
-          <FormLabel htmlFor="firstname">First name</FormLabel>
-          <InputGroup>
-            <InputLeftElement
-              children={<Box as={TiUser} size="20px" color="gray.300" />}
-            />
-            <Input
-              id="firstname"
-              placeholder="John"
-              name="firstname"
-              isInvalid={firstName.meta.error && firstName.meta.touched}
-              {...firstName.input}
-            />
-          </InputGroup>
-
-          {firstName.meta.error && (
-            <ErrorMessage>{firstName.meta.error}</ErrorMessage>
-          )}
-        </FormControl>
-
-        <FormControl
-          isRequired
-          isInvalid={lastName.meta.error && lastName.meta.touched}
-          mb="15px"
-        >
-          <FormLabel htmlFor="lastname">Last name</FormLabel>
-          <InputGroup>
-            <InputLeftElement
-              children={<Box as={TiUser} size="20px" color="gray.300" />}
-            />
-            <Input
-              id="lastname"
-              placeholder="Doe"
-              name="lastname"
-              isInvalid={lastName.meta.error && lastName.meta.touched}
-              {...lastName.input}
-            />
-          </InputGroup>
-          {lastName.meta.error && (
-            <ErrorMessage>{lastName.meta.error}</ErrorMessage>
-          )}
-        </FormControl>
-
-        <FormControl
-          isRequired
-          isInvalid={phone.meta.error && phone.meta.touched}
-          mb="15px"
-        >
-          <FormLabel htmlFor="phone">Phone number</FormLabel>
-          <InputGroup>
-            <InputLeftElement
-              children={<Icon name="phone" color="gray.300" />}
-            />
-            <Input
-              id="phone"
-              placeholder="+61 412 312 312"
-              name="phone"
-              isInvalid={phone.meta.error && phone.meta.touched}
-              {...phone.input}
-            />
-          </InputGroup>
-          {phone.meta.error && <ErrorMessage>{phone.meta.error}</ErrorMessage>}
-        </FormControl>
-
-        <FormControl
-          isRequired
-          isInvalid={email.meta.error && email.meta.touched}
-          mb="15px"
-        >
-          <FormLabel htmlFor="email">Email address</FormLabel>
-          <InputGroup>
-            <InputLeftElement
-              children={<Icon name="at-sign" color="gray.300" />}
-            />
-            <Input
-              id="email"
-              placeholder="john.doe@qimoda.com"
-              name="email"
-              isInvalid={email.meta.error && email.meta.touched}
-              {...email.input}
-            />
-          </InputGroup>
-          {email.meta.error && <ErrorMessage>{email.meta.error}</ErrorMessage>}
-        </FormControl>
-      </Box>
-
-      <ModalFooter>
-        <Button type="submit" isDisabled={pristine} isLoading={submitting}>
-          <Text fontFamily="inherit" zIndex="1">
-            Connect
-          </Text>
-        </Button>
-      </ModalFooter>
-    </form>
-  )
-}
-
 const LoadedModal = Loadable({
   loader: () => import("react-micro-modal"),
-  loading() {
-    return <div />
-  },
+  loading: () => null,
+})
+
+const HooksContactForm = Loadable({
+  loader: () => import("components/HooksContactForm"),
+  loading: () => null,
+})
+
+const Card = Loadable({
+  loader: () => import("components/_ui/Card"),
+  loading: () => null,
 })
 
 const FormModal = ({ defaultURL, isOpen, onClose, buttonMarginMd = "0" }) => (
@@ -309,7 +107,11 @@ const FormModal = ({ defaultURL, isOpen, onClose, buttonMarginMd = "0" }) => (
           />
         </ModalHeader>
 
-        <HooksContactForm defaultURL={defaultURL} onClose={onClose} />
+        <HooksContactForm
+          toast={useToast}
+          defaultURL={defaultURL}
+          onClose={onClose}
+        />
       </>
     )}
   </LoadedModal>
@@ -317,8 +119,6 @@ const FormModal = ({ defaultURL, isOpen, onClose, buttonMarginMd = "0" }) => (
 
 const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  const [animPaused, setAnimPaused] = useState(false)
 
   return (
     <>
@@ -413,6 +213,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
               </Heading>
               <Button
                 onClick={onOpen}
+                onMouseOver={() => HooksContactForm.preload()}
                 margin={{ xs: "0 auto", md: "0" }}
                 display="block"
               >
@@ -494,66 +295,74 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
           templateColumns={{ xs: "1fr", md: "repeat(2, 1fr)" }}
           gap={4}
         >
-          <Card
-            title="Benefit 1"
-            logo={
-              <Box
-                size="100%"
-                backgroundImage={`url('${ft6}')`}
-                backgroundSize="cover"
-              />
-            }
-          >
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-          </Card>
-          <Card
-            title="Benefit 2"
-            logo={
-              <Box
-                size="100%"
-                backgroundImage={`url('${ft4}')`}
-                backgroundSize="cover"
-              />
-            }
-          >
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-          </Card>
-          <Card
-            title="Benefit 3"
-            logo={
-              <Box
-                size="100%"
-                backgroundImage={`url('${ft3}')`}
-                backgroundSize="cover"
-              />
-            }
-          >
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-          </Card>
-          <Card
-            title="Benefit 4"
-            logo={
-              <Box
-                size="100%"
-                backgroundImage={`url('${ft5}')`}
-                backgroundSize="cover"
-              />
-            }
-          >
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-          </Card>
+          <LazyLoad height={200} once offset={50}>
+            <Card
+              title="Benefit 1"
+              logo={
+                <Box
+                  size="100%"
+                  backgroundImage={`url('${ft6}')`}
+                  backgroundSize="cover"
+                />
+              }
+            >
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Text>
+            </Card>
+          </LazyLoad>
+          <LazyLoad height={200} once offset={50}>
+            <Card
+              title="Benefit 2"
+              logo={
+                <Box
+                  size="100%"
+                  backgroundImage={`url('${ft4}')`}
+                  backgroundSize="cover"
+                />
+              }
+            >
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Text>
+            </Card>
+          </LazyLoad>
+          <LazyLoad height={200} once offset={50}>
+            <Card
+              title="Benefit 3"
+              logo={
+                <Box
+                  size="100%"
+                  backgroundImage={`url('${ft3}')`}
+                  backgroundSize="cover"
+                />
+              }
+            >
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Text>
+            </Card>
+          </LazyLoad>
+          <LazyLoad height={200} once offset={50}>
+            <Card
+              title="Benefit 4"
+              logo={
+                <Box
+                  size="100%"
+                  backgroundImage={`url('${ft5}')`}
+                  backgroundSize="cover"
+                />
+              }
+            >
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </Text>
+            </Card>
+          </LazyLoad>
         </Grid>
       </Section>
 

@@ -15,7 +15,7 @@ const ButtonContainer = styled(Button)`
   border-radius: 5px;
   position: relative;
   transition: background 100ms ease-in-out;
-  background-color: ${colors.qimodaDarker}
+  background-color: ${colors.qimodaButtonColour};
   position: relative;
   height: auto;
   overflow: hidden;
@@ -53,6 +53,7 @@ const ButtonContainer = styled(Button)`
 
   &:hover {
     cursor: pointer;
+    background-color: ${colors.qimodaButtonColourHover};
 
     &:after {
       opacity: 0.4;
@@ -60,7 +61,7 @@ const ButtonContainer = styled(Button)`
   }
 
   &.Button--secondary {
-    background: ${colors.qimodaButtonColour};
+    background: ${colors.teal200};
     color: ${colors.teal600};
     padding: 0.95em 1.8em;
     font-size: 0.95rem;

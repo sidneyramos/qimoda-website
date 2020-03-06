@@ -84,8 +84,9 @@ const colors = {
 
   qimodaDark: "#003437",
   qimodaDarker: "#172930",
-  qimodaButtonColour: "#227372",
-  // qimodaButtonColour: "#2A8381",
+  // qimodaButtonColour: "#227372",
+  qimodaButtonColour: "#2A8381",
+  qimodaButtonColourHover: "#206561",
 
   qimodaBrown: "#BCAC9B",
   qimodaBrownLight: "#DDC9B4",

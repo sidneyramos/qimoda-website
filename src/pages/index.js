@@ -35,6 +35,7 @@ import illus4 from "../images/illus4.svg"
 import illus5 from "../images/illus5.svg"
 import illus6 from "../images/illus6.svg"
 import illus7 from "../images/illus7.svg"
+import FadeIn from "react-fade-in"
 
 const Hero = styled(Section)`
   margin: 0 auto;
@@ -117,6 +118,11 @@ const FormModal = ({ defaultURL, isOpen, onClose, buttonMarginMd = "0" }) => (
   </LoadedModal>
 )
 
+const ButtonText = styled.p`
+  font-family: inherit;
+  z-index: 1;
+`
+
 const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -181,6 +187,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
               >
                 Insert tagline here.
               </Heading>
+
               <Heading
                 fontFamily="inherit"
                 as="h1"
@@ -217,9 +224,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
                 margin={{ xs: "0 auto", md: "0" }}
                 display="block"
               >
-                <Text fontFamily="inherit" zIndex="1">
-                  Get early access now
-                </Text>
+                <ButtonText>Get early access now</ButtonText>
               </Button>
             </Box>
           </Flex>
@@ -248,7 +253,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
         <Flex
           width="100%"
           justifyContent="space-around"
-          my="100px"
+          my={{ xs: "4em", md: "100px" }}
           flexDirection={{ xs: "column", md: "row" }}
           px={{ md: "5%" }}
         >
@@ -295,137 +300,179 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
           templateColumns={{ xs: "1fr", md: "repeat(2, 1fr)" }}
           gap={4}
         >
-          <LazyLoad height={200} once offset={50}>
-            <Card
-              title="Benefit 1"
-              logo={
-                <Box
-                  size="100%"
-                  backgroundImage={`url('${ft6}')`}
-                  backgroundSize="cover"
-                />
-              }
-            >
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-            </Card>
+          <LazyLoad height={200} once>
+            <FadeIn transitionDuration={500}>
+              <Card
+                title="Benefit 1"
+                logo={
+                  <Box
+                    size="100%"
+                    backgroundImage={`url('${ft6}')`}
+                    backgroundSize="cover"
+                  />
+                }
+              >
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+              </Card>
+            </FadeIn>
           </LazyLoad>
-          <LazyLoad height={200} once offset={50}>
-            <Card
-              title="Benefit 2"
-              logo={
-                <Box
-                  size="100%"
-                  backgroundImage={`url('${ft4}')`}
-                  backgroundSize="cover"
-                />
-              }
-            >
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-            </Card>
+          <LazyLoad height={200} once>
+            <FadeIn transitionDuration={500}>
+              <Card
+                title="Benefit 2"
+                logo={
+                  <Box
+                    size="100%"
+                    backgroundImage={`url('${ft4}')`}
+                    backgroundSize="cover"
+                  />
+                }
+              >
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+              </Card>
+            </FadeIn>
           </LazyLoad>
-          <LazyLoad height={200} once offset={50}>
-            <Card
-              title="Benefit 3"
-              logo={
-                <Box
-                  size="100%"
-                  backgroundImage={`url('${ft3}')`}
-                  backgroundSize="cover"
-                />
-              }
-            >
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-            </Card>
+          <LazyLoad height={200} once>
+            <FadeIn transitionDuration={500}>
+              <Card
+                title="Benefit 3"
+                logo={
+                  <Box
+                    size="100%"
+                    backgroundImage={`url('${ft3}')`}
+                    backgroundSize="cover"
+                  />
+                }
+              >
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+              </Card>
+            </FadeIn>
           </LazyLoad>
-          <LazyLoad height={200} once offset={50}>
-            <Card
-              title="Benefit 4"
-              logo={
-                <Box
-                  size="100%"
-                  backgroundImage={`url('${ft5}')`}
-                  backgroundSize="cover"
-                />
-              }
-            >
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-            </Card>
+          <LazyLoad height={200} once>
+            <FadeIn transitionDuration={500}>
+              <Card
+                title="Benefit 4"
+                logo={
+                  <Box
+                    size="100%"
+                    backgroundImage={`url('${ft5}')`}
+                    backgroundSize="cover"
+                  />
+                }
+              >
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+              </Card>
+            </FadeIn>
           </LazyLoad>
         </Grid>
       </Section>
 
       <AngledSection>
-        <LazyLoad height={300} once offset={50}>
-          <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap-reverse">
-            <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
-              <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
-                Start off with a template
-              </Heading>
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-            </Box>
-            <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-              <StepIllustration src={illus1} alt="Start off with a template" />
+        <LazyLoad height={300} once>
+          <FadeIn transitionDuration={500}>
+            <Flex
+              alignItems={{ md: "center" }}
+              my="3em"
+              flexWrap="wrap-reverse"
+            >
+              <Box
+                flex={{ xs: "1 0 100%", md: "1 0 50%" }}
+                textAlign="center"
+                my="2em"
+              >
+                <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+                  Start off with a template
+                </Heading>
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+              </Box>
+              <Flex
+                flex={{ xs: "1 0 100%", md: "1 0 50%" }}
+                justifyContent="center"
+              >
+                <StepIllustration
+                  src={illus1}
+                  alt="Start off with a template"
+                />
+              </Flex>
             </Flex>
-          </Flex>
+          </FadeIn>
         </LazyLoad>
-        <LazyLoad height={300} once offset={50}>
-          <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap">
-            <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-              <StepIllustration
-                src={illus3}
-                alt="Help us make it uniquely yours"
-              />
+        <LazyLoad height={300} once>
+          <FadeIn transitionDuration={500}>
+            <Flex alignItems={{ md: "center" }} my="3em" flexWrap="wrap">
+              <Flex
+                flex={{ xs: "1 0 100%", md: "1 0 50%" }}
+                justifyContent="center"
+              >
+                <StepIllustration
+                  src={illus3}
+                  alt="Help us make it uniquely yours"
+                />
+              </Flex>
+              <Box
+                flex={{ xs: "1 0 100%", md: "1 0 50%" }}
+                textAlign="center"
+                my="2em"
+              >
+                <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+                  Help us make it uniquely yours
+                </Heading>
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+              </Box>
             </Flex>
-            <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
-              <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
-                Help us make it uniquely yours
-              </Heading>
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-            </Box>
-          </Flex>
+          </FadeIn>
         </LazyLoad>
 
-        <LazyLoad height={300} once offset={50}>
-          <Flex
-            alignItems={{ md: "center" }}
-            my="3em"
-            mb="0"
-            flexWrap="wrap-reverse"
-          >
-            <Box flex={{ md: "1 0 50%" }} textAlign="center" my="2em">
-              <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
-                We'll take care of the rest
-              </Heading>
-              <Text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </Text>
-            </Box>
-            <Flex flex={{ md: "1 0 50%" }} justifyContent="center">
-              <StepIllustration
-                src={illus4}
-                alt="We'll take care of the rest"
-              />
+        <LazyLoad height={300} once>
+          <FadeIn transitionDuration={500}>
+            <Flex
+              alignItems={{ md: "center" }}
+              my="3em"
+              mb="0"
+              flexWrap="wrap-reverse"
+            >
+              <Box
+                flex={{ xs: "1 0 100%", md: "1 0 50%" }}
+                textAlign="center"
+                my="2em"
+              >
+                <Heading as="h1" margin="0" lineHeight="1" fontSize="2em">
+                  We'll take care of the rest
+                </Heading>
+                <Text>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </Text>
+              </Box>
+              <Flex
+                flex={{ xs: "1 0 100%", md: "1 0 50%" }}
+                justifyContent="center"
+              >
+                <StepIllustration
+                  src={illus4}
+                  alt="We'll take care of the rest"
+                />
+              </Flex>
             </Flex>
-          </Flex>
+          </FadeIn>
         </LazyLoad>
       </AngledSection>
       <Section>
@@ -442,9 +489,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Text>
         <Button onClick={onOpen} margin="0 auto" display="block">
-          <Text fontFamily="inherit" zIndex="1">
-            Get early access now
-          </Text>
+          <ButtonText>Get early access now</ButtonText>
         </Button>
       </Section>
     </>

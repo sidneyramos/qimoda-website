@@ -12,6 +12,7 @@ import { useForm, useField } from "react-final-form-hooks"
 import Box from "@chakra-ui/core/dist/Box"
 import { TiUser } from "react-icons/ti"
 import Icon from "@chakra-ui/core/dist/Icon"
+import useToast from "@chakra-ui/core/dist/Toast"
 
 const p = require("phin")
 
@@ -25,7 +26,9 @@ const ErrorMessage = styled(FormErrorMessage)`
   }
 `
 
-const HooksContactForm = ({ toast, defaultURL, ...props }) => {
+const HooksContactForm = ({ defaultURL, ...props }) => {
+  const toast = useToast()
+
   const firstNameReq = value =>
     !!value && value.length > 1 ? undefined : "Please enter your first name"
   const lastNameReq = value =>
@@ -162,7 +165,7 @@ const HooksContactForm = ({ toast, defaultURL, ...props }) => {
           isInvalid={phone.meta.error && phone.meta.touched}
           mb="15px"
         >
-          <FormLabel htmlFor="phone">Phone numbr</FormLabel>
+          <FormLabel htmlFor="phone">Phone number</FormLabel>
           <InputGroup>
             <InputLeftElement
               children={<Icon name="phone" color="gray.300" />}

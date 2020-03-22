@@ -24,21 +24,21 @@ const listStyles = css`
       position: relative;
       margin: 15px 0;
 
-      &:before {
-        content: "";
-        position: absolute;
-        display: block;
-        height: 19px;
-        width: 9px;
-        left: -15px;
-        top: 3px;
-        background-image: url('${qimoda}');
-        background-size: cover;
-        animation-name: flash;
-        animation-duration: 3s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-      }
+      // &:before {
+      //   content: "";
+      //   position: absolute;
+      //   display: block;
+      //   height: 19px;
+      //   width: 9px;
+      //   left: -15px;
+      //   top: 3px;
+      //   background-image: url('${qimoda}');
+      //   background-size: cover;
+      //   animation-name: flash;
+      //   animation-duration: 3s;
+      //   animation-iteration-count: infinite;
+      //   animation-timing-function: linear;
+      // }
     }
   }
 `

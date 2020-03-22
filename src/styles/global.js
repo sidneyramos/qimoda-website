@@ -43,23 +43,43 @@ const globalStyles = css`
     }
   }
 
-  button {
-    border: initial;
-    background-color: initial;
-    cursor: pointer;
+  // button {
+  //   border: initial;
+  //   background-color: initial;
+  //   cursor: pointer;
 
-    svg {
-      path {
-        fill: white;
-      }
-    }
-  }
+  //   svg {
+  //     path {
+  //       fill: white;
+  //     }
+  //   }
+  // }
 
   .modal {
     .modal-overlay {
       z-index: 10;
       .modal-container {
         position: relative;
+      }
+    }
+  }
+
+  .chart-container {
+    * {
+      font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica,
+        sans-serif;
+    }
+    .chart-legend {
+      display: none;
+    }
+
+    .graph-svg-tip {
+      ul {
+        &.data-point-list {
+          li {
+            font-weight: 400;
+          }
+        }
       }
     }
   }

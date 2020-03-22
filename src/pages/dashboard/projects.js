@@ -4,35 +4,15 @@ import Helmet from "react-helmet"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
 import dimensions from "styles/dimensions"
+import DashboardLayout from "components/DashboardLayout"
+import DashboardCard from "components/_ui/DashboardCard"
+
 import colors from "styles/colors"
 
-const WorkTitle = styled("h1")`
-  margin-bottom: 1em;
-  position: relative;
-  display: inline-block;
-
-  &:after {
-    z-index: -1;
-    content: "";
-    display: block;
-    position: absolute;
-    height: 50%;
-    width: 100%;
-    opacity: 0.25;
-    background-color: ${colors.qimodaLight};
-    bottom: 0;
-    right: 0;
-
-    @media (max-width: ${dimensions.maxwidthTablet}px) {
-      height: calc(45%);
-    }
-  }
-`
-
-const Work = ({ projects, meta }) => (
+const Dashboard = ({ meta }) => (
   <>
     <Helmet
-      title={`Work | Qimoda`}
+      title={`Dashboard | Qimoda`}
       titleTemplate={`%s`}
       meta={[
         {
@@ -69,48 +49,26 @@ const Work = ({ projects, meta }) => (
         },
       ].concat(meta)}
     />
-    <div>Sample</div>
+    <DashboardLayout>
+      <DashboardCard title="Project Tasks">Sample</DashboardCard>
+      <DashboardCard title="Project Timeline">Sample</DashboardCard>
+      <DashboardCard title="Project Chat">Sample</DashboardCard>
+    </DashboardLayout>
   </>
 )
 
 export default ({ data }) => {
-  const projects = data.prismic.allProjects.edges
   const meta = data.site.siteMetadata
-  if (!projects) return null
 
-  return <Work projects={projects} meta={meta} />
+  return <Dashboard meta={meta} />
 }
 
-Work.propTypes = {
+Dashboard.propTypes = {
   projects: PropTypes.array.isRequired,
 }
 
 export const query = graphql`
   {
-    prismic {
-      allProjects {
-        edges {
-          node {
-            project_title
-            project_preview_description
-            project_preview_thumbnail
-            project_preview_image
-            project_preview_imageSharp {
-              childImageSharp {
-                fluid {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-            project_category
-            project_post_date
-            _meta {
-              uid
-            }
-          }
-        }
-      }
-    }
     site {
       siteMetadata {
         title

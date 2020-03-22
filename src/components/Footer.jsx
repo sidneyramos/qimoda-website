@@ -83,8 +83,8 @@ const FooterSpooch = styled("img")`
   z-index: -1;
 `
 
-const Footer = () => (
-  <FooterContainer>
+const Footer = props => (
+  <FooterContainer {...props}>
     <FooterAuthor>
       © 2020 — Qimoda Digital
       <div className="footerLogoContainer">

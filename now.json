@@ -4,7 +4,11 @@
     "CONTACT_SPREADSHEET": "@contact_spreadsheet",
     "GSHEET_AUTH": "@gsheet_auth",
     "GATSBY_GOOGLE_ANALYTICS": "@gatsby_google_analytics",
-    "GATSBY_PRISMIC_APIKEY": "@gatsby_prismic_apikey"
+    "GATSBY_PRISMIC_APIKEY": "@gatsby_prismic_apikey",
+    "FIREBASE_API": "@firebase_api",
+    "FIREBASE_MESSAGE": "@firebase_message",
+    "FIREBASE_APPID": "@firebase_appid",
+    "FIREBASE_MEASUREMENT": "@firebase_measurement"
   },
   "routes": [{ "handle": "filesystem" }, { "src": "/(.*)", "dest": "404.html" }]
 }

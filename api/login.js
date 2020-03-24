@@ -4,17 +4,10 @@ import * as firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
 import * as jwt from "jsonwebtoken"
+import firebaseSettings from "../lib/firebaseSettings"
+const CryptoJS = require("crypto-js")
 
-firebase.initializeApp({
-  apiKey: process.env.FIREBASE_API,
-  authDomain: "qimoda-app.firebaseapp.com",
-  databaseURL: "https://qimoda-app.firebaseio.com",
-  projectId: "qimoda-app",
-  storageBucket: "qimoda-app.appspot.com",
-  messagingSenderId: process.env.FIREBASE_MESSAGE,
-  appId: process.env.FIREBASE_APPID,
-  measurementId: process.env.FIREBASE_MEASUREMENT,
-})
+firebase.initializeApp(firebaseSettings)
 
 module.exports = (req, res) => {
   const { email, password } = req.body
@@ -30,11 +23,16 @@ module.exports = (req, res) => {
         .get()
         .then(function(doc) {
           if (doc.exists) {
-            var token = jwt.sign(doc.data(), fin.user.uid)
+            const token = jwt.sign(doc.data(), fin.user.uid)
+            const firebaseJWT = CryptoJS.AES.encrypt(
+              JSON.stringify(firebaseSettings),
+              fin.user.uid
+            ).toString()
             res.status(200).send({
               message: `You have successfully logged in`,
               data: token,
               uid: fin.user.uid,
+              settings: firebaseJWT,
             })
           } else {
             // doc.data() will be undefined in this case

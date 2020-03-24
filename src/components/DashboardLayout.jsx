@@ -31,6 +31,7 @@ import {
   TiPower,
 } from "react-icons/ti"
 import IconButton from "@chakra-ui/core/dist/IconButton"
+import AuthenticateLayout from "components/AuthenticateLayout"
 
 import Masonry from "react-masonry-css"
 
@@ -204,7 +205,7 @@ const Layout = ({ setLoggedIn, children }) => (
                   <DashButton icon={TiHome} linkUrl="/dashboard" />
                 </div>
                 <div>
-                  <DashButton icon={TiPlus} linkUrl="/dashboard" />
+                  <DashButton icon={TiPlus} linkUrl="/dashboard/create" />
                   <DashButton icon={TiChartPie} linkUrl="/dashboard/projects" />
                   {/* <DashButton icon={TiUser} />
                   <DashButton icon={TiCog} /> */}
@@ -216,6 +217,7 @@ const Layout = ({ setLoggedIn, children }) => (
                     icon={TiPower}
                     onClick={() => {
                       sessionStorage.removeItem("user")
+                      sessionStorage.removeItem("set")
                       setLoggedIn(false)
                     }}
                   />

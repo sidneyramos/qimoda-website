@@ -4,17 +4,10 @@ import * as firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
 import * as jwt from "jsonwebtoken"
+import firebaseSettings from "../lib/firebaseSettings"
+const CryptoJS = require("crypto-js")
 
-firebase.initializeApp({
-  apiKey: process.env.FIREBASE_API,
-  authDomain: "qimoda-app.firebaseapp.com",
-  databaseURL: "https://qimoda-app.firebaseio.com",
-  projectId: "qimoda-app",
-  storageBucket: "qimoda-app.appspot.com",
-  messagingSenderId: process.env.FIREBASE_MESSAGE,
-  appId: process.env.FIREBASE_APPID,
-  measurementId: process.env.FIREBASE_MEASUREMENT,
-})
+firebase.initializeApp(firebaseSettings)
 
 module.exports = (req, res) => {
   const { email, password, fullname } = req.body
@@ -30,12 +23,23 @@ module.exports = (req, res) => {
       db.collection("users")
         .doc(fin.user.uid)
         .set(data)
-        .then(() => {
-          var token = jwt.sign(data, fin.user.uid)
+        .then(async () => {
+          const token = jwt.sign(data, fin.user.uid)
+          const firebaseJWT = CryptoJS.AES.encrypt(
+            JSON.stringify(firebaseSettings),
+            fin.user.uid
+          ).toString()
+          await db
+            .collection("projects")
+            .doc(fin.user.uid)
+            .collection("projArray")
+            .doc()
+            .set({})
           res.status(200).send({
             message: `Your account has been registered.`,
             data: token,
             uid: fin.user.uid,
+            settings: firebaseJWT,
           })
         })
         .catch(error => {

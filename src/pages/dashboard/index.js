@@ -11,7 +11,6 @@ import useCollapse from "react-collapsed"
 import Loadable from "react-loadable"
 import ContentLoader from "react-content-loader"
 import useToast from "@chakra-ui/core/dist/Toast"
-
 import colors from "styles/colors"
 import {
   TiBrush,
@@ -30,6 +29,10 @@ import Flex from "@chakra-ui/core/dist/Flex"
 import FadeIn from "react-fade-in"
 import Heading from "@chakra-ui/core/dist/Heading"
 import * as jwt from "jsonwebtoken"
+import * as firebase from "firebase/app"
+import "firebase/firestore"
+
+const CryptoJS = require("crypto-js")
 
 // import ReactFrappeChart from "react-frappe-charts"
 // import PieChart from "react-minimal-pie-chart"
@@ -377,10 +380,21 @@ const ProjectListItem = ({
 
 const Dashboard = ({ meta, location }) => {
   const [userData, setUserData] = useState(null)
+  const [database, setDatabase] = useState(null)
   const [isLoggedIn, setLoggedIn] = useState(null)
   useEffect(() => {
     if (!!typeof window) {
       const hasUser = sessionStorage.getItem("user")
+      const settings = sessionStorage.getItem("set")
+
+      if (firebase.apps.length === 0 && settings && hasUser) {
+        const key = hasUser.split("%")[1]
+        const parsedSettings = JSON.parse(
+          CryptoJS.AES.decrypt(settings, key).toString(CryptoJS.enc.Utf8)
+        )
+        firebase.initializeApp(parsedSettings)
+        setDatabase(firebase.firestore())
+      }
       setUserData(hasUser)
       setLoggedIn(!!hasUser)
     }
@@ -391,6 +405,8 @@ const Dashboard = ({ meta, location }) => {
         return decoded
       })
     : null
+
+  console.log(database)
 
   const names = parsedData ? parsedData.fullName.split(" ") : null
 
@@ -441,7 +457,11 @@ const Dashboard = ({ meta, location }) => {
           setLoggedIn={setLoggedIn}
         />
       ) : (
-        <DashboardLayout setLoggedIn={setLoggedIn}>
+        <DashboardLayout
+          setLoggedIn={setLoggedIn}
+          setDatabase={setDatabase}
+          setUserData={setUserData}
+        >
           <DashboardCard title="Latest Project Updates">
             <UpdateList>
               <FadeIn transitionDuration={500}>

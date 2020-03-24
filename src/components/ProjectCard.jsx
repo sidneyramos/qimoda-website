@@ -99,7 +99,7 @@ const ProjectCardCategory = styled(Flex)`
   margin-bottom: 1em;
 
   div {
-    &:first-child {
+    &:first-of-type {
       margin-left: 0;
     }
   }

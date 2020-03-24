@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 import styled from "@emotion/styled"
@@ -14,11 +14,10 @@ import Helmet from "react-helmet"
 import "styles/fonts.scss"
 import preview from "../images/preview.png"
 import bg from "../images/bg-min.png"
-import Box from "@chakra-ui/core/dist/Box"
 import colors from "styles/colors"
 import FadeIn from "react-fade-in"
 import { Link } from "gatsby"
-
+import useToast from "@chakra-ui/core/dist/Toast"
 import ThemeProvider from "@chakra-ui/core/dist/ThemeProvider"
 import theme from "styles/theme"
 import {
@@ -26,14 +25,17 @@ import {
   TiUser,
   TiPlus,
   TiCog,
-  TiCalendar,
   TiChartPie,
   TiPower,
 } from "react-icons/ti"
 import IconButton from "@chakra-ui/core/dist/IconButton"
 import AuthenticateLayout from "components/AuthenticateLayout"
-
+import * as jwt from "jsonwebtoken"
+import * as firebase from "firebase/app"
+import "firebase/firestore"
 import Masonry from "react-masonry-css"
+import { DataContext } from "components/Context"
+const CryptoJS = require("crypto-js")
 
 const LayoutContainer = styled.div`
   background-image: url('${bg}');
@@ -173,81 +175,133 @@ const MainMasonry = styled(Masonry)`
   }
 `
 
-const Layout = ({ setLoggedIn, children }) => (
-  <StaticQuery
-    query={graphql`
-      query DashboardSiteTitleQuery {
-        site {
-          siteMetadata {
-            title
-          }
+const Layout = ({ children }) => {
+  const [userData, setUserData] = useState(null)
+  const [database, setDatabase] = useState(null)
+  const [isLoggedIn, setLoggedIn] = useState(null)
+  const [windowLocation, setWindowLocation] = useState(null)
+
+  useEffect(() => {
+    if (!!typeof window) {
+      const hasUser = sessionStorage.getItem("user")
+      const settings = sessionStorage.getItem("set")
+
+      if (settings && hasUser) {
+        if (firebase.apps.length === 0) {
+          const key = hasUser.split("%")[1]
+          const parsedSettings = JSON.parse(
+            CryptoJS.AES.decrypt(settings, key).toString(CryptoJS.enc.Utf8)
+          )
+          firebase.initializeApp(parsedSettings)
+          setDatabase(firebase.firestore())
+        } else {
+          setDatabase(firebase.firestore())
         }
       }
-    `}
-    render={data => (
-      <>
-        <ThemeProvider theme={theme}>
-          <Helmet
-            meta={[
-              {
-                property: `og:image`,
-                content: `https://qimoda.com${preview}`,
-              },
-            ]}
-          />
-          <LayoutContainer>
-            <Global
-              styles={[globalStyles, typeStyles, logoStyles, listStyles]}
+      setUserData(hasUser)
+      setLoggedIn(!!hasUser)
+      setWindowLocation(window.location)
+    }
+  }, [isLoggedIn])
+  const splitData = userData ? userData.split("%") : null
+  const parsedData = splitData
+    ? jwt.verify(splitData[0], splitData[1], function(err, decoded) {
+        return decoded
+      })
+    : null
+
+  return (
+    <StaticQuery
+      query={graphql`
+        query DashboardSiteTitleQuery {
+          site {
+            siteMetadata {
+              title
+            }
+          }
+        }
+      `}
+      render={data => (
+        <>
+          <ThemeProvider theme={theme}>
+            <Helmet
+              meta={[
+                {
+                  property: `og:image`,
+                  content: `https://qimoda.com${preview}`,
+                },
+              ]}
             />
-            <LayoutAside>
-              <div>
-                <div>
-                  <DashButton icon={TiHome} linkUrl="/dashboard" />
-                </div>
-                <div>
-                  <DashButton icon={TiPlus} linkUrl="/dashboard/create" />
-                  <DashButton icon={TiChartPie} linkUrl="/dashboard/projects" />
-                  {/* <DashButton icon={TiUser} />
-                  <DashButton icon={TiCog} /> */}
-                  <DashButton icon={TiCog} linkUrl="/dashboard" />
-                </div>
-                <div>
-                  <DashButton icon={TiUser} linkUrl="/dashboard" />
-                  <DashButton
-                    icon={TiPower}
-                    onClick={() => {
-                      sessionStorage.removeItem("user")
-                      sessionStorage.removeItem("set")
-                      setLoggedIn(false)
-                    }}
+            {!isLoggedIn ? (
+              <AuthenticateLayout
+                defaultURL={windowLocation && windowLocation.origin}
+                toast={useToast}
+                setLoggedIn={setLoggedIn}
+              />
+            ) : (
+              <DataContext.Provider value={parsedData}>
+                <LayoutContainer>
+                  <Global
+                    styles={[globalStyles, typeStyles, logoStyles, listStyles]}
                   />
-                </div>
-              </div>
-            </LayoutAside>
-            <LayoutOuter>
-              <LayoutMain>
-                <FadeIn transitionDuration={500}>
-                  <MainMasonry
-                    breakpointCols={{
-                      default: 3,
-                      768: 1,
-                    }}
-                    className="main-masonry"
-                    columnClassName="masonry-column"
-                  >
-                    {children}
-                  </MainMasonry>
-                </FadeIn>
-                {/* <Box bg="black" height="1000px" /> */}
-              </LayoutMain>
-              <LayoutFooter />
-            </LayoutOuter>
-          </LayoutContainer>
-        </ThemeProvider>
-      </>
-    )}
-  />
-)
+                  <LayoutAside>
+                    <div>
+                      <div>
+                        <DashButton icon={TiHome} linkUrl="/dashboard" />
+                      </div>
+                      <div>
+                        <DashButton icon={TiPlus} linkUrl="/dashboard/create" />
+                        <DashButton
+                          icon={TiChartPie}
+                          linkUrl="/dashboard/projects"
+                        />
+                        {/* <DashButton icon={TiUser} />
+                    <DashButton icon={TiCog} /> */}
+                        <DashButton icon={TiCog} linkUrl="/dashboard" />
+                      </div>
+                      <div>
+                        <DashButton icon={TiUser} linkUrl="/dashboard" />
+                        <DashButton
+                          icon={TiPower}
+                          onClick={() => {
+                            sessionStorage.removeItem("user")
+                            sessionStorage.removeItem("set")
+                            setLoggedIn(false)
+                            setDatabase(null)
+                            setUserData(null)
+                            setWindowLocation(null)
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </LayoutAside>
+                  <LayoutOuter>
+                    <LayoutMain>
+                      <FadeIn transitionDuration={500}>
+                        <MainMasonry
+                          breakpointCols={{
+                            default: 3,
+                            // 768: 1,
+                          }}
+                          className="main-masonry"
+                          columnClassName="masonry-column"
+                        >
+                          {children}
+                        </MainMasonry>
+                      </FadeIn>
+                      {/* <Box bg="black" height="1000px" /> */}
+                    </LayoutMain>
+                    <LayoutFooter />
+                  </LayoutOuter>
+                </LayoutContainer>
+              </DataContext.Provider>
+            )}
+          </ThemeProvider>
+        </>
+      )}
+    />
+  )
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,

@@ -3,14 +3,11 @@ import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
-import dimensions from "styles/dimensions"
 import DashboardLayout from "components/DashboardLayout"
-import AuthenticateLayout from "components/AuthenticateLayout"
 import DashboardCard from "components/_ui/DashboardCard"
 import useCollapse from "react-collapsed"
 import Loadable from "react-loadable"
 import ContentLoader from "react-content-loader"
-import useToast from "@chakra-ui/core/dist/Toast"
 import colors from "styles/colors"
 import {
   TiBrush,
@@ -27,15 +24,7 @@ import {
 import Box from "@chakra-ui/core/dist/Box"
 import Flex from "@chakra-ui/core/dist/Flex"
 import FadeIn from "react-fade-in"
-import Heading from "@chakra-ui/core/dist/Heading"
-import * as jwt from "jsonwebtoken"
-import * as firebase from "firebase/app"
-import "firebase/firestore"
-
-const CryptoJS = require("crypto-js")
-
-// import ReactFrappeChart from "react-frappe-charts"
-// import PieChart from "react-minimal-pie-chart"
+import { DataContext } from "components/Context"
 
 const dayjs = require("dayjs")
 const relativeTime = require("dayjs/plugin/relativeTime")
@@ -182,7 +171,7 @@ const Project = styled.li`
     // background: rgba(0, 0, 0, 0.02);
     button {
       & > div {
-        &:first-child {
+        &:first-of-type {
           filter: brightness(0.85);
         }
       }
@@ -208,7 +197,7 @@ const ExpandButton = styled.button`
   padding: 0.5rem 0;
 
   & > div {
-    &:first-child {
+    &:first-of-type {
       transition: filter 0.3s;
     }
   }
@@ -379,37 +368,6 @@ const ProjectListItem = ({
 }
 
 const Dashboard = ({ meta, location }) => {
-  const [userData, setUserData] = useState(null)
-  const [database, setDatabase] = useState(null)
-  const [isLoggedIn, setLoggedIn] = useState(null)
-  useEffect(() => {
-    if (!!typeof window) {
-      const hasUser = sessionStorage.getItem("user")
-      const settings = sessionStorage.getItem("set")
-
-      if (firebase.apps.length === 0 && settings && hasUser) {
-        const key = hasUser.split("%")[1]
-        const parsedSettings = JSON.parse(
-          CryptoJS.AES.decrypt(settings, key).toString(CryptoJS.enc.Utf8)
-        )
-        firebase.initializeApp(parsedSettings)
-        setDatabase(firebase.firestore())
-      }
-      setUserData(hasUser)
-      setLoggedIn(!!hasUser)
-    }
-  }, [isLoggedIn])
-  const splitData = userData ? userData.split("%") : null
-  const parsedData = splitData
-    ? jwt.verify(splitData[0], splitData[1], function(err, decoded) {
-        return decoded
-      })
-    : null
-
-  console.log(database)
-
-  const names = parsedData ? parsedData.fullName.split(" ") : null
-
   return (
     <>
       <Helmet
@@ -450,199 +408,185 @@ const Dashboard = ({ meta, location }) => {
           },
         ].concat(meta)}
       />
-      {!isLoggedIn ? (
-        <AuthenticateLayout
-          defaultURL={location.origin}
-          toast={useToast}
-          setLoggedIn={setLoggedIn}
-        />
-      ) : (
-        <DashboardLayout
-          setLoggedIn={setLoggedIn}
-          setDatabase={setDatabase}
-          setUserData={setUserData}
-        >
-          <DashboardCard title="Latest Project Updates">
-            <UpdateList>
-              <FadeIn transitionDuration={500}>
-                <Update>
-                  <UpdateLogo icon={TiBrush} />
-                  <Box>
-                    <UpdateTitle>Design - Website Project</UpdateTitle>
-                    Contact us page design
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo icon={TiDocumentText} />
-                  <Box>
-                    <UpdateTitle>Content - Website Project</UpdateTitle>
-                    Homepage Content
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo icon={TiDeviceLaptop} />
-                  <Box>
-                    <UpdateTitle>Development - Website Project</UpdateTitle>
-                    Chart component
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo icon={TiLinkOutline} />
-                  <Box>
-                    <UpdateTitle>SEO - Website Project</UpdateTitle>
-                    Google Analytics plugin
-                  </Box>
-                </Update>
-              </FadeIn>
-            </UpdateList>
-          </DashboardCard>
-          <DashboardCard title="Project Performance" order={{ xs: 2 }}>
-            <ReactFrappeChart
-              type="line"
-              colors={["#21ba45"]}
-              axisOptions={{
-                xAxisMode: "tick",
-                yAxisMode: "tick",
-                xIsSeries: 1,
-              }}
-              height={250}
-              data={{
-                labels: [
-                  "Sun",
-                  "Mon",
-                  "Tue",
-                  "Wed",
-                  "Thu",
-                  "Fri",
-                  "Sat",
-                  "Sun",
-                ],
-                datasets: [
-                  {
-                    name: "Project 1",
-                    values: [18, 40, 30, 35, 8, 52, 17, -4],
-                    chartType: "line",
-                  },
-                  {
-                    name: "Project 2",
-                    values: [30, 50, 0, 15, 18, 32, 27, 14],
-                    chartType: "line",
-                  },
-                  {
-                    name: "Project 3",
-                    values: [0, 15, 27, 32, 14, 30, 18, 50],
-                    chartType: "line",
-                  },
-                  {
-                    name: "Project 4",
-                    values: [18, 14, 27, 15, 30, 50, 32, 1],
-                    chartType: "line",
-                  },
-                ],
-              }}
-            />
-          </DashboardCard>
-          <DashboardCard
-            title="Projects"
-            aboveHeader={`Hi ${names && names[0]}!`}
-            order={{ xs: 1 }}
-          >
-            <ProjectList>
-              <FadeIn transitionDuration={500}>
-                <ProjectListItem
-                  defaultOpen
-                  logo={TiDeviceLaptop}
-                  title="Website Project"
-                  status={0}
-                />
-                <ProjectListItem
-                  logo={TiDevicePhone}
-                  title="App Project"
-                  status={1}
-                />
-                <ProjectListItem
-                  logo={TiDeviceLaptop}
-                  title="Website Project"
-                  status={2}
-                />
-                <ProjectListItem
-                  logo={TiDevicePhone}
-                  title="App Project"
-                  status={0}
-                />
-              </FadeIn>
-            </ProjectList>
-          </DashboardCard>
-          <DashboardCard title="Upcoming Deadlines">
-            <UpdateList>
-              <FadeIn transitionDuration={500}>
-                <Update>
-                  <UpdateLogo logoText="0" />
-                  <Box>
-                    <UpdateTitle>Design - Website Project</UpdateTitle>
-                    Contact us page design
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo logoText="2" variant="yellow" />
-                  <Box>
-                    <UpdateTitle>Content - Website Project</UpdateTitle>
-                    Homepage Content
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo logoText="5" variant="red" />
-                  <Box>
-                    <UpdateTitle>Development - Website Project</UpdateTitle>
-                    Chart component
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo logoText="5" variant="red" />
-                  <Box>
-                    <UpdateTitle>SEO - Website Project</UpdateTitle>
-                    Google Analytics plugin
-                  </Box>
-                </Update>
-              </FadeIn>
-            </UpdateList>
-          </DashboardCard>
-          <DashboardCard title="Latest Messages">
-            <UpdateList>
-              <FadeIn transitionDuration={500}>
-                <Update>
-                  <UpdateLogo icon={TiDeviceLaptop} />
-                  <Box>
-                    <UpdateTitle>Website Project</UpdateTitle>
-                    "We've finished updating the design"
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo icon={TiDevicePhone} />
-                  <Box>
-                    <UpdateTitle>App Project</UpdateTitle>
-                    "The new functionality has been implemented"
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo icon={TiDeviceLaptop} />
-                  <Box>
-                    <UpdateTitle>Website Project</UpdateTitle>
-                    "Done. Please check."
-                  </Box>
-                </Update>
-                <Update>
-                  <UpdateLogo icon={TiDevicePhone} />
-                  <Box>
-                    <UpdateTitle>App Project</UpdateTitle>
-                    Google Analytics plugin
-                  </Box>
-                </Update>
-              </FadeIn>
-            </UpdateList>
-          </DashboardCard>
-        </DashboardLayout>
-      )}
+      <DashboardLayout>
+        <DashboardCard title="Latest Project Updates">
+          <UpdateList>
+            <FadeIn transitionDuration={500}>
+              <Update>
+                <UpdateLogo icon={TiBrush} />
+                <Box>
+                  <UpdateTitle>Design - Website Project</UpdateTitle>
+                  Contact us page design
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo icon={TiDocumentText} />
+                <Box>
+                  <UpdateTitle>Content - Website Project</UpdateTitle>
+                  Homepage Content
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo icon={TiDeviceLaptop} />
+                <Box>
+                  <UpdateTitle>Development - Website Project</UpdateTitle>
+                  Chart component
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo icon={TiLinkOutline} />
+                <Box>
+                  <UpdateTitle>SEO - Website Project</UpdateTitle>
+                  Google Analytics plugin
+                </Box>
+              </Update>
+            </FadeIn>
+          </UpdateList>
+        </DashboardCard>
+        <DashboardCard title="Project Performance" order={{ xs: 2 }}>
+          <ReactFrappeChart
+            type="line"
+            colors={["#21ba45"]}
+            axisOptions={{
+              xAxisMode: "tick",
+              yAxisMode: "tick",
+              xIsSeries: 1,
+            }}
+            height={250}
+            data={{
+              labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+              datasets: [
+                {
+                  name: "Project 1",
+                  values: [18, 40, 30, 35, 8, 52, 17, -4],
+                  chartType: "line",
+                },
+                {
+                  name: "Project 2",
+                  values: [30, 50, 0, 15, 18, 32, 27, 14],
+                  chartType: "line",
+                },
+                {
+                  name: "Project 3",
+                  values: [0, 15, 27, 32, 14, 30, 18, 50],
+                  chartType: "line",
+                },
+                {
+                  name: "Project 4",
+                  values: [18, 14, 27, 15, 30, 50, 32, 1],
+                  chartType: "line",
+                },
+              ],
+            }}
+          />
+        </DashboardCard>
+        <DataContext.Consumer>
+          {data => {
+            const names = data ? data.fullName.split(" ") : ""
+            return (
+              <DashboardCard
+                title="Projects"
+                aboveHeader={`Hi ${names && names[0]}!`}
+                order={{ xs: 1 }}
+              >
+                <ProjectList>
+                  <FadeIn transitionDuration={500}>
+                    <ProjectListItem
+                      defaultOpen
+                      logo={TiDeviceLaptop}
+                      title="Website Project"
+                      status={0}
+                    />
+                    <ProjectListItem
+                      logo={TiDevicePhone}
+                      title="App Project"
+                      status={1}
+                    />
+                    <ProjectListItem
+                      logo={TiDeviceLaptop}
+                      title="Website Project"
+                      status={2}
+                    />
+                    <ProjectListItem
+                      logo={TiDevicePhone}
+                      title="App Project"
+                      status={0}
+                    />
+                  </FadeIn>
+                </ProjectList>
+              </DashboardCard>
+            )
+          }}
+        </DataContext.Consumer>
+        <DashboardCard title="Upcoming Deadlines">
+          <UpdateList>
+            <FadeIn transitionDuration={500}>
+              <Update>
+                <UpdateLogo logoText="0" />
+                <Box>
+                  <UpdateTitle>Design - Website Project</UpdateTitle>
+                  Contact us page design
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo logoText="2" variant="yellow" />
+                <Box>
+                  <UpdateTitle>Content - Website Project</UpdateTitle>
+                  Homepage Content
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo logoText="5" variant="red" />
+                <Box>
+                  <UpdateTitle>Development - Website Project</UpdateTitle>
+                  Chart component
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo logoText="5" variant="red" />
+                <Box>
+                  <UpdateTitle>SEO - Website Project</UpdateTitle>
+                  Google Analytics plugin
+                </Box>
+              </Update>
+            </FadeIn>
+          </UpdateList>
+        </DashboardCard>
+        <DashboardCard title="Latest Messages">
+          <UpdateList>
+            <FadeIn transitionDuration={500}>
+              <Update>
+                <UpdateLogo icon={TiDeviceLaptop} />
+                <Box>
+                  <UpdateTitle>Website Project</UpdateTitle>
+                  "We've finished updating the design"
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo icon={TiDevicePhone} />
+                <Box>
+                  <UpdateTitle>App Project</UpdateTitle>
+                  "The new functionality has been implemented"
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo icon={TiDeviceLaptop} />
+                <Box>
+                  <UpdateTitle>Website Project</UpdateTitle>
+                  "Done. Please check."
+                </Box>
+              </Update>
+              <Update>
+                <UpdateLogo icon={TiDevicePhone} />
+                <Box>
+                  <UpdateTitle>App Project</UpdateTitle>
+                  Google Analytics plugin
+                </Box>
+              </Update>
+            </FadeIn>
+          </UpdateList>
+        </DashboardCard>
+      </DashboardLayout>
     </>
   )
 }

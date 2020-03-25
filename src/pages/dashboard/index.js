@@ -24,7 +24,7 @@ import {
 import Box from "@chakra-ui/core/dist/Box"
 import Flex from "@chakra-ui/core/dist/Flex"
 import FadeIn from "react-fade-in"
-import { DataContext } from "components/Context"
+import { UserDataContext } from "components/Context"
 
 const dayjs = require("dayjs")
 const relativeTime = require("dayjs/plugin/relativeTime")
@@ -480,7 +480,7 @@ const Dashboard = ({ meta, location }) => {
             }}
           />
         </DashboardCard>
-        <DataContext.Consumer>
+        <UserDataContext.Consumer>
           {data => {
             const names = data ? data.fullName.split(" ") : ""
             return (
@@ -517,7 +517,7 @@ const Dashboard = ({ meta, location }) => {
               </DashboardCard>
             )
           }}
-        </DataContext.Consumer>
+        </UserDataContext.Consumer>
         <DashboardCard title="Upcoming Deadlines">
           <UpdateList>
             <FadeIn transitionDuration={500}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
 import styled from "@emotion/styled"
@@ -100,10 +100,17 @@ const RegLink = styled(props => <Button variant="link" {...props} />)`
   }
 `
 
-const Layout = ({ children, defaultURL, toast, setLoggedIn }) => {
+const Layout = ({ children, toast, setLoggedIn }) => {
   const [currentForm, setCurrentForm] = useState("login")
+  const [windowLocation, setWindowLocation] = useState(null)
 
   const isLogin = currentForm === "login"
+
+  useEffect(() => {
+    if (!!typeof window) {
+      setWindowLocation(window.location)
+    }
+  })
 
   return (
     <StaticQuery
@@ -154,13 +161,13 @@ const Layout = ({ children, defaultURL, toast, setLoggedIn }) => {
                       {isLogin ? (
                         <HooksLoginForm
                           toast={toast}
-                          defaultURL={defaultURL}
+                          defaultURL={windowLocation && windowLocation.origin}
                           setLoggedIn={setLoggedIn}
                         />
                       ) : (
                         <HooksRegistrationForm
                           toast={toast}
-                          defaultURL={defaultURL}
+                          defaultURL={windowLocation && windowLocation.origin}
                           setLoggedIn={setLoggedIn}
                         />
                       )}

@@ -90,7 +90,7 @@ const HooksRegistrationForm = ({ defaultURL, setLoggedIn, ...props }) => {
     <form
       onSubmit={event => {
         handleSubmit(event).then(res => {
-          const { message, data, settings, uid } = JSON.parse(
+          const { message, data, settings, uid, sessionToken } = JSON.parse(
             new TextDecoder("utf-8").decode(res.body)
           )
           const isError = res.statusCode !== 200
@@ -98,6 +98,8 @@ const HooksRegistrationForm = ({ defaultURL, setLoggedIn, ...props }) => {
           if (!isError) {
             sessionStorage.setItem("user", data + `%${uid}`)
             sessionStorage.setItem("set", settings)
+            sessionStorage.setItem("tok", sessionToken)
+
             setLoggedIn(true)
           }
 

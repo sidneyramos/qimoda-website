@@ -32,9 +32,10 @@ import IconButton from "@chakra-ui/core/dist/IconButton"
 import AuthenticateLayout from "components/AuthenticateLayout"
 import * as jwt from "jsonwebtoken"
 import * as firebase from "firebase/app"
+import "firebase/auth"
 import "firebase/firestore"
 import Masonry from "react-masonry-css"
-import { DataContext } from "components/Context"
+import { UserDataContext } from "components/Context"
 const CryptoJS = require("crypto-js")
 
 const LayoutContainer = styled.div`
@@ -179,12 +180,12 @@ const Layout = ({ children }) => {
   const [userData, setUserData] = useState(null)
   const [database, setDatabase] = useState(null)
   const [isLoggedIn, setLoggedIn] = useState(null)
-  const [windowLocation, setWindowLocation] = useState(null)
 
   useEffect(() => {
     if (!!typeof window) {
       const hasUser = sessionStorage.getItem("user")
       const settings = sessionStorage.getItem("set")
+      const sessionToken = sessionStorage.getItem("tok")
 
       if (settings && hasUser) {
         if (firebase.apps.length === 0) {
@@ -193,14 +194,34 @@ const Layout = ({ children }) => {
             CryptoJS.AES.decrypt(settings, key).toString(CryptoJS.enc.Utf8)
           )
           firebase.initializeApp(parsedSettings)
-          setDatabase(firebase.firestore())
+          if (!firebase.auth().currentUser) {
+            firebase
+              .auth()
+              .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+              .then(() => {
+                return firebase
+                  .auth()
+                  .signInWithCustomToken(sessionToken)
+                  .then(() => {
+                    sessionStorage.removeItem("tok")
+                    setDatabase(firebase.firestore())
+                  })
+              })
+              .catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code
+                var errorMessage = error.message
+                console.log(errorMessage)
+              })
+          } else {
+            setDatabase(firebase.firestore())
+          }
         } else {
           setDatabase(firebase.firestore())
         }
       }
       setUserData(hasUser)
       setLoggedIn(!!hasUser)
-      setWindowLocation(window.location)
     }
   }, [isLoggedIn])
   const splitData = userData ? userData.split("%") : null
@@ -209,6 +230,15 @@ const Layout = ({ children }) => {
         return decoded
       })
     : null
+
+  if (splitData && database) {
+    database
+      .collection("projects")
+      .doc(splitData[1])
+      .onSnapshot(function(doc) {
+        console.log("Current data: ", doc.data())
+      })
+  }
 
   return (
     <StaticQuery
@@ -233,13 +263,9 @@ const Layout = ({ children }) => {
               ]}
             />
             {!isLoggedIn ? (
-              <AuthenticateLayout
-                defaultURL={windowLocation && windowLocation.origin}
-                toast={useToast}
-                setLoggedIn={setLoggedIn}
-              />
+              <AuthenticateLayout toast={useToast} setLoggedIn={setLoggedIn} />
             ) : (
-              <DataContext.Provider value={parsedData}>
+              <UserDataContext.Provider value={parsedData}>
                 <LayoutContainer>
                   <Global
                     styles={[globalStyles, typeStyles, logoStyles, listStyles]}
@@ -264,12 +290,21 @@ const Layout = ({ children }) => {
                         <DashButton
                           icon={TiPower}
                           onClick={() => {
-                            sessionStorage.removeItem("user")
-                            sessionStorage.removeItem("set")
-                            setLoggedIn(false)
-                            setDatabase(null)
-                            setUserData(null)
-                            setWindowLocation(null)
+                            firebase
+                              .auth()
+                              .signOut()
+                              .then(function() {
+                                sessionStorage.removeItem("user")
+                                sessionStorage.removeItem("set")
+
+                                setLoggedIn(false)
+                                setDatabase(null)
+                                setUserData(null)
+                              })
+                              .catch(function(error) {
+                                // An error happened.
+                                console.log(error)
+                              })
                           }}
                         />
                       </div>
@@ -294,7 +329,7 @@ const Layout = ({ children }) => {
                     <LayoutFooter />
                   </LayoutOuter>
                 </LayoutContainer>
-              </DataContext.Provider>
+              </UserDataContext.Provider>
             )}
           </ThemeProvider>
         </>

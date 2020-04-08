@@ -19,7 +19,7 @@ const CardContainer = styled.div`
   }
 `
 
-const CardTitle = styled.h1`
+const CardTitle = styled.h3`
   font-family: Rubik;
   font-weight: 400;
   margin: 0;
@@ -54,7 +54,11 @@ const CardBody = styled.div`
 const Card = ({ children, title, logo, aboveHeader, ...props }) => {
   return (
     <CardContainer {...props}>
-      {aboveHeader && <Heading as="h2">{aboveHeader}</Heading>}
+      {aboveHeader && (
+        <Heading as="h1" mb="10px">
+          {aboveHeader}
+        </Heading>
+      )}
       {title && <CardTitle>{title}</CardTitle>}
       <CardBody>{children}</CardBody>
     </CardContainer>

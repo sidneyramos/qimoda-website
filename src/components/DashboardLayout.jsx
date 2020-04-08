@@ -180,12 +180,18 @@ const Layout = ({ children }) => {
   const [userData, setUserData] = useState(null)
   const [database, setDatabase] = useState(null)
   const [isLoggedIn, setLoggedIn] = useState(null)
+  const splitData = userData ? userData.split("%") : null
+  const parsedData = splitData
+    ? jwt.verify(splitData[0], splitData[1], function(err, decoded) {
+        return decoded
+      })
+    : null
 
   useEffect(() => {
     if (!!typeof window) {
       const hasUser = sessionStorage.getItem("user")
       const settings = sessionStorage.getItem("set")
-      const sessionToken = sessionStorage.getItem("tok")
+      // const sessionToken = sessionStorage.getItem("tok")
 
       if (settings && hasUser) {
         if (firebase.apps.length === 0) {
@@ -194,49 +200,29 @@ const Layout = ({ children }) => {
             CryptoJS.AES.decrypt(settings, key).toString(CryptoJS.enc.Utf8)
           )
           firebase.initializeApp(parsedSettings)
-          if (!firebase.auth().currentUser) {
-            firebase
-              .auth()
-              .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-              .then(() => {
-                return firebase
-                  .auth()
-                  .signInWithCustomToken(sessionToken)
-                  .then(() => {
-                    sessionStorage.removeItem("tok")
-                    setDatabase(firebase.firestore())
-                  })
-              })
-              .catch(function(error) {
-                // Handle Errors here.
-                var errorCode = error.code
-                var errorMessage = error.message
-                console.log(errorMessage)
-              })
-          } else {
-            setDatabase(firebase.firestore())
-          }
-        } else {
-          setDatabase(firebase.firestore())
         }
+
+        setDatabase(firebase.firestore())
       }
       setUserData(hasUser)
       setLoggedIn(!!hasUser)
     }
   }, [isLoggedIn])
-  const splitData = userData ? userData.split("%") : null
-  const parsedData = splitData
-    ? jwt.verify(splitData[0], splitData[1], function(err, decoded) {
-        return decoded
-      })
-    : null
 
-  if (splitData && database) {
+  if (database) {
+    console.log(splitData[1])
     database
       .collection("projects")
       .doc(splitData[1])
-      .onSnapshot(function(doc) {
-        console.log("Current data: ", doc.data())
+      .collection("projArray")
+      .onSnapshot(function(projArray) {
+        // projArray.docChanges().forEach(function(change) {
+        //   console.log(change.doc.data())
+        // })
+        console.log(projArray)
+        projArray.forEach(function(doc) {
+          console.log(doc.data())
+        })
       })
   }
 
@@ -289,22 +275,22 @@ const Layout = ({ children }) => {
                         <DashButton icon={TiUser} linkUrl="/dashboard" />
                         <DashButton
                           icon={TiPower}
-                          onClick={() => {
-                            firebase
-                              .auth()
-                              .signOut()
-                              .then(function() {
-                                sessionStorage.removeItem("user")
-                                sessionStorage.removeItem("set")
-
-                                setLoggedIn(false)
-                                setDatabase(null)
-                                setUserData(null)
-                              })
-                              .catch(function(error) {
+                          onClick={async () => {
+                            if (firebase.auth().currentUser) {
+                              try {
+                                await firebase.auth().signOut()
+                              } catch (error) {
                                 // An error happened.
                                 console.log(error)
-                              })
+                              }
+                            }
+
+                            sessionStorage.removeItem("user")
+                            sessionStorage.removeItem("set")
+
+                            setLoggedIn(false)
+                            setDatabase(null)
+                            setUserData(null)
                           }}
                         />
                       </div>

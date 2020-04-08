@@ -518,7 +518,7 @@ const Dashboard = ({ meta, location }) => {
             )
           }}
         </UserDataContext.Consumer>
-        <DashboardCard title="Upcoming Deadlines">
+        {/* <DashboardCard title="Upcoming Deadlines">
           <UpdateList>
             <FadeIn transitionDuration={500}>
               <Update>
@@ -551,8 +551,8 @@ const Dashboard = ({ meta, location }) => {
               </Update>
             </FadeIn>
           </UpdateList>
-        </DashboardCard>
-        <DashboardCard title="Latest Messages">
+        </DashboardCard> */}
+        {/* <DashboardCard title="Latest Messages">
           <UpdateList>
             <FadeIn transitionDuration={500}>
               <Update>
@@ -585,7 +585,7 @@ const Dashboard = ({ meta, location }) => {
               </Update>
             </FadeIn>
           </UpdateList>
-        </DashboardCard>
+        </DashboardCard> */}
       </DashboardLayout>
     </>
   )

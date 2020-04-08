@@ -1173,6 +1173,12 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@icons-pack/react-simple-icons@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@icons-pack/react-simple-icons/-/react-simple-icons-2.6.0.tgz#51b61ab4461262050112b69e663ae44bee247401"
+  dependencies:
+    prop-types "^15.7.2"
+
 "@jimp/bmp@^0.6.8":
   version "0.6.8"
   resolved "https://registry.yarnpkg.com/@jimp/bmp/-/bmp-0.6.8.tgz#8abbfd9e26ba17a47fab311059ea9f7dd82005b6"
@@ -1644,6 +1650,10 @@
 "@types/debug@^0.0.29":
   version "0.0.29"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-0.0.29.tgz#a1e514adfbd92f03a224ba54d693111dbf1f3754"
+
+"@types/domhandler@2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@types/domhandler/-/domhandler-2.4.1.tgz#7b3b347f7762180fbcb1ece1ce3dd0ebbb8c64cf"
 
 "@types/eslint-visitor-keys@^1.0.0":
   version "1.0.0"
@@ -4392,7 +4402,7 @@ domelementtype@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.0.1.tgz#1f8bdfe91f5a78063274e803b4bdcedf6e94f94d"
 
-domhandler@^2.3.0:
+domhandler@2.4.2, domhandler@^2.3.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-2.4.2.tgz#8805097e933d65e85546f726d60f5eb88b44f803"
   dependencies:
@@ -6773,6 +6783,14 @@ html-comment-regex@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/html-comment-regex/-/html-comment-regex-1.1.2.tgz#97d4688aeb5c81886a364faa0cad1dda14d433a7"
 
+html-dom-parser@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/html-dom-parser/-/html-dom-parser-0.2.3.tgz#bfee592fc01c12bac08dcfa5da2611f9559a1812"
+  dependencies:
+    "@types/domhandler" "2.4.1"
+    domhandler "2.4.2"
+    htmlparser2 "3.10.1"
+
 html-entities@^1.2.0, html-entities@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
@@ -6789,7 +6807,16 @@ html-minifier@^4.0.0:
     relateurl "^0.2.7"
     uglify-js "^3.5.1"
 
-htmlparser2@^3.3.0, htmlparser2@^3.9.1:
+html-react-parser@^0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/html-react-parser/-/html-react-parser-0.10.3.tgz#d4a8eedc7f143b661d58e9ac4a77193751d3b1d2"
+  dependencies:
+    "@types/domhandler" "2.4.1"
+    html-dom-parser "0.2.3"
+    react-property "1.0.1"
+    style-to-object "0.3.0"
+
+htmlparser2@3.10.1, htmlparser2@^3.3.0, htmlparser2@^3.9.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-3.10.1.tgz#bd679dc3f59897b6a34bb10749c855bb53a9392f"
   dependencies:
@@ -7119,6 +7146,10 @@ ink@^2.6.0:
     widest-line "^3.1.0"
     wrap-ansi "^6.2.0"
     yoga-layout-prebuilt "^1.9.3"
+
+inline-style-parser@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/inline-style-parser/-/inline-style-parser-0.1.1.tgz#ec8a3b429274e9c0a1f1c4ffa9453a7fef72cea1"
 
 inquirer@3.3.0:
   version "3.3.0"
@@ -10456,6 +10487,10 @@ react-minimal-pie-chart@^6.0.1:
   dependencies:
     prop-types "^15.5.7"
 
+react-property@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-property/-/react-property-1.0.1.tgz#4ae4211557d0a0ae050a71aa8ad288c074bea4e6"
+
 react-reconciler@^0.24.0:
   version "0.24.0"
   resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.24.0.tgz#5a396b2c2f5efe8554134a5935f49f546723f2dd"
@@ -11829,6 +11864,12 @@ style-loader@^0.23.1:
   dependencies:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
+
+style-to-object@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/style-to-object/-/style-to-object-0.3.0.tgz#b1b790d205991cc783801967214979ee19a76e46"
+  dependencies:
+    inline-style-parser "0.1.1"
 
 styled-system@5.0.5:
   version "5.0.5"

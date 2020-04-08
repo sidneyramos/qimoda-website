@@ -14,6 +14,10 @@ import { TiUser, TiMail, TiLockOpen } from "react-icons/ti"
 import Icon from "@chakra-ui/core/dist/Icon"
 import useToast from "@chakra-ui/core/dist/Toast"
 import FadeIn from "react-fade-in"
+import * as firebase from "firebase/app"
+import "firebase/auth"
+import "firebase/firestore"
+const CryptoJS = require("crypto-js")
 
 const p = require("phin")
 
@@ -43,11 +47,56 @@ const HooksRegistrationForm = ({ defaultURL, setLoggedIn, ...props }) => {
       : "Please enter a valid email"
 
   const onSubmit = async values => {
-    return await p({
+    const res = await p({
       method: "post",
       url: new URL(`${defaultURL}/api/register`),
       data: values,
     })
+
+    const { message, data, settings, uid, sessionToken } = JSON.parse(
+      new TextDecoder("utf-8").decode(res.body)
+    )
+    const isError = res.statusCode !== 200
+
+    const successResponse = message => ({
+      title: "Success",
+      description: message,
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    })
+
+    const errorResponse = message => ({
+      title: "Error",
+      description: message,
+      status: "error",
+      duration: 9000,
+      isClosable: true,
+    })
+
+    if (!isError) {
+      sessionStorage.setItem("user", data + `%${uid}`)
+      sessionStorage.setItem("set", settings)
+      const parsedSettings = JSON.parse(
+        CryptoJS.AES.decrypt(settings, uid).toString(CryptoJS.enc.Utf8)
+      )
+      if (firebase.apps.length === 0) {
+        firebase.initializeApp(parsedSettings)
+      }
+      try {
+        await firebase
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+        await firebase.auth().signInWithCustomToken(sessionToken)
+        toast(successResponse(message))
+        setLoggedIn(true)
+      } catch (error) {
+        var errorMessage = error.message
+        toast(errorResponse(errorMessage))
+      }
+    } else {
+      toast(errorResponse(message))
+    }
   }
 
   const { form, handleSubmit, values, pristine, submitting } = useForm({
@@ -89,28 +138,7 @@ const HooksRegistrationForm = ({ defaultURL, setLoggedIn, ...props }) => {
   return (
     <form
       onSubmit={event => {
-        handleSubmit(event).then(res => {
-          const { message, data, settings, uid, sessionToken } = JSON.parse(
-            new TextDecoder("utf-8").decode(res.body)
-          )
-          const isError = res.statusCode !== 200
-
-          if (!isError) {
-            sessionStorage.setItem("user", data + `%${uid}`)
-            sessionStorage.setItem("set", settings)
-            sessionStorage.setItem("tok", sessionToken)
-
-            setLoggedIn(true)
-          }
-
-          toast({
-            title: isError ? "Error" : "Success",
-            description: message,
-            status: isError ? "error" : "success",
-            duration: 9000,
-            isClosable: true,
-          })
-        })
+        return handleSubmit(event)
       }}
     >
       <Box minWidth={{ md: "300px" }}>

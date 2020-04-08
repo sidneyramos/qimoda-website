@@ -112,11 +112,14 @@ const Header = () => (
         <Logo />
       </Link>
       <HeaderLinks>
-        <Link activeClassName="Link--is-active" to="/work">
+        {/* <Link activeClassName="Link--is-active" to="/work">
           WORK
-        </Link>
-        <Link activeClassName="Link--is-active" to="/blog">
+        </Link> */}
+        {/* <Link activeClassName="Link--is-active" to="/blog">
           BLOG
+        </Link> */}
+        <Link activeClassName="Link--is-active" to="/dashboard">
+          LOGIN
         </Link>
       </HeaderLinks>
     </HeaderContent>

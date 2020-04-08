@@ -16,7 +16,7 @@ import bg from "../images/bg-min.png"
 import Box from "@chakra-ui/core/dist/Box"
 import Flex from "@chakra-ui/core/dist/Flex"
 import FadeIn from "react-fade-in"
-import illus8 from "../images/illus8.svg"
+import illus8 from "../images/DancingDoodle.svg"
 import Loadable from "react-loadable"
 import ThemeProvider from "@chakra-ui/core/dist/ThemeProvider"
 import theme from "styles/theme"
@@ -56,11 +56,11 @@ const LayoutMain = styled.main`
 `
 
 const Heading = styled.h2`
-  font-size: 1rem;
+  font-size: 1.75rem;
 `
 
 const Illustration = styled("img")`
-  width: 50%;
+  width: 75%;
   margin: 0 auto;
 `
 
@@ -142,13 +142,17 @@ const Layout = ({ children, toast, setLoggedIn }) => {
                 <LayoutMain>
                   <FadeIn transitionDuration={500}>
                     <LoginBox>
-                      <Heading>Welcome Back!</Heading>
+                      <Heading>
+                        {isLogin ? "Welcome Back!" : "Glad to have you!"}
+                      </Heading>
                       <Illustration
                         src={illus8}
                         alt="Start off with a template"
                       />
                       <Text fontSize="12px">
-                        {isLogin ? `Don't h` : "H"}ave an account? Sign up{` `}
+                        {isLogin ? `Don't h` : "H"}ave an account? Sign{" "}
+                        {isLogin ? `up` : "in"}
+                        {` `}
                         <RegLink
                           onClick={() => {
                             const setForm = isLogin ? "register" : "login"

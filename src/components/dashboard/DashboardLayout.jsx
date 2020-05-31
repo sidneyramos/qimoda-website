@@ -9,11 +9,10 @@ import logoStyles from "styles/logo"
 import listStyles from "styles/list"
 import dimensions from "styles/dimensions"
 import Footer from "components/Footer"
-import Header from "components/Header"
 import Helmet from "react-helmet"
 import "styles/fonts.scss"
-import preview from "../images/preview.png"
-import bg from "../images/bg-min.png"
+import preview from "images/preview.png"
+import bg from "images/bg-min.png"
 import colors from "styles/colors"
 import FadeIn from "react-fade-in"
 import { Link } from "gatsby"
@@ -35,7 +34,12 @@ import * as firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/firestore"
 import Masonry from "react-masonry-css"
-import { UserDataContext } from "components/Context"
+import {
+  UserDataContext,
+  TasksContext,
+  DatabaseContext,
+} from "components/Context"
+
 const CryptoJS = require("crypto-js")
 
 const LayoutContainer = styled.div`
@@ -152,7 +156,7 @@ const DashButton = styled(({ linkUrl, ...props }) =>
 
 const MainMasonry = styled(Masonry)`
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   margin-left: -15px;
   width: auto;
   padding: 1rem;
@@ -180,6 +184,7 @@ const Layout = ({ children }) => {
   const [userData, setUserData] = useState(null)
   const [database, setDatabase] = useState(null)
   const [isLoggedIn, setLoggedIn] = useState(null)
+  const [tasks, setTasks] = useState([])
   const splitData = userData ? userData.split("%") : null
   const parsedData = splitData
     ? jwt.verify(splitData[0], splitData[1], function(err, decoded) {
@@ -209,20 +214,29 @@ const Layout = ({ children }) => {
     }
   }, [isLoggedIn])
 
-  if (database) {
-    console.log(splitData[1])
+  if (database && splitData) {
+    // console.log(splitData[1])
+    // database
+    //   .collection("projects")
+    //   .doc(splitData[1])
+    //   .collection("projArray")
+    //   .onSnapshot(function(projArray) {
+    //     // projArray.docChanges().forEach(function(change) {
+    //     //   console.log(change.doc.data())
+    //     // })
+    //     console.log(projArray)
+    //     projArray.forEach(function(doc) {
+    //       console.log(doc.data())
+    //     })
+    //   })
     database
-      .collection("projects")
+      .collection("tasks")
       .doc(splitData[1])
-      .collection("projArray")
-      .onSnapshot(function(projArray) {
-        // projArray.docChanges().forEach(function(change) {
-        //   console.log(change.doc.data())
-        // })
-        console.log(projArray)
-        projArray.forEach(function(doc) {
-          console.log(doc.data())
-        })
+      .onSnapshot(function(docSnap) {
+        const data = docSnap.data()
+        if (JSON.stringify(tasks) !== JSON.stringify(data.taskArray)) {
+          setTasks(data.taskArray)
+        }
       })
   }
 
@@ -251,71 +265,86 @@ const Layout = ({ children }) => {
             {!isLoggedIn ? (
               <AuthenticateLayout toast={useToast} setLoggedIn={setLoggedIn} />
             ) : (
-              <UserDataContext.Provider value={parsedData}>
-                <LayoutContainer>
-                  <Global
-                    styles={[globalStyles, typeStyles, logoStyles, listStyles]}
-                  />
-                  <LayoutAside>
-                    <div>
-                      <div>
-                        <DashButton icon={TiHome} linkUrl="/dashboard" />
-                      </div>
-                      <div>
-                        <DashButton icon={TiPlus} linkUrl="/dashboard/create" />
-                        <DashButton
-                          icon={TiChartPie}
-                          linkUrl="/dashboard/projects"
-                        />
-                        {/* <DashButton icon={TiUser} />
-                    <DashButton icon={TiCog} /> */}
-                        <DashButton icon={TiCog} linkUrl="/dashboard" />
-                      </div>
-                      <div>
-                        <DashButton icon={TiUser} linkUrl="/dashboard" />
-                        <DashButton
-                          icon={TiPower}
-                          onClick={async () => {
-                            if (firebase.auth().currentUser) {
-                              try {
-                                await firebase.auth().signOut()
-                              } catch (error) {
-                                // An error happened.
-                                console.log(error)
-                              }
-                            }
+              <DatabaseContext.Provider
+                value={{ db: database, uid: splitData ? splitData[1] : null }}
+              >
+                <UserDataContext.Provider value={parsedData}>
+                  <TasksContext.Provider value={tasks}>
+                    <LayoutContainer>
+                      <Global
+                        styles={[
+                          globalStyles,
+                          typeStyles,
+                          logoStyles,
+                          listStyles,
+                        ]}
+                      />
+                      <LayoutAside>
+                        <div>
+                          <div>
+                            <DashButton icon={TiHome} linkUrl="/dashboard" />
+                          </div>
+                          <div>
+                            <DashButton
+                              icon={TiPlus}
+                              linkUrl="/dashboard/create"
+                            />
+                            <DashButton
+                              icon={TiChartPie}
+                              linkUrl="/dashboard/projects"
+                            />
+                            {/* <DashButton icon={TiUser} />
+                        <DashButton icon={TiCog} /> */}
+                            <DashButton icon={TiCog} linkUrl="/dashboard" />
+                          </div>
+                          <div>
+                            <DashButton icon={TiUser} linkUrl="/dashboard" />
+                            <DashButton
+                              icon={TiPower}
+                              onClick={async () => {
+                                if (firebase.auth().currentUser) {
+                                  try {
+                                    await firebase.auth().signOut()
+                                  } catch (error) {
+                                    // An error happened.
+                                    console.log(error)
+                                  }
+                                }
 
-                            sessionStorage.removeItem("user")
-                            sessionStorage.removeItem("set")
+                                sessionStorage.removeItem("user")
+                                sessionStorage.removeItem("set")
 
-                            setLoggedIn(false)
-                            setDatabase(null)
-                            setUserData(null)
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </LayoutAside>
-                  <LayoutOuter>
-                    <LayoutMain>
-                      <FadeIn transitionDuration={500}>
-                        <MainMasonry
-                          breakpointCols={{
-                            default: 3,
-                            // 768: 1,
-                          }}
-                          className="main-masonry"
-                          columnClassName="masonry-column"
-                        >
-                          {children}
-                        </MainMasonry>
-                      </FadeIn>
-                      {/* <Box bg="black" height="1000px" /> */}
-                    </LayoutMain>
-                    <LayoutFooter />
-                  </LayoutOuter>
-                </LayoutContainer>
-              </UserDataContext.Provider>
+                                setLoggedIn(false)
+                                setDatabase(null)
+                                setUserData(null)
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </LayoutAside>
+                      <LayoutOuter>
+                        <LayoutMain>
+                          <FadeIn transitionDuration={500}>
+                            <MainMasonry
+                              breakpointCols={{
+                                default: 3,
+                                768: 1,
+                                1024: 2,
+                              }}
+                              className="main-masonry"
+                              columnClassName="masonry-column"
+                            >
+                              {children}
+                            </MainMasonry>
+                          </FadeIn>
+                          {/* <Box bg="black" height="1000px" /> */}
+                        </LayoutMain>
+                        <LayoutFooter />
+                      </LayoutOuter>
+                    </LayoutContainer>
+                  </TasksContext.Provider>
+                </UserDataContext.Provider>
+              </DatabaseContext.Provider>
             )}
           </ThemeProvider>
         </>

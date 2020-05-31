@@ -11,25 +11,7 @@ import Section from "components/_ui/Section"
 
 const BlogTitle = styled("h1")`
   margin-bottom: 1em;
-  position: relative;
-  display: inline-block;
-
-  &:after {
-    z-index: -1;
-    content: "";
-    display: block;
-    position: absolute;
-    height: 50%;
-    width: 100%;
-    opacity: 0.25;
-    background-color: ${colors.qimodaLight};
-    bottom: 0;
-    right: 0;
-
-    @media (max-width: ${dimensions.maxwidthTablet}px) {
-      height: calc(45%);
-    }
-  }
+  font-weight: 500;
 `
 
 const BlogGrid = styled("div")`
@@ -90,7 +72,7 @@ const Blog = ({ posts, meta }) => (
     />
     <Layout>
       <Section>
-        <BlogTitle>OUR BLOG</BlogTitle>
+        <BlogTitle>Latest News</BlogTitle>
         <BlogGrid>
           {posts.map((post, i) => (
             <PostCard

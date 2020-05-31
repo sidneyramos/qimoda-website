@@ -46,9 +46,16 @@ module.exports = (req, res) => {
               await db
                 .collection("projects")
                 .doc(idToken)
-                .collection("projArray")
                 .doc()
-                .set({})
+                .set({
+                  projArray: [],
+                })
+              await db
+                .collection("tasks")
+                .doc(idToken)
+                .set({
+                  taskArray: [],
+                })
               res.status(200).send({
                 message: `Your account has been registered.`,
                 data: token,

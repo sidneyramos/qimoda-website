@@ -12,6 +12,10 @@ const globalStyles = css`
     min-height: 100%;
   }
 
+  input {
+    font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+  }
+
   body {
     width: 100%;
     margin: 0 auto;
@@ -54,6 +58,24 @@ const globalStyles = css`
   //     }
   //   }
   // }
+
+  .Toaster__message-wrapper {
+    button {
+      background-color: transparent;
+      border: none;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.06);
+      }
+
+      svg {
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
 
   .modal {
     .modal-overlay {

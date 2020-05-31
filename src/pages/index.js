@@ -6,7 +6,6 @@ import Loadable from "react-loadable"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
 import colors from "styles/colors"
-import dimensions from "styles/dimensions"
 import Button from "components/_ui/Button"
 import Layout from "components/Layout"
 import Section from "components/_ui/Section"
@@ -14,28 +13,22 @@ import useDisclosure from "@chakra-ui/core/dist/useDisclosure"
 import useToast from "@chakra-ui/core/dist/Toast"
 import IconButton from "@chakra-ui/core/dist/IconButton"
 import Box from "@chakra-ui/core/dist/Box"
-import Grid from "@chakra-ui/core/dist/Grid"
-import LazyLoad from "react-lazyload"
+import Image from "@chakra-ui/core/dist/Image"
 import Heading from "@chakra-ui/core/dist/Heading"
 import Text from "@chakra-ui/core/dist/Text"
 import Flex from "@chakra-ui/core/dist/Flex"
-import ft6 from "../images/feature-tile-icon-06.svg"
-import ft5 from "../images/feature-tile-icon-05.svg"
-import ft4 from "../images/feature-tile-icon-04.svg"
-import ft3 from "../images/feature-tile-icon-03.svg"
-import ft7 from "../images/feature-tile-icon-07.svg"
-import client1 from "../images/clients-01.svg"
-import client4 from "../images/clients-04.svg"
-import client3 from "../images/clients-03.svg"
-import client5 from "../images/clients-05.svg"
-import illus1 from "../images/illus1.svg"
-import illus2 from "../images/illus2.svg"
-import illus3 from "../images/illus3.svg"
-import illus4 from "../images/illus4.svg"
-import illus5 from "../images/illus5.svg"
-import illus6 from "../images/illus6.svg"
-import illus7 from "../images/illus7.svg"
-import FadeIn from "react-fade-in"
+import landingSvg from "../images/GroovySittingDoodle.svg"
+import windowSvgFront from "../images/feature-window-1.svg"
+import windowSvgBack from "../images/feature-window-2.svg"
+import meditateSvg from "../images/MeditatingDoodle.svg"
+import flowShape from "../images/flow-shape.svg"
+import {
+  ReactJs,
+  NextDotJs,
+  Gatsby,
+  Svelte,
+  VueDotJs,
+} from "@icons-pack/react-simple-icons"
 
 const Hero = styled(Section)`
   margin: 0 auto;
@@ -53,21 +46,24 @@ const ModalClose = styled(IconButton)`
 
 const AngledSection = styled(Section)`
   background-color: rgba(240, 252, 251, 0.75);
-  clip-path: polygon(0px 0px, 100% 4%, 100% 100%, 0% 100%);
-  padding-top: 80px;
-  padding-bottom: 80px;
+  // clip-path: polygon(0px 0px, 100% 10%, 100% 100%, 0% 100%);
+  padding-top: 50px;
+  padding-bottom: 50px;
   overflow: hidden;
 `
 
-const LandingIllustration = styled("img")`
-  width: 80%;
-  @media (max-width: ${dimensions.maxwidthMobile}px) {
-    width: 100%;
-  }
+const ColouredSection = styled(Section)`
+  background-color: #eef4f5;
+  margin-top: 150px;
+  padding-top: 35px;
+  padding-bottom: 50px;
+  position: relative;
 `
 
-const StepIllustration = styled("img")`
-  width: 50%;
+const LandingIllustration = styled(Image)``
+
+const StepIllustration = styled(Image)`
+  width: 100%;
 `
 
 const ModalHeader = styled("header")`
@@ -123,6 +119,43 @@ const ButtonText = styled.p`
   z-index: 1;
 `
 
+const TechRing = styled(Box)`
+  // animation-name: rotate;
+  // animation-duration: 50s;
+  // animation-iteration-count: infinite;
+  // animation-timing-function: linear;
+
+  // @keyframes rotate {
+  //   from {
+  //     transform: rotate(0deg);
+  //   }
+  //   to {
+  //     transform: rotate(360deg);
+  //   }
+  // }
+`
+
+const TechRingIllustration = styled(Image)`
+  animation-name: float;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+
+  @keyframes float {
+    from {
+      padding-bottom: 30px;
+    }
+    to {
+      padding-bottom: 60px;
+    }
+  }
+`
+
+const TechRingElement = styled(Box)`
+  position: absolute;
+`
+
 const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -168,15 +201,16 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
       />
       <FormModal isOpen={isOpen} onClose={onClose} defaultURL={location.href} />
       <Hero pt={{ md: "2.5em" }} pb={{ md: "3em" }}>
-        <Flex flexWrap="wrap" mt={{ md: "2em" }} mb={{ md: "6em" }}>
+        <Flex flexWrap="wrap" mb={{ md: "6em" }}>
           <Flex
             width={{ xs: "100%", md: "auto" }}
-            flex={{ xs: "1 0 100%", md: "1" }}
+            flex={{ xs: "1 0 100%", md: "1 0 50%" }}
             flexDirection="column"
           >
-            <Box>
+            <Box mt={{ md: "5rem" }}>
               <Heading
                 fontFamily="inherit"
+                fontSize="2.5rem"
                 as="h1"
                 fontWeight="500"
                 lineHeight="1"
@@ -185,11 +219,16 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
                 mb="0.25em"
                 textAlign={{ xs: "center", md: "left" }}
               >
-                Insert tagline here.
+                Build the next{" "}
+                <Box as="span" color={colors.qimodaLight}>
+                  best thing
+                </Box>
+                .
               </Heading>
 
               <Heading
                 fontFamily="inherit"
+                fontSize="2.5rem"
                 as="h1"
                 fontWeight="500"
                 lineHeight="1"
@@ -197,26 +236,22 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
                 mb="0.6em"
                 textAlign={{ xs: "center", md: "left" }}
               >
-                Seriously, we{" "}
-                <Box as="span" color={colors.qimodaLight}>
-                  need{" "}
-                </Box>
-                it
+                All in one place.
               </Heading>
 
               <Heading
                 fontFamily="inherit"
                 as="h3"
                 fontWeight="400"
-                fontSize="0.9rem"
+                fontSize="1.1rem"
                 color="#353535"
                 lineHeight="1.5"
                 m="0"
                 mb="2rem"
                 textAlign={{ xs: "center", md: "left" }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Create innovative and efficient products with the latest
+                technologies, seamlessly in one platform.
               </Heading>
               <Button
                 onClick={onOpen}
@@ -224,76 +259,146 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
                 margin={{ xs: "0 auto", md: "0" }}
                 display="block"
               >
-                <ButtonText>Get early access now</ButtonText>
+                <ButtonText>Connect with us now</ButtonText>
               </Button>
             </Box>
           </Flex>
           <Flex
             width={{ xs: "100%", md: "auto" }}
-            flex={{ xs: "1 0 100%", md: "1" }}
+            flex={{ xs: "1 0 100%", md: "1 1 45%" }}
             position="relative"
             alignItems={{ md: "center" }}
             justifyContent={{ md: "flex-end" }}
-            mt={{ xs: "5em", md: "0" }}
+            mt={{ xs: "5em", md: "2.5em" }}
           >
-            <LandingIllustration src={illus7} alt="Imagine. Create. Disrupt." />
+            <LandingIllustration
+              position="absolute"
+              top="8%"
+              left="0"
+              width="75%"
+              zIndex="2"
+              src={windowSvgFront}
+              alt="Imagine. Create. Disrupt."
+            />
+            <LandingIllustration
+              position="absolute"
+              top="0"
+              right="0"
+              width="75%"
+              zIndex="1"
+              src={windowSvgBack}
+              alt="Imagine. Create. Disrupt."
+            />
+            <LandingIllustration
+              marginTop="40%"
+              marginLeft="20%"
+              zIndex="3"
+              width="100%"
+              src={landingSvg}
+              alt="Imagine. Create. Disrupt."
+            />
           </Flex>
         </Flex>
       </Hero>
-      <Section>
-        <Heading as="h1" textAlign="center" mb="0">
-          Lorem ipsum dolor sit amet
-        </Heading>
-        <Box textAlign="center" padding="0 15%">
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </Text>
-        </Box>
-        <Flex
+      <ColouredSection>
+        <Box
+          position="absolute"
           width="100%"
-          justifyContent="space-around"
-          my={{ xs: "4em", md: "100px" }}
-          flexDirection={{ xs: "column", md: "row" }}
-          px={{ md: "5%" }}
+          top="0"
+          left="0"
+          transform="translateY(-75%)"
         >
+          <Image src={flowShape} width="100%" />
+        </Box>
+        <Heading
+          as="h2"
+          my="0"
+          fontWeight="500"
+          fontSize="2.5rem"
+          textAlign="center"
+        >
+          Ditch the website builder.
+        </Heading>
+        {/* <Box width="100%" position="relative">
           <Box
-            width={{ xs: "100%", md: "20%" }}
-            mb={{ xs: "20px", md: 0 }}
-            height="30px"
-            backgroundPosition="center"
-            backgroundImage={`url('${client1}')`}
-            backgroundSize="auto 100%"
-            backgroundRepeat="no-repeat"
+            position="absolute"
+            boxSizing="content-box"
+            textAlign="right"
+            width="40%"
+            right="0"
+          >
+            <Text>
+              Forget about the cookie-cutter solutions. We tailor-make your
+              product to assure it can efficiently scale using the latest
+              technologies.
+            </Text>
+          </Box>
+        </Box> */}
+
+        <Flex
+          position="relative"
+          width={{ xs: "100%", md: "400px" }}
+          justifyContent="space-around"
+          mx="auto"
+          mt={{ xs: "6em", md: "3.5rem" }}
+          mb={{ xs: "4em", md: "25px" }}
+          flexDirection={{ xs: "column", md: "row" }}
+        >
+          <TechRingIllustration
+            mt="5%"
+            width="100%"
+            height="400px"
+            src={meditateSvg}
+            zIndex="3"
           />
-          <Box
-            width={{ xs: "100%", md: "20%" }}
-            mb={{ xs: "20px", md: 0 }}
-            height="30px"
-            backgroundPosition="center"
-            backgroundImage={`url('${client4}')`}
-            backgroundSize="auto 100%"
-            backgroundRepeat="no-repeat"
+          <TechRing
+            width={{ xs: "200px", md: "50%" }}
+            height={{ xs: "200px", md: "50%" }}
+            backgroundColor="white"
+            position="absolute"
+            top={{ xs: "25%", md: "20%" }}
+            left={{ xs: "50%", md: "initial" }}
+            transform={{ xs: "translateX(-50%)", md: "initial" }}
+            borderRadius="50%"
+            zIndex="1"
           />
-          <Box
-            width={{ xs: "100%", md: "20%" }}
-            mb={{ xs: "20px", md: 0 }}
-            height="30px"
-            backgroundPosition="center"
-            backgroundImage={`url('${client3}')`}
-            backgroundSize="auto 100%"
-            backgroundRepeat="no-repeat"
-          />
-          <Box
-            width={{ xs: "100%", md: "20%" }}
-            mb={{ xs: "20px", md: 0 }}
-            height="30px"
-            backgroundPosition="center"
-            backgroundImage={`url('${client5}')`}
-            backgroundSize="auto 100%"
-            backgroundRepeat="no-repeat"
-          />
+          <TechRing
+            position="absolute"
+            width={{ xs: "100%", md: "110%" }}
+            height={{ xs: "100%", md: "105%" }}
+          >
+            <TechRingElement
+              left="50%"
+              top="0"
+              transform="translate(-50%, -40%)"
+            >
+              <ReactJs color="#61DAFB" size={70} />
+            </TechRingElement>
+            <TechRingElement top="20%" left="5%" transform="translateX(-50%)">
+              <NextDotJs color="#000000" size={70} />
+            </TechRingElement>
+            <TechRingElement top="20%" right="0" transform="translateX(25%)">
+              <Gatsby color="#663399" size={70} />
+            </TechRingElement>
+            <TechRingElement
+              bottom={{ xs: "7%", md: "5%" }}
+              left="10%"
+              transform="translateX(-20%)"
+            >
+              <Svelte color="#FF3E00" size={70} />
+            </TechRingElement>
+            <TechRingElement
+              bottom={{ xs: "7%", md: "5%" }}
+              right="10%"
+              transform="translateX(20%)"
+            >
+              <VueDotJs color="#4FC08D" size={70} />
+            </TechRingElement>
+          </TechRing>
         </Flex>
+      </ColouredSection>
+
+      {/* <Section>
         <Grid
           mt="40px"
           px={{ md: "5%" }}
@@ -303,7 +408,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
           <LazyLoad height={200} once>
             <FadeIn transitionDuration={500}>
               <Card
-                title="Benefit 1"
+                title="L-U-D-I, don't D-I-Y"
                 logo={
                   <Box
                     size="100%"
@@ -312,9 +417,10 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
                   />
                 }
               >
-                <Text>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                <Text textAlign="justify">
+                  Let us do it, don't do it yourself. No need to go too
+                  technical with detailing, just let us know what you have in
+                  mind and our experts will handle the rest.
                 </Text>
               </Card>
             </FadeIn>
@@ -331,7 +437,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
                   />
                 }
               >
-                <Text>
+                <Text textAlign="justify">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </Text>
@@ -350,7 +456,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
                   />
                 }
               >
-                <Text>
+                <Text textAlign="justify">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </Text>
@@ -369,7 +475,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
                   />
                 }
               >
-                <Text>
+                <Text textAlign="justify">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </Text>
@@ -474,7 +580,7 @@ const RenderBody = ({ home, projects, meta, posts, location, ...props }) => {
             </Flex>
           </FadeIn>
         </LazyLoad>
-      </AngledSection>
+      </AngledSection> */}
       <Section>
         <Heading as="h1" textAlign="center" mb="0.5em">
           Be part of the early beta

@@ -4,8 +4,8 @@ import Helmet from "react-helmet"
 import { graphql } from "gatsby"
 import styled from "@emotion/styled"
 import dimensions from "styles/dimensions"
-import DashboardLayout from "components/DashboardLayout"
-import DashboardCard from "components/_ui/DashboardCard"
+import DashboardLayout from "components/dashboard/DashboardLayout"
+import DashboardCard from "components/dashboard/_ui/DashboardCard"
 
 import colors from "styles/colors"
 

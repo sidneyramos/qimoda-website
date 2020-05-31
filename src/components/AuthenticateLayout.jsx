@@ -57,6 +57,7 @@ const LayoutMain = styled.main`
 
 const Heading = styled.h2`
   font-size: 1.75rem;
+  margin-bottom: 0.5rem;
 `
 
 const Illustration = styled("img")`

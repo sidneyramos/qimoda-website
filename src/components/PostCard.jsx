@@ -192,12 +192,3 @@ const PostCard = ({
 )
 
 export default PostCard
-
-PostCard.propTypes = {
-  author: PropTypes.string.isRequired,
-  category: PropTypes.array.isRequired,
-  date: PropTypes.string.isRequired,
-  title: PropTypes.array.isRequired,
-  description: PropTypes.array.isRequired,
-  uid: PropTypes.string.isRequired,
-}

@@ -168,12 +168,6 @@ export default ({ data }) => {
   const meta = data.site.siteMetadata
   return <Post post={postContent} meta={meta} />
 }
-
-Post.propTypes = {
-  post: PropTypes.object.isRequired,
-  meta: PropTypes.object.isRequired,
-}
-
 export const query = graphql`
   query PostQuery($uid: String) {
     prismic {

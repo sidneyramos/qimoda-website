@@ -99,11 +99,6 @@ export default ({ data }) => {
   return <Blog posts={posts} meta={meta} />
 }
 
-Blog.propTypes = {
-  posts: PropTypes.array.isRequired,
-  meta: PropTypes.object.isRequired,
-}
-
 export const query = graphql`
   {
     prismic {

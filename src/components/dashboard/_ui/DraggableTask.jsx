@@ -7,6 +7,7 @@ import Text from "@chakra-ui/core/dist/Text"
 import Flex from "@chakra-ui/core/dist/Flex"
 import IconButton from "@chakra-ui/core/dist/IconButton"
 import useToast from "@chakra-ui/core/dist/Toast"
+import Checkbox from "@chakra-ui/core/dist/Checkbox"
 
 import Button from "@chakra-ui/core/dist/Button"
 
@@ -14,7 +15,7 @@ import Input from "@chakra-ui/core/dist/Input"
 import InputGroup from "@chakra-ui/core/dist/InputGroup"
 import { InputRightElement } from "@chakra-ui/core/dist/InputElement"
 
-import { TiPlus, TiTimes, TiPencil, TiTick } from "react-icons/ti"
+import { TiPlus, TiTimes, TiTick } from "react-icons/ti"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import "react-micro-modal/dist/index.css"
 import Loadable from "react-loadable"
@@ -84,6 +85,67 @@ const MeetingCard = styled.div`
     outline: initial;
   }
 `
+
+const TaskCheckbox = styled(Checkbox)`
+  & > div:first-of-type {
+    border-radius: 50%;
+  }
+  & > div:last-of-type {
+    width: 100%;
+  }
+`
+
+const StateTaskCheckbox = ({
+  initialVal,
+  children,
+  changeFn,
+  index,
+  item,
+  editTask,
+  setTaskDelete,
+  setModalOpen,
+  ...props
+}) => {
+  // const [value, setValue] = useState(initialVal)
+
+  return (
+    <TaskCheckbox
+      size="lg"
+      variantColor="green"
+      isFullWidth
+      isChecked={initialVal}
+      onChange={() => {
+        changeFn()
+      }}
+    >
+      <Flex justifyContent="space-between" alignItems="center" width="100%">
+        <Text
+          my="0"
+          lineHeight="normal"
+          fontWeight="500"
+          width="100%"
+          lineHeight="1.5"
+          textDecoration={initialVal ? "line-through" : "initial"}
+          onClick={() => {
+            editTask(index)
+          }}
+        >
+          {item.content ? item.content : <em>Untitled task</em>}
+        </Text>
+        <Flex>
+          <TaskButton
+            size="xs"
+            icon={TiTimes}
+            onClick={() => {
+              setTaskDelete(index)
+              setModalOpen(true)
+            }}
+          />
+        </Flex>
+      </Flex>
+    </TaskCheckbox>
+  )
+}
 
 const getItemStyle = (isDragging, draggableStyle) => ({
   userSelect: "none",
@@ -206,10 +268,25 @@ const DragTaskApp = ({ tasks, database, ...props }) => {
   const newTasks = tasks.map((item, index) => ({
     id: `item-${index}`,
     content: item.title,
+    isNewTask: false,
+    isCompleted: item.isCompleted,
   }))
   const [items, setItems] = useState(newTasks)
   const [modalOpen, setModalOpen] = useState(false)
   const [currentTaskDelete, setTaskDelete] = useState(0)
+
+  const updateDB = items => {
+    const dbItems = items.map(item => ({
+      title: item.content,
+      isCompleted: !!item.isCompleted,
+    }))
+    if (database.db && database.uid) {
+      database.db
+        .collection("tasks")
+        .doc(database.uid)
+        .update({ taskArray: dbItems })
+    }
+  }
 
   useEffect(() => {
     if (JSON.stringify(items) !== JSON.stringify(newTasks)) {
@@ -222,76 +299,93 @@ const DragTaskApp = ({ tasks, database, ...props }) => {
       id: `item-${index + 1}`,
       content: item.content,
       isNewTask: item.isNewTask,
+      isCompleted: item.isCompleted,
     }))
 
     newItems.unshift({
       id: "item-0",
       content: "",
       isNewTask: true,
+      isCompleted: false,
     })
 
     setItems(newItems)
+    updateDB(newItems)
   }
 
   const deleteTask = index => {
     items.splice(index, 1)
     const newItems = items.map((item, index) => ({
-      id: `item-${index + 1}`,
+      id: `item-${index}`,
       content: item.content,
       isNewTask: item.isNewTask,
+      isCompleted: item.isCompleted,
     }))
-    const dbItems = newItems.map(item => ({ title: item.content }))
 
     setItems(newItems)
-    if (database.db && database.uid) {
-      database.db
-        .collection("tasks")
-        .doc(database.uid)
-        .set({ taskArray: dbItems })
-    }
+    updateDB(newItems)
   }
 
   const editTask = id => {
     const newItems = items.map((item, index) =>
       id === index
         ? {
-            id: `item-${id + 1}`,
+            id: `item-${id}`,
             content: item.content,
             isNewTask: true,
+            isCompleted: item.isCompleted,
           }
         : {
-            id: `item-${index + 1}`,
+            id: `item-${index}`,
             content: item.content,
             isNewTask: item.isNewTask,
+            isCompleted: item.isCompleted,
           }
     )
 
     setItems(newItems)
+    updateDB(newItems)
+  }
+
+  const completeTask = id => {
+    const newItems = items.map((item, index) =>
+      id === index
+        ? {
+            id: `item-${id}`,
+            content: item.content,
+            isNewTask: item.isNewTask,
+            isCompleted: !item.isCompleted,
+          }
+        : {
+            id: `item-${index}`,
+            content: item.content,
+            isNewTask: item.isNewTask,
+            isCompleted: item.isCompleted,
+          }
+    )
+    setItems(newItems)
+    updateDB(newItems)
   }
 
   const changeName = (id, newContent) => {
     const newItems = items.map((item, index) =>
       id === index
         ? {
-            id: `item-${id + 1}`,
+            id: `item-${id}`,
             content: newContent,
             isNewTask: false,
+            isCompleted: item.isCompleted,
           }
         : {
-            id: `item-${index + 1}`,
+            id: `item-${index}`,
             content: item.content,
             isNewTask: item.isNewTask,
+            isCompleted: item.isCompleted,
           }
     )
-    const dbItems = newItems.map(item => ({ title: item.content }))
 
     setItems(newItems)
-    if (database.db && database.uid) {
-      database.db
-        .collection("tasks")
-        .doc(database.uid)
-        .set({ taskArray: dbItems })
-    }
+    updateDB(newItems)
   }
 
   const onDragEnd = result => {
@@ -305,16 +399,8 @@ const DragTaskApp = ({ tasks, database, ...props }) => {
       result.destination.index
     )
 
-    const dbItems = newItems.map(item => ({ title: item.content }))
-
     setItems(newItems)
-
-    if (database.db && database.uid) {
-      database.db
-        .collection("tasks")
-        .doc(database.uid)
-        .set({ taskArray: dbItems })
-    }
+    updateDB(newItems)
   }
 
   return (
@@ -361,32 +447,17 @@ const DragTaskApp = ({ tasks, database, ...props }) => {
                           9:00AM
                         </Text> */}
                         {!item.isNewTask ? (
-                          <Flex
-                            justifyContent="space-between"
-                            alignItems="center"
-                          >
-                            <Text my="0" lineHeight="normal" fontWeight="500">
-                              {item.content}
-                            </Text>
-                            <Flex>
-                              <TaskButton
-                                size="xs"
-                                icon={TiPencil}
-                                onClick={() => {
-                                  editTask(index)
-                                }}
-                                mr="5px"
-                              />
-                              <TaskButton
-                                size="xs"
-                                icon={TiTimes}
-                                onClick={() => {
-                                  setTaskDelete(index)
-                                  setModalOpen(true)
-                                }}
-                              />
-                            </Flex>
-                          </Flex>
+                          <StateTaskCheckbox
+                            initialVal={!!item.isCompleted}
+                            item={item}
+                            index={index}
+                            editTask={editTask}
+                            setTaskDelete={setTaskDelete}
+                            setModalOpen={setModalOpen}
+                            changeFn={() => {
+                              completeTask(index)
+                            }}
+                          />
                         ) : (
                           <EditingTask
                             item={item}

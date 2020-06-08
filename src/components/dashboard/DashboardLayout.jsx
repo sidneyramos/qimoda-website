@@ -214,30 +214,35 @@ const Layout = ({ children }) => {
     }
   }, [isLoggedIn])
 
-  if (database && splitData) {
-    // console.log(splitData[1])
-    // database
-    //   .collection("projects")
-    //   .doc(splitData[1])
-    //   .collection("projArray")
-    //   .onSnapshot(function(projArray) {
-    //     // projArray.docChanges().forEach(function(change) {
-    //     //   console.log(change.doc.data())
-    //     // })
-    //     console.log(projArray)
-    //     projArray.forEach(function(doc) {
-    //       console.log(doc.data())
-    //     })
-    //   })
-    database
-      .collection("tasks")
-      .doc(splitData[1])
-      .onSnapshot(function(docSnap) {
-        const data = docSnap.data()
-        if (JSON.stringify(tasks) !== JSON.stringify(data.taskArray)) {
-          setTasks(data.taskArray)
-        }
-      })
+  if (isLoggedIn) {
+    if (database && splitData) {
+      // database
+      //   .collection("tasks")
+      //   .doc(splitData[1])
+      //   .onSnapshot(function(docSnap) {
+      //     const data = docSnap.data()
+      //     if (JSON.stringify(tasks) !== JSON.stringify(data.taskArray)) {
+      //       setTasks(data.taskArray)
+      //     }
+      //   })
+      const docRef = database.collection("tasks").doc(splitData[1])
+
+      docRef
+        .get()
+        .then(function(doc) {
+          if (doc.exists) {
+            const data = doc.data()
+            if (JSON.stringify(tasks) !== JSON.stringify(data.taskArray)) {
+              setTasks(data.taskArray)
+            }
+          } else {
+            console.log("No such document!")
+          }
+        })
+        .catch(function(error) {
+          console.log("Error getting document:", error)
+        })
+    }
   }
 
   return (
@@ -314,6 +319,7 @@ const Layout = ({ children }) => {
                                 sessionStorage.removeItem("user")
                                 sessionStorage.removeItem("set")
 
+                                setTasks([])
                                 setLoggedIn(false)
                                 setDatabase(null)
                                 setUserData(null)
@@ -351,10 +357,6 @@ const Layout = ({ children }) => {
       )}
     />
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
 }
 
 export default Layout

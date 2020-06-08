@@ -233,11 +233,3 @@ const ProjectCard = ({ category, title, description, thumbnailSharp, uid }) => (
 )
 
 export default ProjectCard
-
-ProjectCard.propTypes = {
-  category: PropTypes.array.isRequired,
-  thumbnailSharp: PropTypes.object.isRequired,
-  title: PropTypes.array.isRequired,
-  description: PropTypes.array.isRequired,
-  uid: PropTypes.string.isRequired,
-}

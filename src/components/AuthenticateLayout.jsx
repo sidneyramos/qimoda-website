@@ -188,8 +188,4 @@ const Layout = ({ children, toast, setLoggedIn }) => {
   )
 }
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-}
-
 export default Layout

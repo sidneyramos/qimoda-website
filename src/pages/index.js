@@ -33,7 +33,7 @@ import {
 const Hero = styled(Section)`
   margin: 0 auto;
   text-align: left;
-  font-family: Rubik, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+  font-family: Literal, -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
 `
 
 const ModalClose = styled(IconButton)`
@@ -621,13 +621,6 @@ export default ({ data, ...props }) => {
       />
     </Layout>
   )
-}
-
-RenderBody.propTypes = {
-  home: PropTypes.object.isRequired,
-  projects: PropTypes.array.isRequired,
-  posts: PropTypes.array.isRequired,
-  meta: PropTypes.object.isRequired,
 }
 
 export const query = graphql`

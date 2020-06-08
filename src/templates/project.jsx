@@ -124,10 +124,6 @@ export default ({ data }) => {
   return <Project project={projectContent} meta={meta} />
 }
 
-Project.propTypes = {
-  project: PropTypes.object.isRequired,
-}
-
 export const query = graphql`
   query ProjectQuery($uid: String) {
     prismic {

@@ -83,10 +83,6 @@ export default ({ data }) => {
   return <Work projects={projects} meta={meta} />
 }
 
-Work.propTypes = {
-  projects: PropTypes.array.isRequired,
-}
-
 export const query = graphql`
   {
     prismic {

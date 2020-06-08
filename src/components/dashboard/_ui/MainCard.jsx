@@ -38,7 +38,7 @@ const MeetingCard = styled(Box)`
   );
   width: 100%;
   box-shadow: 0px 2px 5px rgba(173, 191, 191, 0.2);
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     margin-top: 5px;
   }
   margin-bottom: 5px;

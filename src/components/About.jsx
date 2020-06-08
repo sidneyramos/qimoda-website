@@ -271,8 +271,3 @@ const About = ({ title, bio, socialLinks, posts }) => (
 )
 
 export default About
-
-About.propTypes = {
-  bio: PropTypes.array.isRequired,
-  socialLinks: PropTypes.array.isRequired,
-}

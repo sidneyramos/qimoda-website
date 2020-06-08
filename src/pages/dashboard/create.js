@@ -63,10 +63,6 @@ export default ({ data }) => {
   return <Dashboard meta={meta} />
 }
 
-Dashboard.propTypes = {
-  projects: PropTypes.array.isRequired,
-}
-
 export const query = graphql`
   {
     site {

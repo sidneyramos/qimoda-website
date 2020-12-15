@@ -38,6 +38,7 @@ import {
   UserDataContext,
   TasksContext,
   DatabaseContext,
+  LoadingContext,
 } from "components/Context"
 
 const CryptoJS = require("crypto-js")
@@ -181,6 +182,7 @@ const MainMasonry = styled(Masonry)`
 `
 
 const Layout = ({ children }) => {
+  const [loading, setLoading] = useState(true)
   const [userData, setUserData] = useState(null)
   const [database, setDatabase] = useState(null)
   const [isLoggedIn, setLoggedIn] = useState(null)
@@ -216,15 +218,6 @@ const Layout = ({ children }) => {
 
   if (isLoggedIn) {
     if (database && splitData) {
-      // database
-      //   .collection("tasks")
-      //   .doc(splitData[1])
-      //   .onSnapshot(function(docSnap) {
-      //     const data = docSnap.data()
-      //     if (JSON.stringify(tasks) !== JSON.stringify(data.taskArray)) {
-      //       setTasks(data.taskArray)
-      //     }
-      //   })
       const docRef = database.collection("tasks").doc(splitData[1])
 
       docRef
@@ -234,14 +227,19 @@ const Layout = ({ children }) => {
             const data = doc.data()
             if (JSON.stringify(tasks) !== JSON.stringify(data.taskArray)) {
               setTasks(data.taskArray)
+              setLoading(false)
             }
           } else {
             console.log("No such document!")
+            setLoading(false)
           }
         })
         .catch(function(error) {
+          setLoading(false)
           console.log("Error getting document:", error)
         })
+    } else {
+      setLoading(false)
     }
   }
 
@@ -270,87 +268,89 @@ const Layout = ({ children }) => {
             {!isLoggedIn ? (
               <AuthenticateLayout toast={useToast} setLoggedIn={setLoggedIn} />
             ) : (
-              <DatabaseContext.Provider
-                value={{ db: database, uid: splitData ? splitData[1] : null }}
-              >
-                <UserDataContext.Provider value={parsedData}>
-                  <TasksContext.Provider value={tasks}>
-                    <LayoutContainer>
-                      <Global
-                        styles={[
-                          globalStyles,
-                          typeStyles,
-                          logoStyles,
-                          listStyles,
-                        ]}
-                      />
-                      <LayoutAside>
-                        <div>
+              <LoadingContext.Provider value={loading}>
+                <DatabaseContext.Provider
+                  value={{ db: database, uid: splitData ? splitData[1] : null }}
+                >
+                  <UserDataContext.Provider value={parsedData}>
+                    <TasksContext.Provider value={tasks}>
+                      <LayoutContainer>
+                        <Global
+                          styles={[
+                            globalStyles,
+                            typeStyles,
+                            logoStyles,
+                            listStyles,
+                          ]}
+                        />
+                        <LayoutAside>
                           <div>
-                            <DashButton icon={TiHome} linkUrl="/dashboard" />
-                          </div>
-                          <div>
-                            <DashButton
-                              icon={TiPlus}
-                              linkUrl="/dashboard/create"
-                            />
-                            <DashButton
-                              icon={TiChartPie}
-                              linkUrl="/dashboard/projects"
-                            />
-                            {/* <DashButton icon={TiUser} />
-                        <DashButton icon={TiCog} /> */}
-                            <DashButton icon={TiCog} linkUrl="/dashboard" />
-                          </div>
-                          <div>
-                            <DashButton icon={TiUser} linkUrl="/dashboard" />
-                            <DashButton
-                              icon={TiPower}
-                              onClick={async () => {
-                                if (firebase.auth().currentUser) {
-                                  try {
-                                    await firebase.auth().signOut()
-                                  } catch (error) {
-                                    // An error happened.
-                                    console.log(error)
+                            <div>
+                              <DashButton icon={TiHome} linkUrl="/dashboard" />
+                            </div>
+                            <div>
+                              <DashButton
+                                icon={TiPlus}
+                                linkUrl="/dashboard/create"
+                              />
+                              <DashButton
+                                icon={TiChartPie}
+                                linkUrl="/dashboard/projects"
+                              />
+                              {/* <DashButton icon={TiUser} />
+                          <DashButton icon={TiCog} /> */}
+                              <DashButton icon={TiCog} linkUrl="/dashboard" />
+                            </div>
+                            <div>
+                              <DashButton icon={TiUser} linkUrl="/dashboard" />
+                              <DashButton
+                                icon={TiPower}
+                                onClick={async () => {
+                                  if (firebase.auth().currentUser) {
+                                    try {
+                                      await firebase.auth().signOut()
+                                    } catch (error) {
+                                      // An error happened.
+                                      console.log(error)
+                                    }
                                   }
-                                }
 
-                                sessionStorage.removeItem("user")
-                                sessionStorage.removeItem("set")
+                                  sessionStorage.removeItem("user")
+                                  sessionStorage.removeItem("set")
 
-                                setTasks([])
-                                setLoggedIn(false)
-                                setDatabase(null)
-                                setUserData(null)
-                              }}
-                            />
+                                  setTasks([])
+                                  setLoggedIn(false)
+                                  setDatabase(null)
+                                  setUserData(null)
+                                }}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </LayoutAside>
-                      <LayoutOuter>
-                        <LayoutMain>
-                          <FadeIn transitionDuration={500}>
-                            <MainMasonry
-                              breakpointCols={{
-                                default: 3,
-                                768: 1,
-                                1024: 2,
-                              }}
-                              className="main-masonry"
-                              columnClassName="masonry-column"
-                            >
-                              {children}
-                            </MainMasonry>
-                          </FadeIn>
-                          {/* <Box bg="black" height="1000px" /> */}
-                        </LayoutMain>
-                        <LayoutFooter />
-                      </LayoutOuter>
-                    </LayoutContainer>
-                  </TasksContext.Provider>
-                </UserDataContext.Provider>
-              </DatabaseContext.Provider>
+                        </LayoutAside>
+                        <LayoutOuter>
+                          <LayoutMain>
+                            <FadeIn transitionDuration={500}>
+                              <MainMasonry
+                                breakpointCols={{
+                                  default: 3,
+                                  768: 1,
+                                  1024: 2,
+                                }}
+                                className="main-masonry"
+                                columnClassName="masonry-column"
+                              >
+                                {children}
+                              </MainMasonry>
+                            </FadeIn>
+                            {/* <Box bg="black" height="1000px" /> */}
+                          </LayoutMain>
+                          <LayoutFooter />
+                        </LayoutOuter>
+                      </LayoutContainer>
+                    </TasksContext.Provider>
+                  </UserDataContext.Provider>
+                </DatabaseContext.Provider>
+              </LoadingContext.Provider>
             )}
           </ThemeProvider>
         </>

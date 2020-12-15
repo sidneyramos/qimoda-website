@@ -8,9 +8,8 @@ import Flex from "@chakra-ui/core/dist/Flex"
 import IconButton from "@chakra-ui/core/dist/IconButton"
 import useToast from "@chakra-ui/core/dist/Toast"
 import Checkbox from "@chakra-ui/core/dist/Checkbox"
-
+import Loading from "components/_ui/Loading"
 import Button from "@chakra-ui/core/dist/Button"
-
 import Input from "@chakra-ui/core/dist/Input"
 import InputGroup from "@chakra-ui/core/dist/InputGroup"
 import { InputRightElement } from "@chakra-ui/core/dist/InputElement"
@@ -264,7 +263,7 @@ const EditingTask = ({ item, index, changeName }) => {
   )
 }
 
-const DragTaskApp = ({ tasks, database, ...props }) => {
+const DragTaskApp = ({ loading, tasks, database, ...props }) => {
   const newTasks = tasks.map((item, index) => ({
     id: `item-${index}`,
     content: item.title,
@@ -422,59 +421,61 @@ const DragTaskApp = ({ tasks, database, ...props }) => {
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
       />
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => {
-                    return (
-                      <MeetingCard
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        style={getItemStyle(
-                          snapshot.isDragging,
-                          provided.draggableProps.style
-                        )}
-                      >
-                        {/* <Text my="0" lineHeight="normal">
-                          9:00AM
-                        </Text> */}
-                        {!item.isNewTask ? (
-                          <StateTaskCheckbox
-                            initialVal={!!item.isCompleted}
-                            item={item}
-                            index={index}
-                            editTask={editTask}
-                            setTaskDelete={setTaskDelete}
-                            setModalOpen={setModalOpen}
-                            changeFn={() => {
-                              completeTask(index)
-                            }}
-                          />
-                        ) : (
-                          <EditingTask
-                            item={item}
-                            index={index}
-                            changeName={changeName}
-                          />
-                        )}
-                      </MeetingCard>
-                    )
-                  }}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+
+      {loading ? (
+        <Loading />
+      ) : (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                style={getListStyle(snapshot.isDraggingOver)}
+              >
+                {items.map((item, index) => (
+                  <Draggable key={item.id} draggableId={item.id} index={index}>
+                    {(provided, snapshot) => {
+                      return (
+                        <MeetingCard
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style
+                          )}
+                        >
+                          {!item.isNewTask ? (
+                            <StateTaskCheckbox
+                              initialVal={!!item.isCompleted}
+                              item={item}
+                              index={index}
+                              editTask={editTask}
+                              setTaskDelete={setTaskDelete}
+                              setModalOpen={setModalOpen}
+                              changeFn={() => {
+                                completeTask(index)
+                              }}
+                            />
+                          ) : (
+                            <EditingTask
+                              item={item}
+                              index={index}
+                              changeName={changeName}
+                            />
+                          )}
+                        </MeetingCard>
+                      )
+                    }}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      )}
     </>
   )
 }

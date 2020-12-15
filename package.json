@@ -70,6 +70,8 @@
     "react-router-dom": "^5.0.0",
     "react-router-hash-link": "^1.2.1",
     "rebass": "^4.0.7",
+    "slate": "^0.58.3",
+    "slate-react": "^0.58.3",
     "smooth-scroll": "16.1.2",
     "typeface-rubik": "^0.0.72",
     "typeface-rubik-mono-one": "^0.0.72",
